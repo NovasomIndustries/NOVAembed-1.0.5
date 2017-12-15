@@ -679,8 +679,8 @@ void NOVAembed::on_GenerateFileSystem_pushButton_clicked()
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    out << QString("./SetupFs "+ui->NewFileSystemSelectedlineEdit->text()+" "+ ui->NewFileSystemConfigurationcomboBox->currentText()+"\n");
-    out << QString("echo $? > /tmp/result\n");
+    out << QString("./SetupFs "+ui->NewFileSystemSelectedlineEdit->text()+" \""+ui->Board_comboBox->currentText()+"\" "+ ui->NewFileSystemConfigurationcomboBox->currentText()+"\n");
+    //out << QString("echo $? > /tmp/result\n");
     scriptfile.close();
     if ( run_script() == 0)
     {

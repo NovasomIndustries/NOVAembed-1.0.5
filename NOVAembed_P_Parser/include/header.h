@@ -865,12 +865,13 @@
                         MX6QDL_PAD_GPIO_6__GPIO1_IO06 \n\
                 >;\n\
         };\n\
-        pinctrl_pwm1: pwm1grp {\n\
+"
+/*        pinctrl_pwm1: pwm1grp {\n\
                 fsl,pins = <\n\
                         MX6QDL_PAD_GPIO_9__PWM1_OUT 0x1b0b1\n\
                 >;\n\
         };\n\
-"
+*/
 
 #define dtsi_lvds_header_defs "\
 &ldb {\n\
