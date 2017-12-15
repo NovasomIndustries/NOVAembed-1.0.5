@@ -402,7 +402,7 @@ void NOVAembed::on_ThisIsReferenceServer_checkBox_clicked(bool checked)
         if (!entries.isEmpty()) {
             QNetworkAddressEntry entry = entries.first();
             IP=entry.ip().toString();
-            //qDebug() << IP;
+            qDebug() << IP;
         }
         else
             qDebug() << "IP not found";
@@ -458,26 +458,8 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("cd /Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"\n");
-    if ( ui->Board_comboBox->currentText() == "S Series")
-    {
-        out << QString("cp .config board/novasis/NOVAsomS/Init/etc/buildroot.config\n");
-        out << QString("cp BusyBox.config board/novasis/NOVAsomS/Init/etc/busybox.config\n");
-        out << QString("make  > /Devel/NOVAsom_SDK/Logs/FileSystem_Smake.log\n");
-    }
-    if ( ui->Board_comboBox->currentText() == "P Series")
-    {
-        out << QString("cp .config board/novasis/NOVAsomP/Init/etc/buildroot.config\n");
-        out << QString("cp BusyBox.config board/novasis/NOVAsomP/Init/etc/busybox.config\n");
-        out << QString("make > /Devel/NOVAsom_SDK/Logs/FileSystem_Pmake.log\n");
-    }
-    if ( ui->Board_comboBox->currentText() == "U Series")
-    {
-        out << QString("cp .config board/novasis/NOVAsomU/Init/etc/buildroot.config\n");
-        out << QString("cp BusyBox.config board/novasis/NOVAsomU/Init/etc/busybox.config\n");
-        out << QString("make > /Devel/NOVAsom_SDK/Logs/FileSystem_Umake.log\n");
-    }
-    out << QString("echo $? > /tmp/result\n");
+    out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+"\n");
+    //out << QString("echo $? > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)

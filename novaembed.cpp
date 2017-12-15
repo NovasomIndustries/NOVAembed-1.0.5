@@ -61,6 +61,8 @@ NOVAembed::NOVAembed(QWidget *parent) :
     ui(new Ui::NOVAembed)
 {
 int     copy_required_files = 0;
+    qDebug() << "Starting";
+
     /* Initialize user area */
     if ( ! QDir("/Devel/NOVAsom_SDK/Logs").exists() )
         system("mkdir -p /Devel/NOVAsom_SDK/Logs");
