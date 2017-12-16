@@ -124,8 +124,6 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    if ( ui->Board_comboBox->currentText() == "S Series")
-        out << QString("./umakeS  > /Devel/NOVAsom_SDK/Logs/umakeS.log\n");
     if ( ui->Board_comboBox->currentText() == "P Series")
         out << QString("./umakeP > /Devel/NOVAsom_SDK/Logs/umakeP.log\n");
     if ( ui->Board_comboBox->currentText() == "U Series")
@@ -335,6 +333,7 @@ void NOVAembed::on_LaunchMenuConfig_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/FileSystem/"+FileSystemName+"\n");
     out << QString("make menuconfig\n");
+    out << QString("echo \"0\" > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -373,6 +372,7 @@ void NOVAembed::on_LaunchBusyboxMenuConfig_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/FileSystem/"+FileSystemName+"\n");
     out << QString("make busybox-menuconfig\n");
+    out << QString("echo \"0\" > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -459,7 +459,6 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+"\n");
-    //out << QString("echo $? > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -621,9 +620,9 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     if ( ui->Board_comboBox->currentText() == "U Series")
-        out << QString("./Uflash "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        out << QString("./flashU "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     else
-        out << QString("./Pflash "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+sdl_dtb+" "+q_dtb+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+sdl_dtb+" "+q_dtb+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     if ( ui->UserAutoRun_checkBox->isChecked())
         out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     out << QString("echo $? > /tmp/result\n");

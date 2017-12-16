@@ -2079,7 +2079,6 @@ void NOVAembed::on_P_Generate_pushButton_clicked()
             out << QString("kwrite /Devel/NOVAsom_SDK/DtbUserWorkArea/"+QUAD_FileNameNoExtension+".dtsi\n");
         out << QString("./user_dtb_compile "+QUAD_FileNameNoExtension+" P >> /Devel/NOVAsom_SDK/Logs/P_bspf.log\n");
     }
-    //out << QString("echo $? > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)

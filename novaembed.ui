@@ -120,8 +120,8 @@
         <rect>
          <x>20</x>
          <y>10</y>
-         <width>41</width>
-         <height>41</height>
+         <width>31</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="font">
@@ -146,7 +146,7 @@
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>60</y>
+         <y>50</y>
          <width>211</width>
          <height>101</height>
         </rect>
@@ -292,7 +292,7 @@
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>170</y>
+         <y>160</y>
          <width>211</width>
          <height>101</height>
         </rect>
@@ -402,7 +402,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>30</y>
+         <y>20</y>
          <width>181</width>
          <height>20</height>
         </rect>
@@ -425,7 +425,7 @@
       <widget class="QPushButton" name="P_HUM_pushButton_3">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>90</x>
          <y>350</y>
          <width>181</width>
          <height>31</height>
@@ -1604,7 +1604,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
