@@ -26,5 +26,6 @@
         <file>Icons/Web-Icon-Blue.png</file>
         <file>Icons/pdf-icon.png</file>
         <file>Icons/animation.gif</file>
+        <file>Icons/NovaEmbedIcon.png</file>
     </qresource>
 </RCC>

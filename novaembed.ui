@@ -14,8 +14,8 @@
    <string>NOVAembed</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../NovaEmbedLogoBtn.png</normaloff>../NovaEmbedLogoBtn.png</iconset>
+   <iconset resource="novaembedresources.qrc">
+    <normaloff>:/Icons/NovaEmbedIcon.png</normaloff>:/Icons/NovaEmbedIcon.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tab">
