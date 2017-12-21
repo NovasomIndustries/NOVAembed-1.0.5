@@ -420,25 +420,10 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
     }
     QHostAddress myIP;
     QString IP=ui->REFERENCE_SERVER_lineEdit->text();
-
+    qDebug() << "IP "+IP;
     if( myIP.setAddress(ui->REFERENCE_SERVER_lineEdit->text()) )
     {
-        if ( ui->Board_comboBox->currentText() == "P Series")
-        {
-            ui->iperror_label->setVisible(false);
-            QString command1 = "echo \"REFERENCE_SERVER="+IP+"\" > /Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"/board/novasis/NOVAsomP/Init/etc/sysconfig/system_vars";
-            QByteArray ba1 = command1.toLatin1();
-            const char *c_str1 = ba1.data();
-            system(c_str1);
-        }
-        if ( ui->Board_comboBox->currentText() == "U Series")
-        {
-            ui->iperror_label->setVisible(false);
-            QString command1 = "echo \"REFERENCE_SERVER="+IP+"\" > /Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"/board/novasis/NOVAsomU/Init/etc/sysconfig/system_vars";
-            QByteArray ba1 = command1.toLatin1();
-            const char *c_str1 = ba1.data();
-            system(c_str1);
-        }
+        ui->iperror_label->setVisible(false);
     }
     else
     {
@@ -446,7 +431,6 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
         update_status_bar("Invalid IP address");
         return;
     }
-
     QFile scriptfile("/tmp/script");
     update_status_bar("Compiling "+FileSystemName+" ...");
 
@@ -458,7 +442,10 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+"\n");
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" P\n");
+    if ( ui->Board_comboBox->currentText() == "U Series")
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" U\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -625,7 +612,7 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
         out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+sdl_dtb+" "+q_dtb+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     if ( ui->UserAutoRun_checkBox->isChecked())
         out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
-    out << QString("echo $? > /tmp/result\n");
+//    out << QString("echo $? > /tmp/result\n");
     scriptfile.close();
     if ( run_script() == 0)
     {
