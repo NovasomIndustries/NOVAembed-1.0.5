@@ -2377,7 +2377,7 @@
       <widget class="QComboBox" name="ExtFS_uSD_Device_comboBox">
        <property name="geometry">
         <rect>
-         <x>114</x>
+         <x>110</x>
          <y>70</y>
          <width>91</width>
          <height>21</height>
@@ -2539,6 +2539,11 @@
        <item>
         <property name="text">
          <string>U Series</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>M8 Series</string>
         </property>
        </item>
       </widget>

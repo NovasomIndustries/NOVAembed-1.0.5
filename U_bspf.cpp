@@ -395,7 +395,7 @@ void NOVAembed::on_U_Generate_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("[ ! -d /Devel/NOVAsom_SDK/DtbUserWorkArea ] && mkdir /Devel/NOVAsom_SDK/DtbUserWorkArea\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    out << QString("/Devel/NOVAsom_SDK/Qt/NOVAembed/NOVAembed/NOVAembed_U_Parser/bin/Debug/NOVAembed_U_Parser /Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf/"+FileNameNoExtension+".bspf > /Devel/NOVAsom_SDK/Logs/U_bspf.log\n");
+    out << QString("/Devel/NOVAsom_SDK/Qt/NOVAembed/NOVAembed_U_Parser/bin/Debug/NOVAembed_U_Parser /Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf/"+FileNameNoExtension+".bspf > /Devel/NOVAsom_SDK/Logs/U_bspf.log\n");
     if ( ui->U_EditBeforeGenerate_checkBox->isChecked())
         out << QString("kwrite /Devel/NOVAsom_SDK/DtbUserWorkArea/"+FileNameNoExtension+".dts\n");
     out << QString("./user_dtb_compile "+FileNameNoExtension+" U >> /Devel/NOVAsom_SDK/Logs/U_bspf.log\n");

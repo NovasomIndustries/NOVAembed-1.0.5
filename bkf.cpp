@@ -20,7 +20,7 @@ extern  QString FileSystemName;
 extern  QString DeployedFileSystemName;
 extern  QString FileSystemConfigName;
 extern  QString _Board_comboBox;
-extern  QString Last_S_BSPFactoryFile;
+extern  QString Last_M8_BSPFactoryFile;
 extern  QString Last_P_BSPFactoryFile;
 extern  QString Last_U_BSPFactoryFile;
 extern  QString NumberOfUserPartitions;
@@ -52,7 +52,8 @@ void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
         return;
     if (( arg1 == "U Series") && ( CurrentBSPF_Tab == "U BSP Factory"))
         return;
-
+    if (( arg1 == "M8 Series") && ( CurrentBSPF_Tab == "M8 BSP Factory"))
+        return;
     _Board_comboBox = arg1;
 
     if ( arg1 == "U Series")
@@ -87,6 +88,23 @@ void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
         ui->UserBSPFselectedlineEdit->setVisible(true);
         Kernel="linux-imx_4.1.15_1.2.0_ga";
         SourceMeFile="SourceMe32_5";
+    }
+    if ( arg1 == "M8 Series")
+    {
+        CurrentBSPF_Tab = "M8 BSP Factory";
+        current_stab = PBSP_stab;
+        ui->PreCompiledFileSystem_frame->setVisible(true);
+        ui->VideoVisible_label->setVisible(true);
+        ui->VideoVisible_label_2->setVisible(true);
+        ui->PrimaryVideo_comboBox->setVisible(true);
+        ui->SecondaryVideo_comboBox->setVisible(true);
+        ui->PriVideo_24bit_checkBox->setVisible(true);
+        ui->SecVideo_24bit_checkBox->setVisible(true);
+        ui->label_61->setVisible(true);
+        ui->UserBSPFSelect_pushButton->setVisible(true);
+        ui->UserBSPFselectedlineEdit->setVisible(true);
+        Kernel="linux-4.11.0-QualcommLinaro";
+        SourceMeFile="SourceMe32_6";
     }
     /* hide Tools for recompose order */
     ui->tab->removeTab(3);
@@ -128,6 +146,8 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
         out << QString("./umakeP > /Devel/NOVAsom_SDK/Logs/umakeP.log\n");
     if ( ui->Board_comboBox->currentText() == "U Series")
         out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
+    if ( ui->Board_comboBox->currentText() == "M8 Series")
+        out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeM8.log\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -304,7 +324,7 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
 /* File System */
 void NOVAembed::on_SelectFileSystem_pushButton_clicked()
 {
-    QString directory = QFileDialog::getExistingDirectory(this, tr("Select the File System Top Directory"),"/Devel/NOVAsom_SDK/FileSystem",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString directory = QFileDialog::getExistingDirectory(this, tr("Open Directory"),"/Devel/NOVAsom_SDK/FileSystem/",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     QFileInfo fileInfo(directory );
     QString filesystemname(fileInfo.fileName());
     ui->FileSystemSelectedlineEdit->setText(filesystemname);
@@ -443,6 +463,8 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" P\n");
     if ( ui->Board_comboBox->currentText() == "U Series")
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" U\n");
+    if ( ui->Board_comboBox->currentText() == "M8 Series")
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" M8\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -582,7 +604,6 @@ void NOVAembed::NOVAsom_Params_helper()
 void NOVAembed::on_Write_uSD_pushButton_clicked()
 {
     /*uSD_Device_comboBox*/
-    QString sdl_dtb,q_dtb;
 
     uSD_Device = ui->uSD_Device_comboBox->currentText();
     QFile scriptfile("/tmp/script");
@@ -597,16 +618,14 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
     NOVAsom_Params_helper();
 
     QFileInfo fi(ui->UserBSPFselectedlineEdit->text());
-    sdl_dtb = "SDL_"+fi.baseName()+".dtb";
-    q_dtb = "QUAD_"+fi.baseName()+".dtb";
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     if ( ui->Board_comboBox->currentText() == "U Series")
-        out << QString("./flashU "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
-    else
-        out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+sdl_dtb+" "+q_dtb+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        out << QString("./flashU "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+fi.baseName()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     if ( ui->UserAutoRun_checkBox->isChecked())
         out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     scriptfile.close();
@@ -680,6 +699,8 @@ void NOVAembed::on_AddFileSystemConfig_pushButton_clicked()
         QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/.config", "/Devel/NOVAsom_SDK/Utils/Configurations/PClass_Buildroot_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
     if ( ui->Board_comboBox->currentText() == "U Series")
         QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/.config", "/Devel/NOVAsom_SDK/Utils/Configurations/UClass_Buildroot_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
+    if ( ui->Board_comboBox->currentText() == "M8 Series")
+        QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/.config", "/Devel/NOVAsom_SDK/Utils/Configurations/M8Class_Buildroot_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
 
     QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/BusyBox.config", "/Devel/NOVAsom_SDK/Utils/Configurations/BusyBox_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
 
@@ -725,8 +746,8 @@ void NOVAembed::on_UserBSPFSelect_pushButton_clicked()
     else
     {
         ui->UserBSPFselectedlineEdit->setText(fileName);
-        if ( ui->Board_comboBox->currentText() == "S Series")
-            Last_S_BSPFactoryFile = ui->UserBSPFselectedlineEdit->text();
+        if ( ui->Board_comboBox->currentText() == "M8 Series")
+            Last_M8_BSPFactoryFile = ui->UserBSPFselectedlineEdit->text();
         if ( ui->Board_comboBox->currentText() == "P Series")
             Last_P_BSPFactoryFile = ui->UserBSPFselectedlineEdit->text();
         if ( ui->Board_comboBox->currentText() == "U Series")
@@ -802,8 +823,8 @@ void NOVAembed::on_ViewBootLog_pushButton_clicked()
         system("kwrite /Devel/NOVAsom_SDK/Logs/umakeP.log");
     if ( ui->Board_comboBox->currentText() == "U Series")
         system("kwrite /Devel/NOVAsom_SDK/Logs/umakeU.log");
-    if ( ui->Board_comboBox->currentText() == "S Series")
-        system("kwrite /Devel/NOVAsom_SDK/Logs/umakeS.log");
+    if ( ui->Board_comboBox->currentText() == "M8 Series")
+        system("kwrite /Devel/NOVAsom_SDK/Logs/umakeM8.log");
 }
 
 
@@ -814,8 +835,8 @@ void NOVAembed::on_ViewFSLog_pushButton_clicked()
         system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_Pmake.log");
     if ( ui->Board_comboBox->currentText() == "U Series")
         system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_Umake.log");
-    if ( ui->Board_comboBox->currentText() == "S Series")
-        system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_Smake.log");
+    if ( ui->Board_comboBox->currentText() == "M8 Series")
+        system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_M8make.log");
 }
 
 void NOVAembed::on_ViewKernelLog_pushButton_clicked()

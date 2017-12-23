@@ -19,13 +19,13 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0rc1";
+QString Version = "1.0.5.0rc2";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
 QString FileSystemConfigName = "";
 QString _Board_comboBox = "";
-QString Last_S_BSPFactoryFile = "";
+QString Last_M8_BSPFactoryFile = "";
 QString Last_U_BSPFactoryFile = "";
 QString Last_P_BSPFactoryFile = "";
 QString CfgBitDefaultValueDefault = "0x4001b8b1";
@@ -117,7 +117,7 @@ int     copy_required_files = 0;
         DeployedFileSystemName = settings->value( strKeySettings + "DeployedFileSystemName", "r").toString();
         FileSystemConfigName = settings->value( strKeySettings + "FileSystemConfigName", "r").toString();
         _Board_comboBox = settings->value( strKeySettings + "Board_comboBox", "r").toString();
-        Last_S_BSPFactoryFile = settings->value( strKeySettings + "Last_S_BSPFactoryFile", "r").toString();
+        Last_M8_BSPFactoryFile = settings->value( strKeySettings + "Last_M8_BSPFactoryFile", "r").toString();
         Last_P_BSPFactoryFile = settings->value( strKeySettings + "Last_P_BSPFactoryFile", "r").toString();
         Last_U_BSPFactoryFile = settings->value( strKeySettings + "Last_U_BSPFactoryFile", "r").toString();
         CfgBitDefaultValue = settings->value( strKeySettings + "CfgBitDefaultValue", "r").toString();
@@ -231,7 +231,7 @@ void NOVAembed::storeNOVAembed_ini()
     out << QString("DeployedFileSystemName="+DeployedFileSystemName+"\n");
     out << QString("FileSystemConfigName="+FileSystemConfigName+"\n");
     out << QString("Board_comboBox="+_Board_comboBox+"\n");
-    out << QString("Last_S_BSPFactoryFile="+Last_S_BSPFactoryFile+"\n");
+    out << QString("Last_M8_BSPFactoryFile="+Last_M8_BSPFactoryFile+"\n");
     out << QString("Last_P_BSPFactoryFile="+Last_P_BSPFactoryFile+"\n");
     out << QString("Last_U_BSPFactoryFile="+Last_U_BSPFactoryFile+"\n");
     out << QString("CfgBitDefaultValue="+CfgBitDefaultValue+"\n");
@@ -264,9 +264,9 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
         ui->PrimaryVideo_comboBox->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
     }
-    else if (ui->Board_comboBox->currentText() == "S Series")
+    else if (ui->Board_comboBox->currentText() == "M8 Series")
     {
-        str = "SClass_Buildroot_*.config";
+        str = "M8Class_Buildroot_*.config";
         ui->PrimaryVideo_comboBox->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
     }
@@ -422,12 +422,12 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
 
-        if ( ui->Board_comboBox->currentText() == "S Series")
+        if ( ui->Board_comboBox->currentText() == "M8 Series")
         {
-            if ( Last_S_BSPFactoryFile.length() < 2)
+            if ( Last_M8_BSPFactoryFile.length() < 2)
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
             else
-                ui->UserBSPFselectedlineEdit->setText(Last_S_BSPFactoryFile);
+                ui->UserBSPFselectedlineEdit->setText(Last_M8_BSPFactoryFile);
             ui->PreCompiledFileSystem_frame->setVisible(true);
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
