@@ -147,7 +147,7 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
     if ( ui->Board_comboBox->currentText() == "U Series")
         out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
     if ( ui->Board_comboBox->currentText() == "M8 Series")
-        out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeM8.log\n");
+        out << QString("./umakeM8 > /Devel/NOVAsom_SDK/Logs/umakeM8.log\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -262,7 +262,7 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
     update_status_bar("Compiling "+Kernel);
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
     out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
@@ -295,7 +295,7 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
     out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
@@ -460,11 +460,11 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     if ( ui->Board_comboBox->currentText() == "P Series")
-        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" P\n");
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" P > /Devel/NOVAsom_SDK/Logs/FileSystem_Pmake.log\n");
     if ( ui->Board_comboBox->currentText() == "U Series")
-        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" U\n");
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" U > /Devel/NOVAsom_SDK/Logs/FileSystem_Umake.log\n");
     if ( ui->Board_comboBox->currentText() == "M8 Series")
-        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" M8\n");
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" M8 > /Devel/NOVAsom_SDK/Logs/FileSystem_M8make.log\n");
 
     scriptfile.close();
     if ( run_script() == 0)
