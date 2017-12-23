@@ -164,7 +164,7 @@ void NOVAembed::on_KernelXconfig_pushButton_clicked()
     out << QString("cd /Devel/NOVAsom_SDK/Kernel/"+Kernel+"\n");
     out << QString(". ../../Utils/"+SourceMeFile+"\n");
     out << QString("make xconfig\n");
-    out << QString("echo 0? > /tmp/result\n");
+    out << QString("echo \"0\" > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -200,7 +200,7 @@ void NOVAembed::on_KernelCompileSplash_pushButton_clicked()
 
     out << QString("#!/bin/sh\n");
     out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+"\n");
-    out << QString("echo 0? > /tmp/result\n");
+    out << QString("echo \"0\" > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -247,8 +247,6 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
     out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
-    out << QString("echo 0? > /tmp/result\n");
-
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -282,7 +280,6 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
     out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     out << QString("./kremake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
-    out << QString("echo 0? > /tmp/result\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -612,7 +609,6 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
         out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+sdl_dtb+" "+q_dtb+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     if ( ui->UserAutoRun_checkBox->isChecked())
         out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
-//    out << QString("echo $? > /tmp/result\n");
     scriptfile.close();
     if ( run_script() == 0)
     {
@@ -666,7 +662,6 @@ void NOVAembed::on_GenerateFileSystem_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     out << QString("./SetupFs "+ui->NewFileSystemSelectedlineEdit->text()+" \""+ui->Board_comboBox->currentText()+"\" "+ ui->NewFileSystemConfigurationcomboBox->currentText()+"\n");
-    //out << QString("echo $? > /tmp/result\n");
     scriptfile.close();
     if ( run_script() == 0)
     {
@@ -706,7 +701,6 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     out << QString("./flashP_ExtFs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" /Devel/NOVAsom_SDK/ExternalFileSystems/"+ ui->ExtFS_comboBox->currentText()+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
-    out << QString("echo $? > /tmp/result\n");
     scriptfile.close();
     if ( run_script() == 0)
     {
@@ -785,8 +779,6 @@ void NOVAembed::on_Write_AutoRun_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write\n");
-
-    out << QString("echo $? > /tmp/result\n");
     scriptfile.close();
 
     if ( run_script() == 0)
