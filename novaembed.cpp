@@ -19,7 +19,7 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0rc2";
+QString Version = "1.0.5.0rc3";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
@@ -44,7 +44,7 @@ QString FSValid = "INVALID";
 QString KernelValid = "INVALID";
 QString CurrentDevelopment = "Stable";
 QString uSDwriteValid = "INVALID";
-QString CurrentSplashName =  "NOVAsomP800x480.png";
+QString CurrentSplashName =  "NOVAsomP800x480";
 QString Kernel =  "linux-imx_4.1.15_1.2.0_ga";
 QString SourceMeFile =  "SourceMe32_5";
 
@@ -138,6 +138,21 @@ int     copy_required_files = 0;
         CurrentSplashName = settings->value( strKeySettings + "CurrentSplashName", "r").toString();
         Kernel = settings->value( strKeySettings + "Kernel", "r").toString();
         CurrentDevelopment = settings->value( strKeySettings + "CurrentDevelopment", "r").toString();
+        if ( _Board_comboBox == "P Series")
+        {
+            Kernel="linux-imx_4.1.15_1.2.0_ga";
+            SourceMeFile="SourceMe32_5";
+        }
+        if ( _Board_comboBox == "M8")
+        {
+            Kernel="linux-4.11.0-QualcommLinaro";
+            SourceMeFile="SourceMe32_6";
+        }
+        if ( _Board_comboBox == "U5")
+        {
+            Kernel="linux-imx_4.1.43";
+            SourceMeFile="SourceMe32_5";
+        }
     }
     if ( ! QDir("/Devel/NOVAsom_SDK/NOVAembed_Settings/PClass_bspf").exists() )
     {
@@ -264,13 +279,13 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
         ui->PrimaryVideo_comboBox->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
     }
-    else if (ui->Board_comboBox->currentText() == "M8 Series")
+    else if (ui->Board_comboBox->currentText() == "M8")
     {
         str = "M8Class_Buildroot_*.config";
         ui->PrimaryVideo_comboBox->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
     }
-    else if (ui->Board_comboBox->currentText() == "U Series")
+    else if (ui->Board_comboBox->currentText() == "U5")
     {
         str = "UClass_Buildroot_*.config";
         ui->PrimaryVideo_comboBox->setVisible(false);
@@ -377,6 +392,7 @@ void NOVAembed::on_tab_currentChanged(int index)
         compile_NewFileSystemFileSystemConfigurationcomboBox();
         compile_ExtFS_comboBox();
         on_ThisIsReferenceServer_checkBox_clicked(true);
+        initrd_helper();
 
         ui->iperror_label->setVisible(false);
         ui->REFERENCE_SERVER_label->setEnabled(false);
@@ -422,7 +438,7 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
 
-        if ( ui->Board_comboBox->currentText() == "M8 Series")
+        if ( ui->Board_comboBox->currentText() == "M8")
         {
             if ( Last_M8_BSPFactoryFile.length() < 2)
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
@@ -444,7 +460,7 @@ void NOVAembed::on_tab_currentChanged(int index)
             }
             ui->PreCompiledFileSystem_frame->setVisible(true);
         }
-        if ( ui->Board_comboBox->currentText() == "U Series")
+        if ( ui->Board_comboBox->currentText() == "U5")
         {
             if ( Last_U_BSPFactoryFile.length() < 2)
             {
@@ -461,10 +477,6 @@ void NOVAembed::on_tab_currentChanged(int index)
             ui->PriVideo_24bit_checkBox->setVisible(false);
             ui->SecVideo_24bit_checkBox->setVisible(false);
             ui->label_61->setVisible(false);
-            /*
-            ui->UserBSPFSelect_pushButton->setVisible(false);
-            ui->UserBSPFselectedlineEdit->setVisible(false);
-            */
             ui->PreCompiledFileSystem_frame->setVisible(false);
         }
 

@@ -39,6 +39,7 @@ private slots:
     int update_status_bar(QString StatusBarContent);
     void P_save_helper( QString filename, QString Processor_model);
     void NOVAsom_Params_helper();
+    void initrd_helper(void);
 
     /* Helper Functions End */
 
