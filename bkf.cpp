@@ -272,21 +272,6 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
         update_status_bar("Unable to create /tmp/script");
         return;
     }
-    if ( ui->Board_comboBox->currentText() == "P Series")
-    {
-        Kernel="linux-imx_4.1.15_1.2.0_ga";
-        SourceMeFile="SourceMe32_5";
-    }
-    if ( ui->Board_comboBox->currentText() == "M8")
-    {
-        Kernel="linux-4.11.0-QualcommLinaro";
-        SourceMeFile="SourceMe32_6";
-    }
-    if ( ui->Board_comboBox->currentText() == "U5")
-    {
-        Kernel="linux-imx_4.1.43";
-        SourceMeFile="SourceMe32_5";
-    }
     update_status_bar("Compiling "+Kernel);
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
@@ -319,30 +304,28 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
 void NOVAembed::on_KernelReCompile_pushButton_clicked()
 {
     QFile scriptfile("/tmp/script");
-    update_status_bar("ReCompiling linux ...");
+    QString config_file;
+    if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
+    {
+        update_status_bar("Unable to create /tmp/script");
+        return;
+    }
+    update_status_bar("ReCompiling "+Kernel);
+
     if ( ui->Board_comboBox->currentText() == "P Series")
-    {
-        Kernel="linux-imx_4.1.43";
-        SourceMeFile="SourceMe32_5";
-    }
+        config_file = "imx_novasomp_defconfig";
+    if ( ui->Board_comboBox->currentText() == "U5")
+        config_file = "imx_v7_defconfig";
     if ( ui->Board_comboBox->currentText() == "M8")
-    {
-        Kernel="linux-4.11.0-QualcommLinaro";
-        SourceMeFile="SourceMe32_6";
-    }
-    if ( ui->Board_comboBox->currentText() == "M8")
-    {
-        Kernel="linux-imx_4.1.43";
-        SourceMeFile="SourceMe32_5";
-    }
+        config_file = "qcom_defconfig";
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
     out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
     out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    out << QString("./kremake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    out << QString("./kremake "+Kernel+" "+SourceMeFile+" "+config_file+">> /Devel/NOVAsom_SDK/Logs/kremake.log\n");
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -726,14 +709,34 @@ void NOVAembed::on_GenerateFileSystem_pushButton_clicked()
 
 void NOVAembed::on_AddFileSystemConfig_pushButton_clicked()
 {
+    QString dest_file;
     if ( ui->Board_comboBox->currentText() == "P Series")
-        QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/.config", "/Devel/NOVAsom_SDK/Utils/Configurations/PClass_Buildroot_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
+        dest_file = "/Devel/NOVAsom_SDK/Utils/Configurations/PClass_Buildroot_"+ui->FileSystemSelectedlineEdit->text()+".config";
     if ( ui->Board_comboBox->currentText() == "U5")
-        QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/.config", "/Devel/NOVAsom_SDK/Utils/Configurations/UClass_Buildroot_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
+        dest_file = "/Devel/NOVAsom_SDK/Utils/Configurations/U5Class_Buildroot_"+ui->FileSystemSelectedlineEdit->text()+".config";
     if ( ui->Board_comboBox->currentText() == "M8")
-        QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/.config", "/Devel/NOVAsom_SDK/Utils/Configurations/M8Class_Buildroot_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
+        dest_file = "/Devel/NOVAsom_SDK/Utils/Configurations/M8Class_Buildroot_"+ui->FileSystemSelectedlineEdit->text()+".config";
+    QFileInfo check_file(dest_file);
+    QString filename(check_file.fileName());
 
-    QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text()+"/BusyBox.config", "/Devel/NOVAsom_SDK/Utils/Configurations/BusyBox_"+ui->NewFileSystemSelectedlineEdit->text()+".config");
+    if (check_file.exists() && check_file.isFile())
+    {
+        update_status_bar(filename+" already exists");
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Already exists !","Overwrite "+filename+"?", QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes)
+        {
+            qDebug() << "Yes was clicked";
+        }
+        else
+        {
+            qDebug() << "Yes was *not* clicked";
+            return;
+        }
+    }
+    QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"/.config", dest_file);
+
+    QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"/BusyBox.config", "/Devel/NOVAsom_SDK/Utils/Configurations/BusyBox_"+ui->FileSystemSelectedlineEdit->text()+".config");
 
     compile_NewFileSystemFileSystemConfigurationcomboBox();
 }

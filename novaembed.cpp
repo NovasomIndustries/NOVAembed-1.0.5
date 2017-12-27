@@ -287,7 +287,7 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
     }
     else if (ui->Board_comboBox->currentText() == "U5")
     {
-        str = "UClass_Buildroot_*.config";
+        str = "U5Class_Buildroot_*.config";
         ui->PrimaryVideo_comboBox->setVisible(false);
         ui->VideoVisible_label->setVisible(false);
     }
@@ -298,10 +298,6 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
     QStringList BuildrootfilesList = BuildrootDir.entryList(BuildrootnameFilter);
 
     ui->NewFileSystemConfigurationcomboBox->clear();
-    /*
-    for(int i=0;i<BuildrootfilesList.count();i++)
-        ui->NewFileSystemConfigurationcomboBox->removeItem(i);
-        */
     for(int i=0;i<BuildrootfilesList.count();i++)
     {
         str = BuildrootfilesList[i];
@@ -440,6 +436,8 @@ void NOVAembed::on_tab_currentChanged(int index)
 
         if ( ui->Board_comboBox->currentText() == "M8")
         {
+            Kernel="linux-4.11.0-QualcommLinaro";
+            SourceMeFile="SourceMe32_6";
             if ( Last_M8_BSPFactoryFile.length() < 2)
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
             else
@@ -448,6 +446,8 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
         {
+            Kernel="linux-4.11.0-QualcommLinaro";
+            SourceMeFile="SourceMe32_6";
             if ( Last_P_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
@@ -462,6 +462,8 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "U5")
         {
+            Kernel="linux-imx_4.1.43";
+            SourceMeFile="SourceMe32_5";
             if ( Last_U_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
