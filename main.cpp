@@ -1,6 +1,9 @@
 #include "novaembed.h"
 #include <QApplication>
 #include <QLoggingCategory>
+#include <QDebug>
+#include <iostream>
+
 
 int main(int argc, char *argv[])
 {

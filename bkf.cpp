@@ -131,6 +131,12 @@ QFileInfo check_file1;
         ui->UserBSPFselectedlineEdit->setVisible(true);
         Kernel="linux-4.11.0-QualcommLinaro";
         SourceMeFile="SourceMe32_6";
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-4.11.0-QualcommLinaro/arch/arm/boot/zImage");
+        if (check_file1.exists() && check_file1.isFile())
+            kernelok=1;
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomM8-2017.11/u-boot.bin");
+        if (check_file1.exists() && check_file1.isFile())
+            bootok=1;
     }
     /* hide Tools for recompose order */
     ui->tab->removeTab(3);
@@ -149,11 +155,21 @@ QFileInfo check_file1;
         ui->uboot_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
         BootValid = "INVALID";
     }
+    else
+    {
+        ui->uboot_Valid_label->setPixmap(QPixmap(":/Icons/valid.png"));
+        BootValid = "OK";
+    }
     ui->fs_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
     if ( kernelok == 0 )
     {
         ui->kernel_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
         KernelValid = "INVALID";
+    }
+    else
+    {
+        ui->kernel_Valid_label->setPixmap(QPixmap(":/Icons/valid.png"));
+        KernelValid = "OK";
     }
     FSValid = "INVALID";
     ui->frame_5->setEnabled(false);
@@ -369,6 +385,7 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
 /* File System */
 void NOVAembed::on_SelectFileSystem_pushButton_clicked()
 {
+    //QString directory =  QFileDialog::getOpenFileName(this,"Open File System","/Devel/NOVAsom_SDK/FileSystem/","*.*");
     QString directory = QFileDialog::getExistingDirectory(this, tr("Open Directory"),"/Devel/NOVAsom_SDK/FileSystem/",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     QFileInfo fileInfo(directory );
     QString filesystemname(fileInfo.fileName());

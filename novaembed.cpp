@@ -14,7 +14,7 @@
 //#include <QHostInfo>
 #include <QDirIterator>
 #include <QMovie>
-
+#include <iostream>
 /*****************************************************************************************************************************************************************************************/
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
@@ -61,7 +61,7 @@ NOVAembed::NOVAembed(QWidget *parent) :
     ui(new Ui::NOVAembed)
 {
 int     copy_required_files = 0;
-    qDebug() << "Starting";
+    qInfo() << "Starting now";
 
     /* Initialize user area */
     if ( ! QDir("/Devel/NOVAsom_SDK/Logs").exists() )
@@ -659,4 +659,5 @@ void NOVAembed::on_ViewUpdatesLog_pushButton_clicked()
 {
     system("kwrite /Devel/NOVAsom_SDK/Logs/update.log");
 }
+
 
