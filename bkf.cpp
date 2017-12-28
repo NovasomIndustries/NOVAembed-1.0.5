@@ -60,7 +60,8 @@ void NOVAembed::initrd_helper(void)
 }
 void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
 {
-
+int kernelok=0,bootok=0;
+QFileInfo check_file1;
     if (( arg1 == "P Series") && ( CurrentBSPF_Tab == "P BSP Factory"))
         return;
     if (( arg1 == "U5") && ( CurrentBSPF_Tab == "U BSP Factory"))
@@ -84,6 +85,12 @@ void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
         ui->PreCompiledFileSystem_frame->setVisible(false);
         Kernel="linux-imx_4.1.43";
         SourceMeFile="SourceMe32_5";
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-imx_4.1.43/arch/arm/boot/zImage");
+        if (check_file1.exists() && check_file1.isFile())
+            kernelok=1;
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomU-2016.03/NOVAsomU/u-boot.imx");
+        if (check_file1.exists() && check_file1.isFile())
+            bootok=1;
     }
     if ( arg1 == "P Series")
     {
@@ -101,6 +108,12 @@ void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
         ui->UserBSPFselectedlineEdit->setVisible(true);
         Kernel="linux-imx_4.1.15_1.2.0_ga";
         SourceMeFile="SourceMe32_5";
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-imx_4.1.15_1.2.0_ga/arch/arm/boot/zImage");
+        if (check_file1.exists() && check_file1.isFile())
+            kernelok=1;
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomP-2015.04/NOVAsomP/u-boot.img");
+        if (check_file1.exists() && check_file1.isFile())
+            bootok=1;
     }
     if ( arg1 == "M8")
     {
@@ -131,12 +144,18 @@ void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
     compile_NewFileSystemFileSystemConfigurationcomboBox();
 
     ui->FileSystemSelectedlineEdit->setText("");
-    ui->uboot_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
+    if ( bootok == 0 )
+    {
+        ui->uboot_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
+        BootValid = "INVALID";
+    }
     ui->fs_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
-    ui->kernel_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
-    BootValid = "INVALID";
+    if ( kernelok == 0 )
+    {
+        ui->kernel_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
+        KernelValid = "INVALID";
+    }
     FSValid = "INVALID";
-    KernelValid = "INVALID";
     ui->frame_5->setEnabled(false);
 
     storeNOVAembed_ini();
@@ -610,6 +629,17 @@ void NOVAembed::NOVAsom_Params_helper()
         if ( ui->PrimaryVideo_comboBox->currentText() == "LVDS 800x480")
         {
             NOVAsomParamsName = "NOVAsomParams_P_LVDS_800x480";
+        }
+    }
+    if ( ui->Board_comboBox->currentText() == "U5")
+    {
+        if ( ui->U_PrimaryVideo_comboBox->currentText() == "800x480")
+        {
+            NOVAsomParamsName = "NOVAsomParams_U5_800x480";
+        }
+        if ( ui->U_PrimaryVideo_comboBox->currentText() == "480x272")
+        {
+            NOVAsomParamsName = "NOVAsomParams_U5_480x272";
         }
     }
 }
