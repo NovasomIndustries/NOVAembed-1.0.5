@@ -96,7 +96,6 @@ int     copy_required_files = 0;
         QMessageBox::information(this, tr("NOVAembed.ini"),"NOVAembed.ini not found. Creating a new one!");
         if ( ! QDir("/Devel/NOVAsom_SDK/NOVAembed_Settings").exists() )
         {
-            //qDebug() << "mkdir /Devel/NOVAsom_SDK/NOVAembed_Settings";
             QDir().mkdir("/Devel/NOVAsom_SDK/NOVAembed_Settings");
         }
         storeNOVAembed_ini();
@@ -117,9 +116,6 @@ int     copy_required_files = 0;
         settings = new QSettings( fileName, QSettings::IniFormat );
         FileSystemName = settings->value( strKeySettings + "FileSystemName", "r").toString();
         DeployedFileSystemName = settings->value( strKeySettings + "DeployedFileSystemName", "r").toString();
-        std::cout << "FileSystemName : " << FileSystemName.toStdString() << "\n" << std::flush;
-        std::cout << "DeployedFileSystemName : " << FileSystemName.toStdString() << "\n" << std::flush;
-
         FileSystemConfigName = settings->value( strKeySettings + "FileSystemConfigName", "r").toString();
         _Board_comboBox = settings->value( strKeySettings + "Board_comboBox", "r").toString();
         Last_M8_BSPFactoryFile = settings->value( strKeySettings + "Last_M8_BSPFactoryFile", "r").toString();
@@ -210,7 +206,6 @@ int     copy_required_files = 0;
         CurrentBSPF_Tab = "P BSP Factory";
     }
     ui->tab->insertTab(3,TOOL_stab,"Tools");
-    std::cout << "on load FSValid : " << FSValid.toStdString() << std::flush;
 }
 
 NOVAembed::~NOVAembed()
@@ -228,16 +223,9 @@ void NOVAembed::on_actionExit_triggered()
 /*****************************************************************************************************************************************************************************************/
 /*                                                                              Helper Functions                                                                                         */
 /*****************************************************************************************************************************************************************************************/
-/*
-    qDebug() << "Hello world.";
-    qWarning() << "Uh, oh...";
-    qCritical() << "Oh, noes!";
-    qFatal( "AAAAAAAAAH!" );
-*/
 
 void NOVAembed::storeNOVAembed_ini()
 {
-    std::cout << "on storeNOVAembed_ini FSValid : " << FSValid.toStdString() << std::flush;
     QString fileName = "/Devel/NOVAsom_SDK/NOVAembed_Settings/NOVAembed.ini";
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly))
@@ -330,7 +318,6 @@ void NOVAembed::compile_ExtFS_comboBox()
         str = ExternalFileSystemsfilesList[i];
         if (( str != ".") && (str != ".."))
         {
-            //qDebug() << str;
             ui->ExtFS_comboBox->addItem(str);
         }
     }
@@ -391,7 +378,6 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->UserPartition_comboBox->setCurrentText(NumberOfUserPartitions);
         ui->SplashImageNameLabel->setText(CurrentSplashName+".png");
         ui->SplashThumb->setPixmap(QPixmap("/Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png") );
-        std::cout << "on_tab_currentChanged FSValid : " << FSValid.toStdString() << std::flush;
 
         compile_NewFileSystemFileSystemConfigurationcomboBox();
         compile_ExtFS_comboBox();
@@ -547,7 +533,6 @@ void NOVAembed::on_tab_currentChanged(int index)
     case 2 : // BSP Factory
         if (CurrentBSPF_Tab == "P BSP Factory")
         {
-            //qDebug() << "P BSP Factory";
             ui->P_SATA_checkBox->setChecked(false);
             ui->P_PCIe_checkBox->setChecked(true);
             ui->P_PUPD_frame->setEnabled(false);

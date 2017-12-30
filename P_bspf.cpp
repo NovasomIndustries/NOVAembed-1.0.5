@@ -1567,9 +1567,7 @@ void NOVAembed::P_pin_decode()
         P_PCIe_checkBox = "P_PCIe_checkBox=false";
 
     P_PrimaryVideo_comboBox   = ui->PrimaryVideo_comboBox->currentText();
-    //qDebug() << P_PrimaryVideo_comboBox;
     P_SecondaryVideo_comboBox = ui->SecondaryVideo_comboBox->currentText();
-    //qDebug() << P_SecondaryVideo_comboBox;
 }
 
 void NOVAembed::P_save_helper(QString fileName , QString Processor_model)
@@ -1681,7 +1679,6 @@ void NOVAembed::P_save_helper(QString fileName , QString Processor_model)
     else
         out << QString("P_PCIe_checkBox=false\n");
     out << QString("PrimaryVideo_comboBox="+ui->PrimaryVideo_comboBox->currentText()+"\n");
-    //qDebug() << ui->PrimaryVideo_comboBox->currentText();
     out << QString("SecondaryVideo_comboBox="+ui->SecondaryVideo_comboBox->currentText()+"\n");
     P_PrimaryVideo_comboBox   = ui->PrimaryVideo_comboBox->currentText();
     P_SecondaryVideo_comboBox = ui->SecondaryVideo_comboBox->currentText();

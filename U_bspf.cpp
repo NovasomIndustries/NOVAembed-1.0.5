@@ -314,7 +314,6 @@ QSettings * func_settings = 0;
     //storeNOVAembed_ini();
 
     func_settings = new QSettings( fileName, QSettings::IniFormat );
-    //qDebug() << U_getvalue(strKeyFunc, func_settings , "U_GPIO04_IO06_comboBox");
 
     if ( U_getvalue(strKeyFunc, func_settings , "U_GPIO04_IO06_comboBox") == "ECSPI4_SCLK" )
         on_U_SPI4_checkBox_toggled(true);

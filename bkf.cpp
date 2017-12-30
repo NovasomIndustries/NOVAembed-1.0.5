@@ -92,9 +92,11 @@ QFileInfo check_file1;
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
+        ui->FileSystemSelectedlineEdit->setText("");
     }
     if ( arg1 == "P Series")
     {
+        ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "P BSP Factory";
         current_stab = PBSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(true);
@@ -119,6 +121,7 @@ QFileInfo check_file1;
     }
     if ( arg1 == "M8")
     {
+        ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "M8 BSP Factory";
         current_stab = PBSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(true);
@@ -489,10 +492,7 @@ void NOVAembed::on_ThisIsReferenceServer_checkBox_clicked(bool checked)
         if (!entries.isEmpty()) {
             QNetworkAddressEntry entry = entries.first();
             IP=entry.ip().toString();
-            qDebug() << IP;
         }
-        else
-            qDebug() << "IP not found";
     }
     ui->REFERENCE_SERVER_lineEdit->setText(IP);
 
@@ -507,7 +507,6 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
     }
     QHostAddress myIP;
     QString IP=ui->REFERENCE_SERVER_lineEdit->text();
-    qDebug() << "IP "+IP;
     if( myIP.setAddress(ui->REFERENCE_SERVER_lineEdit->text()) )
     {
         ui->iperror_label->setVisible(false);
@@ -733,13 +732,11 @@ void NOVAembed::on_GenerateFileSystem_pushButton_clicked()
         reply = QMessageBox::question(this, "A file system called "+ui->NewFileSystemSelectedlineEdit->text()+" already exists      ","Overwrite?", QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes)
         {
-            qDebug() << "Yes was clicked";
             QDir dir( "/Devel/NOVAsom_SDK/FileSystem/"+ui->NewFileSystemSelectedlineEdit->text() );
             dir.removeRecursively();
         }
         else
         {
-            qDebug() << "Yes was *not* clicked";
             return;
         }
     }
@@ -796,7 +793,6 @@ void NOVAembed::on_AddFileSystemConfig_pushButton_clicked()
         }
         else
         {
-            qDebug() << "Yes was *not* clicked";
             return;
         }
     }
@@ -912,9 +908,7 @@ void NOVAembed::on_Write_AutoRun_pushButton_clicked()
 
 void NOVAembed::on_PrimaryVideo_comboBox_currentTextChanged(const QString &arg1)
 {
-    //qDebug() << "Parameter : "+arg1;
     CurrentPrimaryVideo = ui->PrimaryVideo_comboBox->currentText();
-    //qDebug() << "CurrentPrimaryVideo : "+CurrentPrimaryVideo;
 }
 
 void NOVAembed::on_ViewBootLog_pushButton_clicked()
@@ -926,8 +920,6 @@ void NOVAembed::on_ViewBootLog_pushButton_clicked()
     if ( ui->Board_comboBox->currentText() == "M8")
         system("kwrite /Devel/NOVAsom_SDK/Logs/umakeM8.log");
 }
-
-
 
 void NOVAembed::on_ViewFSLog_pushButton_clicked()
 {
