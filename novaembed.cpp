@@ -192,9 +192,9 @@ int     copy_required_files = 0;
     {
         ui->tab->insertTab(2,PBSP_stab,"P BSP Factory");
     }
-    else if (CurrentBSPF_Tab == "S BSP Factory")
+    else if (CurrentBSPF_Tab == "M8 BSP Factory")
     {
-        ui->tab->insertTab(2,SBSP_stab,"S BSP Factory");
+        ui->tab->insertTab(2,SBSP_stab,"M8 BSP Factory");
     }
     else if (CurrentBSPF_Tab == "U BSP Factory")
     {
