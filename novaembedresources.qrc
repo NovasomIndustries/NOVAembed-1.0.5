@@ -27,5 +27,7 @@
         <file>Icons/pdf-icon.png</file>
         <file>Icons/animation.gif</file>
         <file>Icons/NovaEmbedIcon.png</file>
+        <file>Icons/NXP-Logo.png</file>
+        <file>Icons/Qualcomm_Snapdragon_logo.png</file>
     </qresource>
 </RCC>

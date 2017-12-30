@@ -91,6 +91,7 @@ QFileInfo check_file1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomU-2016.03/NOVAsomU/u-boot.imx");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
     }
     if ( arg1 == "P Series")
     {
@@ -114,6 +115,7 @@ QFileInfo check_file1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomP-2015.04/NOVAsomP/u-boot.img");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
     }
     if ( arg1 == "M8")
     {
@@ -137,6 +139,7 @@ QFileInfo check_file1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomM8-2017.11/u-boot.bin");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        ui->brand_label->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
     }
     /* hide Tools for recompose order */
     ui->tab->removeTab(3);
@@ -149,7 +152,6 @@ QFileInfo check_file1;
 
     compile_NewFileSystemFileSystemConfigurationcomboBox();
 
-    ui->FileSystemSelectedlineEdit->setText("");
     if ( bootok == 0 )
     {
         ui->uboot_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
@@ -171,9 +173,7 @@ QFileInfo check_file1;
         ui->kernel_Valid_label->setPixmap(QPixmap(":/Icons/valid.png"));
         KernelValid = "OK";
     }
-    FSValid = "INVALID";
     ui->frame_5->setEnabled(false);
-
     storeNOVAembed_ini();
 }
 
@@ -191,11 +191,20 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     if ( ui->Board_comboBox->currentText() == "P Series")
+    {
+        out << QString("cd nxp\n");
         out << QString("./umakeP > /Devel/NOVAsom_SDK/Logs/umakeP.log\n");
+    }
     if ( ui->Board_comboBox->currentText() == "U5")
-        out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
+    {
+        out << QString("cd nxp\n");
+        out << QString("cd nxp\n");        out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
+    }
     if ( ui->Board_comboBox->currentText() == "M8")
+    {
+        out << QString("cd qcom\n");
         out << QString("./umakeM8 > /Devel/NOVAsom_SDK/Logs/umakeM8.log\n");
+    }
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -277,13 +286,16 @@ void NOVAembed::on_KernelCompileSplash_pushButton_clicked()
         on_KernelCompile_pushButton_clicked();
     }
     else
+    {
+        KernelValid = "INVALID";
         update_status_bar("Error setting splash");
+    }
+    storeNOVAembed_ini();
 }
 
 
 void NOVAembed::on_KernelSplash_pushButton_clicked()
 {
-
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"/Devel/NOVAsom_SDK/Utils/LinuxSplashLogos",tr("Image File (*.png)"));
     if ( fileName == "" ) // Hit cancel
     {
@@ -295,12 +307,10 @@ void NOVAembed::on_KernelSplash_pushButton_clicked()
     ui->SplashImageNameLabel->setText(CurrentSplashName+".png");
     ui->SplashThumb->setPixmap(QPixmap(fileName) );
     storeNOVAembed_ini();
-
 }
 
 void NOVAembed::on_KernelCompile_pushButton_clicked()
 {
-    //qDebug() << "CurrentSplashName "+CurrentSplashName;
     QFile scriptfile("/tmp/script");
     if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
     {
@@ -430,8 +440,6 @@ void NOVAembed::on_LaunchMenuConfig_pushButton_clicked()
     }
     storeNOVAembed_ini();
 }
-
-
 
 void NOVAembed::on_LaunchBusyboxMenuConfig_pushButton_clicked()
 {
@@ -681,15 +689,26 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
 
     if ( ui->Board_comboBox->currentText() == "U5")
+    {
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./flashU "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+fi.baseName()+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+    }
     if ( ui->Board_comboBox->currentText() == "P Series")
+    {
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "M8")
+    {
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/qcom\n");
+        out << QString("./flashM8 "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+    }
     if ( ui->UserAutoRun_checkBox->isChecked())
         out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" "+NOVAsomParamsName+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     scriptfile.close();
+    return;
     if ( run_script() == 0)
     {
         update_status_bar("uSD successfully written, file system is "+FileSystemName);

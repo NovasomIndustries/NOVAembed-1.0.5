@@ -61,8 +61,7 @@ NOVAembed::NOVAembed(QWidget *parent) :
     ui(new Ui::NOVAembed)
 {
 int     copy_required_files = 0;
-    qInfo() << "Starting now";
-
+    std::cout << "Starting now" << std::flush;
     /* Initialize user area */
     if ( ! QDir("/Devel/NOVAsom_SDK/Logs").exists() )
         system("mkdir -p /Devel/NOVAsom_SDK/Logs");
@@ -93,7 +92,7 @@ int     copy_required_files = 0;
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly))
     {
-        //qDebug() << "NOVAembed.ini not found !!";
+        std::cout << "NOVAembed.ini not found !!" << std::flush;
         QMessageBox::information(this, tr("NOVAembed.ini"),"NOVAembed.ini not found. Creating a new one!");
         if ( ! QDir("/Devel/NOVAsom_SDK/NOVAembed_Settings").exists() )
         {
@@ -109,12 +108,18 @@ int     copy_required_files = 0;
         config = new QSettings( fileName, QSettings::IniFormat );
         Configuration = config->value( strKeyConf + "Configuration", "r").toString();
         if ( Configuration !=  Version )
+        {
+            std::cout << "Configuration !=  Version !!" << std::flush;
             storeNOVAembed_ini();
+        }
         QString strKeySettings("NOVAembed General Settings/");
         QSettings * settings = 0;
         settings = new QSettings( fileName, QSettings::IniFormat );
         FileSystemName = settings->value( strKeySettings + "FileSystemName", "r").toString();
         DeployedFileSystemName = settings->value( strKeySettings + "DeployedFileSystemName", "r").toString();
+        std::cout << "FileSystemName : " << FileSystemName.toStdString() << "\n" << std::flush;
+        std::cout << "DeployedFileSystemName : " << FileSystemName.toStdString() << "\n" << std::flush;
+
         FileSystemConfigName = settings->value( strKeySettings + "FileSystemConfigName", "r").toString();
         _Board_comboBox = settings->value( strKeySettings + "Board_comboBox", "r").toString();
         Last_M8_BSPFactoryFile = settings->value( strKeySettings + "Last_M8_BSPFactoryFile", "r").toString();
@@ -205,6 +210,7 @@ int     copy_required_files = 0;
         CurrentBSPF_Tab = "P BSP Factory";
     }
     ui->tab->insertTab(3,TOOL_stab,"Tools");
+    std::cout << "on load FSValid : " << FSValid.toStdString() << std::flush;
 }
 
 NOVAembed::~NOVAembed()
@@ -231,6 +237,7 @@ void NOVAembed::on_actionExit_triggered()
 
 void NOVAembed::storeNOVAembed_ini()
 {
+    std::cout << "on storeNOVAembed_ini FSValid : " << FSValid.toStdString() << std::flush;
     QString fileName = "/Devel/NOVAsom_SDK/NOVAembed_Settings/NOVAembed.ini";
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly))
@@ -384,6 +391,7 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->UserPartition_comboBox->setCurrentText(NumberOfUserPartitions);
         ui->SplashImageNameLabel->setText(CurrentSplashName+".png");
         ui->SplashThumb->setPixmap(QPixmap("/Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png") );
+        std::cout << "on_tab_currentChanged FSValid : " << FSValid.toStdString() << std::flush;
 
         compile_NewFileSystemFileSystemConfigurationcomboBox();
         compile_ExtFS_comboBox();
@@ -590,24 +598,6 @@ void NOVAembed::on_tab_currentChanged(int index)
                 update_status_bar("BSP Factory : Loaded file "+Last_U_BSPFactoryFile);
             }
         }
-        /*
-        else
-        {
-            P_load_BSPF_File(Last_P_BSPFactoryFile);
-            QFileInfo fi(Last_P_BSPFactoryFile);
-            if ( ! fi.exists())
-            {
-                update_status_bar("BSP Factory : File "+fi.baseName()+".bspf not found, reverting to default");
-            }
-            else
-            {
-                QString base = fi.baseName();
-                if ( base != "" )
-                    ui->P_Current_BSPF_File_label->setText(base+".bspf");
-                update_status_bar("BSP Factory : Loaded file "+Last_P_BSPFactoryFile);
-            }
-        }
-        */
         break;
     }
 }
