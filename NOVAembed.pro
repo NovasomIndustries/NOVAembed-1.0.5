@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     P_bspf.cpp \
     tools.cpp \
     welcome.cpp \
-    U_bspf.cpp
+    U_bspf.cpp \
+    m8_bspf.cpp
 
 HEADERS  += novaembed.h
 

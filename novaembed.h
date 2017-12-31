@@ -277,6 +277,29 @@ private slots:
     void on_P_HUM_pushButton_3_clicked();
 
 
+    void on_M8_Clear_pushButton_clicked();
+
+    void on_M8_SPI1_checkBox_toggled(bool checked);
+
+    void on_M8_I2C2_checkBox_toggled(bool checked);
+
+    void on_M8_UART2_checkBox_toggled(bool checked);
+
+    void on_M8_UART2_4WirescheckBox_toggled(bool checked);
+
+    void on_M8_PWM2_checkBox_toggled(bool checked);
+
+    void on_M8_Load_pushButton_clicked();
+
+    void M8_load_BSPF_File(QString fileName);
+
+    void on_M8_Save_pushButton_clicked();
+
+    void M8_save_helper(QString fileName);
+
+
+    void on_M8_Generate_pushButton_clicked();
+
 private:
     Ui::NOVAembed *ui;
 };

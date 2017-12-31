@@ -71,6 +71,8 @@ int     copy_required_files = 0;
     {
         QMessageBox::information(this, tr("DtbUserWorkArea"),"DtbUserWorkArea not found. Creating a new one!");
         system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/PClass_bspf/temp");
+        system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf/temp");
+        system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/M8Class_bspf/temp");
         copy_required_files = 1;
     }
     if ( ! QDir("/Devel/NOVAsom_SDK/DtbUserWorkArea/PClass_bspf").exists() )
@@ -81,6 +83,11 @@ int     copy_required_files = 0;
     if ( ! QDir("/Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf").exists() )
     {
         system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf/temp");
+        copy_required_files = 1;
+    }
+    if ( ! QDir("/Devel/NOVAsom_SDK/DtbUserWorkArea/M8Class_bspf").exists() )
+    {
+        system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/M8Class_bspf/temp");
         copy_required_files = 1;
     }
 
@@ -583,6 +590,23 @@ void NOVAembed::on_tab_currentChanged(int index)
                 update_status_bar("BSP Factory : Loaded file "+Last_U_BSPFactoryFile);
             }
         }
+        if (CurrentBSPF_Tab == "M8 BSP Factory")
+        {
+            QFileInfo fi(Last_M8_BSPFactoryFile);
+            if ( ! fi.exists())
+            {
+                update_status_bar("BSP Factory : File "+fi.baseName()+".bspf not found, reverting to default");
+            }
+            else
+            {
+                QString base = fi.baseName();
+                if ( base != "" )
+                    ui->M8_Current_BSPF_File_label->setText(base+".bspf");
+                M8_load_BSPF_File(Last_U_BSPFactoryFile);
+                ui->M8_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
+                update_status_bar("BSP Factory : Loaded file "+Last_M8_BSPFactoryFile);
+            }
+        }
         break;
     }
 }
@@ -634,5 +658,4 @@ void NOVAembed::on_ViewUpdatesLog_pushButton_clicked()
 {
     system("kwrite /Devel/NOVAsom_SDK/Logs/update.log");
 }
-
 

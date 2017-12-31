@@ -235,17 +235,17 @@ void NOVAembed::on_U_UART5_4WirescheckBox_toggled(bool checked)
         ui->label_UGPIO4_IO24->setText("UART5_CTS");
         U_GPIO04_IO23_comboBox="UART5_RTS";
         U_GPIO04_IO24_comboBox="UART5_CTS";
-        ui->U_UART5_4WirescheckBox->setChecked(true);
+        ui->U_UART6_checkBox->setChecked(true);
 
     }
     else
     {
-        ui->U_UART5_4WirescheckBox->setChecked(false);
+        ui->U_UART6_4WirescheckBox->setChecked(false);
         ui->label_UGPIO4_IO23->setText("GPIO4_IO23");
         ui->label_UGPIO4_IO24->setText("GPIO4_IO24");
         U_GPIO04_IO23_comboBox="GPIO04_IO23";
         U_GPIO04_IO24_comboBox="GPIO04_IO24";
-        ui->U_UART5_4WirescheckBox->setChecked(false);
+        ui->U_UART6_4WirescheckBox->setChecked(false);
     }
 }
 void NOVAembed::on_U_Audio1_checkBox_toggled(bool checked)

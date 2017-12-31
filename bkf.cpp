@@ -35,7 +35,7 @@ extern  QString AutoRunFolder;
 extern  QString Kernel;
 extern  QString SourceMeFile;
 
-extern  QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*TOOL_stab;
+extern  QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*M8BSP_stab,*TOOL_stab;
 
 extern QString BootValid , FSValid , KernelValid , uSDwriteValid;
 
@@ -123,7 +123,7 @@ QFileInfo check_file1;
     {
         ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "M8 BSP Factory";
-        current_stab = PBSP_stab;
+        //current_stab = M8BSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
         ui->VideoVisible_label_2->setVisible(true);
