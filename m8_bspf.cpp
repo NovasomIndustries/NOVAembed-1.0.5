@@ -36,22 +36,11 @@ void NOVAembed::M8_load_BSPF_File(QString fileName)
 QString strKeyFunc("M8_IOMUX/");
 QSettings * func_settings = 0;
 
-    on_U_Clear_pushButton_clicked();
+    on_M8_Clear_pushButton_clicked();
 
     Last_M8_BSPFactoryFile = fileName;
 
     func_settings = new QSettings( fileName, QSettings::IniFormat );
-/*
-    if ( M8_getvalue(strKeyFunc, func_settings , "M8_GPIO04_IO06_comboBox") == "ECSPI4_SCLK" )
-        on_M8_SPI1_checkBox_toggled(true);
-
-
-    ui->U_I2C2Speed_lineEdit->setText(U_getvalue(strKeyFunc, func_settings , "U_I2C2Speed"));
-    ui->U_SPIdev4_checkBox->setChecked(false);
-    ui->U_PrimaryVideo_comboBox->setCurrentText(U_getvalue(strKeyFunc, func_settings , "U_PrimaryVideo_comboBox"));
-    if ( U_getvalue(strKeyFunc, func_settings , "U_PrimaryVideo_24bit_comboBox") == "true")
-        on_UPriVideo_24bit_checkBox_toggled(true);
-    */
 }
 
 
@@ -72,58 +61,7 @@ void NOVAembed::M8_save_helper(QString fileName)
 
     QTextStream out(&file);
     out << QString("[M8_IOMUX]\n");
-    /*
-    out << QString("U_GPIO01_IO09_comboBox="+U_GPIO01_IO09_comboBox+"\n");
-    out << QString("U_GPIO01_IO10_comboBox="+U_GPIO01_IO10_comboBox+"\n");
-    out << QString("U_GPIO04_IO01_comboBox="+U_GPIO04_IO01_comboBox+"\n");
-    out << QString("U_GPIO04_IO02_comboBox="+U_GPIO04_IO02_comboBox+"\n");
-    out << QString("U_GPIO04_IO06_comboBox="+U_GPIO04_IO06_comboBox+"\n");
-    out << QString("U_GPIO04_IO07_comboBox="+U_GPIO04_IO07_comboBox+"\n");
-    out << QString("U_GPIO04_IO08_comboBox="+U_GPIO04_IO08_comboBox+"\n");
-    out << QString("U_GPIO04_IO09_comboBox="+U_GPIO04_IO09_comboBox+"\n");
-    out << QString("U_GPIO04_IO17_comboBox="+U_GPIO04_IO17_comboBox+"\n");
-    out << QString("U_GPIO04_IO18_comboBox="+U_GPIO04_IO18_comboBox+"\n");
-    out << QString("U_GPIO04_IO19_comboBox="+U_GPIO04_IO19_comboBox+"\n");
-    out << QString("U_GPIO04_IO20_comboBox="+U_GPIO04_IO20_comboBox+"\n");
-    out << QString("U_GPIO04_IO23_comboBox="+U_GPIO04_IO23_comboBox+"\n");
-    out << QString("U_GPIO04_IO24_comboBox="+U_GPIO04_IO24_comboBox+"\n");
-
-
-    if ( ui->U_I2C2Speed_lineEdit->text().isEmpty() )
-        ui->U_I2C2Speed_lineEdit->setText("100000");
-    U_I2C2Speed = ui->U_I2C2Speed_lineEdit->text();
-    out << QString("U_I2C2Speed="+U_I2C2Speed+"\n");
-
-
-    if ( ui->U_SPIdev4_checkBox->isChecked() )
-        out << QString("U_SPIdev4_checkBox=true\n");
-    else
-        out << QString("U_SPIdev4_checkBox=false\n");
-
-    out << QString("U_PrimaryVideo_comboBox="+ui->U_PrimaryVideo_comboBox->currentText()+"\n");
-    U_PrimaryVideo_comboBox   = ui->U_PrimaryVideo_comboBox->currentText();
-    if ( ui->U_PrimaryVideo_24bit_comboBox->isChecked() )
-        out << QString("U_PrimaryVideo_24bit_comboBox=true\n");
-    else
-        out << QString("U_PrimaryVideo_24bit_comboBox=false\n");
-    */
     out << QString("\n[M8_CONF]\n");
-    /*
-    out << QString("U_GPIO01_IO09_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO01_IO10_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO01_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO02_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO06_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO07_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO08_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO09_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO17_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO18_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO19_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO20_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO23_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    out << QString("U_GPIO04_IO24_cbit="+ui->P_cbit_lineEdit->text()+"\n");
-    */
     file.close();
     update_status_bar("File "+Last_M8_BSPFactoryFile+" saved");
     Last_M8_BSPFactoryFile = fileName;
@@ -252,7 +190,7 @@ void NOVAembed::on_M8_Load_pushButton_clicked()
         return;
     else
     {
-        U_load_BSPF_File(fileName);
+        M8_load_BSPF_File(fileName);
         update_status_bar("File "+Last_M8_BSPFactoryFile+" loaded");
         QFileInfo fi(fileName);
         ui->M8_Current_BSPF_File_label->setText(fi.baseName()+".bspf");

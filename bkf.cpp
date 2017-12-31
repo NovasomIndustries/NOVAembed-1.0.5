@@ -123,7 +123,7 @@ QFileInfo check_file1;
     {
         ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "M8 BSP Factory";
-        //current_stab = M8BSP_stab;
+        current_stab = M8BSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
         ui->VideoVisible_label_2->setVisible(true);
@@ -201,7 +201,8 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
     if ( ui->Board_comboBox->currentText() == "U5")
     {
         out << QString("cd nxp\n");
-        out << QString("cd nxp\n");        out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
+        out << QString("cd nxp\n");
+        out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "M8")
     {

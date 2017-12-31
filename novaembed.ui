@@ -2488,7 +2488,7 @@
       <widget class="QLabel" name="label_16">
        <property name="geometry">
         <rect>
-         <x>460</x>
+         <x>10</x>
          <y>20</y>
          <width>61</width>
          <height>15</height>
@@ -2509,7 +2509,7 @@
       <widget class="QComboBox" name="Board_comboBox">
        <property name="geometry">
         <rect>
-         <x>550</x>
+         <x>100</x>
          <y>10</y>
          <width>111</width>
          <height>31</height>
@@ -2534,7 +2534,7 @@
       <widget class="QLabel" name="brand_label">
        <property name="geometry">
         <rect>
-         <x>670</x>
+         <x>220</x>
          <y>10</y>
          <width>71</width>
          <height>31</height>
@@ -69102,7 +69102,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tabBSPFS">
+    <widget class="QWidget" name="tabBSPFM8">
      <attribute name="title">
       <string>M8 BSP Factory</string>
      </attribute>

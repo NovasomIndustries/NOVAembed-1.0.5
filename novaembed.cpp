@@ -50,7 +50,7 @@ QString SourceMeFile =  "SourceMe32_5";
 
 
 extern  void storeNOVAembed_ini();
-QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*TOOL_stab,*TOOL_devel;
+QWidget *PBSP_stab,*UBSP_stab,*M8BSP_stab,*TOOL_stab,*TOOL_devel;
 
 /*****************************************************************************************************************************************************************************************/
 /*                                                                                    Code                                                                                               */
@@ -188,8 +188,9 @@ int     copy_required_files = 0;
     ui->UserPartition_comboBox->setCurrentText(NumberOfUserPartitions);
     ui->VersionLabel->setText(Version);
     PBSP_stab=ui->tabBSPFP;
-    SBSP_stab=ui->tabBSPFS;
+    //SBSP_stab=ui->tabBSPFS;
     UBSP_stab=ui->tabBSPFU;
+    M8BSP_stab=ui->tabBSPFM8;
     TOOL_stab=ui->tabTools;
     ui->tab->removeTab(4);
     ui->tab->removeTab(3);
@@ -201,7 +202,7 @@ int     copy_required_files = 0;
     }
     else if (CurrentBSPF_Tab == "M8 BSP Factory")
     {
-        ui->tab->insertTab(2,SBSP_stab,"M8 BSP Factory");
+        ui->tab->insertTab(2,M8BSP_stab,"M8 BSP Factory");
     }
     else if (CurrentBSPF_Tab == "U BSP Factory")
     {
@@ -602,7 +603,7 @@ void NOVAembed::on_tab_currentChanged(int index)
                 QString base = fi.baseName();
                 if ( base != "" )
                     ui->M8_Current_BSPF_File_label->setText(base+".bspf");
-                M8_load_BSPF_File(Last_U_BSPFactoryFile);
+                M8_load_BSPF_File(Last_M8_BSPFactoryFile);
                 ui->M8_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
                 update_status_bar("BSP Factory : Loaded file "+Last_M8_BSPFactoryFile);
             }
