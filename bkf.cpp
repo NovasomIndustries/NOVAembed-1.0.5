@@ -694,21 +694,24 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
     {
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./flashU "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+fi.baseName()+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        if ( ui->UserAutoRun_checkBox->isChecked())
+            out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "P Series")
     {
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        if ( ui->UserAutoRun_checkBox->isChecked())
+            out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "M8")
     {
         out << QString("cd /Devel/NOVAsom_SDK/Utils/qcom\n");
-        out << QString("./flashM8 "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        out << QString("./flashM8 /dev/"+uSD_Device+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        if ( ui->UserAutoRun_checkBox->isChecked())
+            out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     }
-    if ( ui->UserAutoRun_checkBox->isChecked())
-        out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" "+NOVAsomParamsName+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     scriptfile.close();
-    return;
     if ( run_script() == 0)
     {
         update_status_bar("uSD successfully written, file system is "+FileSystemName);

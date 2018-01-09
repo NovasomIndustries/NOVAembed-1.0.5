@@ -445,6 +445,7 @@ void NOVAembed::on_tab_currentChanged(int index)
             else
                 ui->UserBSPFselectedlineEdit->setText(Last_M8_BSPFactoryFile);
             ui->PreCompiledFileSystem_frame->setVisible(true);
+            ui->brand_label->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
         {
@@ -461,6 +462,7 @@ void NOVAembed::on_tab_currentChanged(int index)
                 ui->UserBSPFselectedlineEdit->setText(Last_P_BSPFactoryFile);
             }
             ui->PreCompiledFileSystem_frame->setVisible(true);
+            ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "U5")
         {
@@ -482,6 +484,7 @@ void NOVAembed::on_tab_currentChanged(int index)
             ui->SecVideo_24bit_checkBox->setVisible(false);
             ui->label_61->setVisible(false);
             ui->PreCompiledFileSystem_frame->setVisible(false);
+            ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
 
         if ( AutoRunSelected == "true" )
