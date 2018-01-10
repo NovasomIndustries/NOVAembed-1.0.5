@@ -154,7 +154,7 @@ int     copy_required_files = 0;
         if ( _Board_comboBox == "M8")
         {
             Kernel="linux-4.11.0-QualcommLinaro";
-            SourceMeFile="SourceMe32_6";
+            SourceMeFile="SourceMe64";
         }
         if ( _Board_comboBox == "U5")
         {
@@ -439,7 +439,7 @@ void NOVAembed::on_tab_currentChanged(int index)
         if ( ui->Board_comboBox->currentText() == "M8")
         {
             Kernel="linux-4.11.0-QualcommLinaro";
-            SourceMeFile="SourceMe32_6";
+            SourceMeFile="SourceMe64";
             if ( Last_M8_BSPFactoryFile.length() < 2)
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
             else
@@ -449,8 +449,8 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
         {
-            Kernel="linux-4.11.0-QualcommLinaro";
-            SourceMeFile="SourceMe32_6";
+            Kernel="linux-imx_4.1.15_1.2.0_ga";
+            SourceMeFile="SourceMe32_5";
             if ( Last_P_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");

@@ -135,7 +135,7 @@ QFileInfo check_file1;
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
         Kernel="linux-4.11.0-QualcommLinaro";
-        SourceMeFile="SourceMe32_6";
+        SourceMeFile="SourceMe64";
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-4.11.0-QualcommLinaro/arch/arm/boot/zImage");
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
