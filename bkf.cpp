@@ -35,7 +35,7 @@ extern  QString AutoRunFolder;
 extern  QString Kernel;
 extern  QString SourceMeFile;
 
-extern  QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*M8BSP_stab,*TOOL_stab;
+extern  QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*M8BSP_stab,*M9BSP_stab,*TOOL_stab;
 
 extern QString BootValid , FSValid , KernelValid , uSDwriteValid;
 
@@ -68,6 +68,8 @@ QFileInfo check_file1;
         return;
     if (( arg1 == "M8") && ( CurrentBSPF_Tab == "M8 BSP Factory"))
         return;
+    if (( arg1 == "M9") && ( CurrentBSPF_Tab == "M9 BSP Factory"))
+        return;
     _Board_comboBox = arg1;
 
     if ( arg1 == "U5")
@@ -75,13 +77,6 @@ QFileInfo check_file1;
         CurrentBSPF_Tab = "U BSP Factory";
         current_stab = UBSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(false);
-        ui->VideoVisible_label->setVisible(false);
-        ui->VideoVisible_label_2->setVisible(false);
-        ui->PrimaryVideo_comboBox->setVisible(false);
-        ui->SecondaryVideo_comboBox->setVisible(false);
-        ui->PriVideo_24bit_checkBox->setVisible(false);
-        ui->SecVideo_24bit_checkBox->setVisible(false);
-        ui->label_61->setVisible(false);
         ui->PreCompiledFileSystem_frame->setVisible(false);
         Kernel="linux-imx_4.1.43";
         SourceMeFile="SourceMe32_5";
@@ -100,13 +95,6 @@ QFileInfo check_file1;
         CurrentBSPF_Tab = "P BSP Factory";
         current_stab = PBSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(true);
-        ui->VideoVisible_label->setVisible(true);
-        ui->VideoVisible_label_2->setVisible(true);
-        ui->PrimaryVideo_comboBox->setVisible(true);
-        ui->SecondaryVideo_comboBox->setVisible(true);
-        ui->PriVideo_24bit_checkBox->setVisible(true);
-        ui->SecVideo_24bit_checkBox->setVisible(true);
-        ui->label_61->setVisible(true);
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
         Kernel="linux-imx_4.1.15_1.2.0_ga";
@@ -125,24 +113,35 @@ QFileInfo check_file1;
         CurrentBSPF_Tab = "M8 BSP Factory";
         current_stab = M8BSP_stab;
         ui->PreCompiledFileSystem_frame->setVisible(true);
-        ui->VideoVisible_label->setVisible(true);
-        ui->VideoVisible_label_2->setVisible(true);
-        ui->PrimaryVideo_comboBox->setVisible(true);
-        ui->SecondaryVideo_comboBox->setVisible(true);
-        ui->PriVideo_24bit_checkBox->setVisible(true);
-        ui->SecVideo_24bit_checkBox->setVisible(true);
-        ui->label_61->setVisible(true);
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
         Kernel="linux-4.11.0-QualcommLinaro";
         SourceMeFile="SourceMe64";
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-4.11.0-QualcommLinaro/arch/arm/boot/zImage");
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-4.11.0-QualcommLinaro/arch/arm64/boot/Image");
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomM8-2017.11/u-boot.bin");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
+    }
+    if ( arg1 == "M9")
+    {
+        ui->FileSystemSelectedlineEdit->setText("");
+        CurrentBSPF_Tab = "M9 BSP Factory";
+        current_stab = M9BSP_stab;
+        ui->PreCompiledFileSystem_frame->setVisible(true);
+        ui->UserBSPFSelect_pushButton->setVisible(true);
+        ui->UserBSPFselectedlineEdit->setVisible(true);
+        Kernel="linux-allw-4.15.0";
+        SourceMeFile="SourceMe64";
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-allw-4.15.0/arch/arm64/boot/Image");
+        if (check_file1.exists() && check_file1.isFile())
+            kernelok=1;
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-NOVAsomH5-2017.11/u-boot.bin");
+        if (check_file1.exists() && check_file1.isFile())
+            bootok=1;
+        ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
     }
     /* hide Tools for recompose order */
     ui->tab->removeTab(3);

@@ -300,6 +300,14 @@ private slots:
 
     void on_M8_Generate_pushButton_clicked();
 
+    void on_M9_Load_pushButton_clicked();
+
+    void on_M9_Save_pushButton_clicked();
+
+    void M9_load_BSPF_File(QString fileName);
+
+    void M9_save_helper(QString fileName);
+
 private:
     Ui::NOVAembed *ui;
 };

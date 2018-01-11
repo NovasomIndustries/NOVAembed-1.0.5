@@ -26,6 +26,7 @@ QString DeployedFileSystemName = "";
 QString FileSystemConfigName = "";
 QString _Board_comboBox = "";
 QString Last_M8_BSPFactoryFile = "";
+QString Last_M9_BSPFactoryFile = "";
 QString Last_U_BSPFactoryFile = "";
 QString Last_P_BSPFactoryFile = "";
 QString CfgBitDefaultValueDefault = "0x4001b8b1";
@@ -50,7 +51,7 @@ QString SourceMeFile =  "SourceMe32_5";
 
 
 extern  void storeNOVAembed_ini();
-QWidget *PBSP_stab,*UBSP_stab,*M8BSP_stab,*TOOL_stab,*TOOL_devel;
+QWidget *PBSP_stab,*UBSP_stab,*M8BSP_stab,*M9BSP_stab,*TOOL_stab,*TOOL_devel;
 
 /*****************************************************************************************************************************************************************************************/
 /*                                                                                    Code                                                                                               */
@@ -191,7 +192,9 @@ int     copy_required_files = 0;
     //SBSP_stab=ui->tabBSPFS;
     UBSP_stab=ui->tabBSPFU;
     M8BSP_stab=ui->tabBSPFM8;
+    M9BSP_stab=ui->tabBSPFM9;
     TOOL_stab=ui->tabTools;
+    ui->tab->removeTab(5);
     ui->tab->removeTab(4);
     ui->tab->removeTab(3);
     ui->tab->removeTab(2);
@@ -207,6 +210,10 @@ int     copy_required_files = 0;
     else if (CurrentBSPF_Tab == "U BSP Factory")
     {
         ui->tab->insertTab(2,UBSP_stab,"U BSP Factory");
+    }
+    else if (CurrentBSPF_Tab == "M9 BSP Factory")
+    {
+        ui->tab->insertTab(2,M9BSP_stab,"M9 BSP Factory");
     }
     else
     {
@@ -436,6 +443,17 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
 
+        if ( ui->Board_comboBox->currentText() == "M9")
+        {
+            Kernel="linux-allw-4.15.0";
+            SourceMeFile="SourceMe64";
+            if ( Last_M9_BSPFactoryFile.length() < 2)
+                ui->UserBSPFselectedlineEdit->setText("Not Initialized");
+            else
+                ui->UserBSPFselectedlineEdit->setText(Last_M9_BSPFactoryFile);
+            ui->PreCompiledFileSystem_frame->setVisible(true);
+            ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
+        }
         if ( ui->Board_comboBox->currentText() == "M8")
         {
             Kernel="linux-4.11.0-QualcommLinaro";
@@ -475,14 +493,6 @@ void NOVAembed::on_tab_currentChanged(int index)
             }
             else
                 ui->UserBSPFselectedlineEdit->setText(Last_U_BSPFactoryFile);
-
-            ui->VideoVisible_label->setVisible(false);
-            ui->VideoVisible_label_2->setVisible(false);
-            ui->PrimaryVideo_comboBox->setVisible(false);
-            ui->SecondaryVideo_comboBox->setVisible(false);
-            ui->PriVideo_24bit_checkBox->setVisible(false);
-            ui->SecVideo_24bit_checkBox->setVisible(false);
-            ui->label_61->setVisible(false);
             ui->PreCompiledFileSystem_frame->setVisible(false);
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
@@ -611,6 +621,23 @@ void NOVAembed::on_tab_currentChanged(int index)
                 update_status_bar("BSP Factory : Loaded file "+Last_M8_BSPFactoryFile);
             }
         }
+        if (CurrentBSPF_Tab == "M9 BSP Factory")
+        {
+            QFileInfo fi(Last_M9_BSPFactoryFile);
+            if ( ! fi.exists())
+            {
+                update_status_bar("BSP Factory : File "+fi.baseName()+".bspf not found, reverting to default");
+            }
+            else
+            {
+                QString base = fi.baseName();
+                if ( base != "" )
+                    ui->M9_Current_BSPF_File_label->setText(base+".bspf");
+                M9_load_BSPF_File(Last_M9_BSPFactoryFile);
+                ui->M9_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
+                update_status_bar("BSP Factory : Loaded file "+Last_M9_BSPFactoryFile);
+            }
+        }
         break;
     }
 }
@@ -662,4 +689,5 @@ void NOVAembed::on_ViewUpdatesLog_pushButton_clicked()
 {
     system("kwrite /Devel/NOVAsom_SDK/Logs/update.log");
 }
+
 
