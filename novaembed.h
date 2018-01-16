@@ -29,6 +29,7 @@
 #define QUALCOMM_BLOB_NAME  "linux-qualcomm-4.11.0_Image"
 #define NXP_P_BLOB_NAME     "linux-nxp_p-4.1.15.2_zImage"
 #define NXP_U_BLOB_NAME     "linux-nxp_u-4.1.43_zImage"
+#define KERNEL_REPO_SERVER  "217.57.158.18"
 
 namespace Ui {
 class NOVAembed;
@@ -50,6 +51,7 @@ private slots:
     void compile_ExtFS_comboBox();
     void local_sleep(int ms);
     int run_script(void);
+    int run_background_script(void);
     int update_status_bar(QString StatusBarContent);
     void P_save_helper( QString filename, QString Processor_model);
     void NOVAsom_Params_helper();
@@ -325,6 +327,8 @@ private slots:
     void M9_save_helper(QString fileName);
 
     void on_KernelDecompress_pushButton_clicked();
+
+    void on_KernelDownload_pushButton_clicked();
 
 private:
     Ui::NOVAembed *ui;

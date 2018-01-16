@@ -252,7 +252,16 @@ void NOVAembed::disable_kernelbuttons()
     ui->KernelCompile_pushButton->setEnabled(false);
     ui->KernelReCompile_pushButton->setEnabled(false);
     ui->ViewKernelLog_pushButton->setEnabled(false);
-    ui->KernelDecompress_pushButton->setEnabled(true);
+    if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+".tar.bz2").exists() )
+    {
+        ui->KernelDownload_pushButton->setEnabled(false);
+        ui->KernelDecompress_pushButton->setEnabled(true);
+    }
+    else
+    {
+        ui->KernelDownload_pushButton->setEnabled(true);
+        ui->KernelDecompress_pushButton->setEnabled(false);
+    }
 }
 void NOVAembed::enable_kernelbuttons()
 {
@@ -318,6 +327,12 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
     else if (ui->Board_comboBox->currentText() == "M8")
     {
         str = "M8Class_Buildroot_*.config";
+        ui->PrimaryVideo_comboBox->setVisible(true);
+        ui->VideoVisible_label->setVisible(true);
+    }
+    else if (ui->Board_comboBox->currentText() == "M9")
+    {
+        str = "M9Class_Buildroot_*.config";
         ui->PrimaryVideo_comboBox->setVisible(true);
         ui->VideoVisible_label->setVisible(true);
     }
@@ -398,6 +413,24 @@ int NOVAembed::run_script(void)
     return content.toInt();
 }
 
+int NOVAembed::run_background_script(void)
+{
+    this->setCursor(Qt::WaitCursor);
+
+    system("rm -f /tmp/result");
+    system("chmod 777 /tmp/background_script");
+    system("konsole -e /tmp/background_script --background-mode -geometry 350x150 & > /Devel/NOVAsom_SDK/Logs/main_log");
+
+    QFile file("/tmp/result");
+    while( file.open(QIODevice::ReadOnly) == false )
+        local_sleep(100);
+    QTextStream stream(&file);
+    QString content = stream.readAll();
+    file.close();
+    content.chop(1);
+    this->setCursor(Qt::ArrowCursor);
+    return content.toInt();
+}
 int NOVAembed::update_status_bar(QString StatusBarContent)
 {
     ui->statusBar->showMessage(StatusBarContent);
@@ -468,7 +501,6 @@ void NOVAembed::on_tab_currentChanged(int index)
             ui->frame_5->setEnabled(false);
         else
             ui->frame_5->setEnabled(true);
-
 
         ui->VideoVisible_label->setVisible(true);
         ui->VideoVisible_label_2->setVisible(true);
@@ -721,4 +753,6 @@ void NOVAembed::on_ViewUpdatesLog_pushButton_clicked()
 {
     system("kwrite /Devel/NOVAsom_SDK/Logs/update.log");
 }
+
+
 

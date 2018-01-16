@@ -140,7 +140,7 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-NOVAsomH5-2017.11/u-boot.bin");
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-NOVAsomH5-2017.11/H5/u-boot.bin");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
@@ -1001,14 +1001,32 @@ void NOVAembed::on_ViewPreCompiledLog_pushButton_clicked()
     system("kwrite /Devel/NOVAsom_SDK/Logs/extfs.log");
 }
 
+void NOVAembed::on_KernelDownload_pushButton_clicked()
+{
+    QFile scriptfile("/tmp/background_script");
+    update_status_bar("Downloading "+Kernel+" ...");
+    if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
+    {
+        update_status_bar("Unable to create /tmp/script");
+        return;
+    }
+    QTextStream out(&scriptfile);
+    out << QString("#!/bin/sh\n");
+    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
+    out << QString("echo \"This windows runs a background script. DO NOT CLOSE IT!!\"\n");
+    out << QString("./download_kernel "+Kernel+" "+ KERNEL_REPO_SERVER +"/Kernels\n");
+    out << QString("echo 0 > /tmp/result\n");
+    out << QString("return 0\n");
 
+    scriptfile.close();
+    run_background_script();
+    update_status_bar("Kernel "+Kernel+" background downloading");
+}
 
 void NOVAembed::on_KernelDecompress_pushButton_clicked()
 {
     QFile scriptfile("/tmp/script");
-
     update_status_bar("Decompressing "+Kernel+" ...");
-
     if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
     {
         update_status_bar("Unable to create /tmp/script");
@@ -1020,9 +1038,7 @@ void NOVAembed::on_KernelDecompress_pushButton_clicked()
     out << QString("./decompress_kernel "+Kernel+" >> /Devel/NOVAsom_SDK/Logs/decompress_kernel_log\n");
     scriptfile.close();
     if ( run_script() == 0)
-    {
         update_status_bar("Kernel "+Kernel+" decompressed succesfully");
-    }
     else
         update_status_bar("Kernel "+Kernel+" decompression error");
 }
