@@ -1048,6 +1048,24 @@
         <string>View kernel log</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="KernelDecompress_pushButton">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>80</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Decompress Sources</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QFrame" name="frame_4">
       <property name="geometry">
@@ -1714,7 +1732,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
@@ -2435,7 +2453,7 @@
         <rect>
          <x>110</x>
          <y>40</y>
-         <width>161</width>
+         <width>241</width>
          <height>21</height>
         </rect>
        </property>
@@ -2544,28 +2562,6 @@
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
-      <widget class="QLabel" name="FileSystemLogo">
-       <property name="geometry">
-        <rect>
-         <x>280</x>
-         <y>40</y>
-         <width>64</width>
-         <height>64</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="novaembedresources.qrc">:/Icons/ArchLinux.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
       <widget class="QPushButton" name="ViewPreCompiledLog_pushButton">
        <property name="geometry">
         <rect>
@@ -2640,6 +2636,11 @@
          <string>M8</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>M9</string>
+        </property>
+       </item>
       </widget>
       <widget class="QLabel" name="brand_label">
        <property name="geometry">
@@ -2669,6 +2670,30 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+     </widget>
+     <widget class="QLabel" name="label_test">
+      <property name="geometry">
+       <rect>
+        <x>870</x>
+        <y>280</y>
+        <width>341</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Boot Loader</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tabBSPFP">

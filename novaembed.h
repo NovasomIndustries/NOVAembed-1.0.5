@@ -16,6 +16,20 @@
 //#include <QHostInfo>
 #include <QDirIterator>
 
+#define ALLWINNER_KERNEL    "linux-allw-4.14.0"
+#define QUALCOMM_KERNEL     "linux-4.11.0-QualcommLinaro"
+#define NXP_P_KERNEL        "linux-imx_4.1.15_1.2.0_ga"
+#define NXP_U_KERNEL        "linux-imx_4.1.43"
+#define ALLWINNER_SOURCEME  "SourceMe64"
+#define QUALCOMM_SOURCEME   "SourceMe64"
+#define NXP_P_SOURCEME      "SourceMe32_5"
+#define NXP_U_SOURCEME      "SourceMe32_5"
+#define BLOBS_PATH          "/Devel/NOVAsom_SDK/Blobs/"
+#define ALLWINNER_BLOB_NAME "linux-allw-4.14.0_Image"
+#define QUALCOMM_BLOB_NAME  "linux-qualcomm-4.11.0_Image"
+#define NXP_P_BLOB_NAME     "linux-nxp_p-4.1.15.2_zImage"
+#define NXP_U_BLOB_NAME     "linux-nxp_u-4.1.43_zImage"
+
 namespace Ui {
 class NOVAembed;
 }
@@ -40,6 +54,10 @@ private slots:
     void P_save_helper( QString filename, QString Processor_model);
     void NOVAsom_Params_helper();
     void initrd_helper(void);
+    void disable_kernelbuttons();
+    void enable_kernelbuttons();
+
+
 
     /* Helper Functions End */
 
@@ -138,8 +156,6 @@ private slots:
     void on_GenerateFileSystem_pushButton_clicked();
 
     void on_ExtFS_Write_uSD_pushButton_clicked();
-
-    void on_ExtFS_comboBox_currentIndexChanged(const QString &arg1);
 
     void on_ThisIsReferenceServer_checkBox_clicked(bool checked);
 
@@ -307,6 +323,8 @@ private slots:
     void M9_load_BSPF_File(QString fileName);
 
     void M9_save_helper(QString fileName);
+
+    void on_KernelDecompress_pushButton_clicked();
 
 private:
     Ui::NOVAembed *ui;

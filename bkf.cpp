@@ -15,6 +15,7 @@
 #include <QDirIterator>
 #include <QNetworkInterface>
 #include <QDialog>
+#include <iostream>
 
 extern  QString FileSystemName;
 extern  QString DeployedFileSystemName;
@@ -62,6 +63,7 @@ void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
 {
 int kernelok=0,bootok=0;
 QFileInfo check_file1;
+QString file_exists_path;
     if (( arg1 == "P Series") && ( CurrentBSPF_Tab == "P BSP Factory"))
         return;
     if (( arg1 == "U5") && ( CurrentBSPF_Tab == "U BSP Factory"))
@@ -71,16 +73,16 @@ QFileInfo check_file1;
     if (( arg1 == "M9") && ( CurrentBSPF_Tab == "M9 BSP Factory"))
         return;
     _Board_comboBox = arg1;
+    file_exists_path = BLOBS_PATH;
 
     if ( arg1 == "U5")
     {
         CurrentBSPF_Tab = "U BSP Factory";
         current_stab = UBSP_stab;
-        ui->PreCompiledFileSystem_frame->setVisible(false);
-        ui->PreCompiledFileSystem_frame->setVisible(false);
-        Kernel="linux-imx_4.1.43";
-        SourceMeFile="SourceMe32_5";
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-imx_4.1.43/arch/arm/boot/zImage");
+        Kernel=NXP_U_KERNEL;
+        SourceMeFile=NXP_U_SOURCEME;
+        file_exists_path += NXP_U_BLOB_NAME;
+        check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomU-2016.03/NOVAsomU/u-boot.imx");
@@ -94,12 +96,12 @@ QFileInfo check_file1;
         ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "P BSP Factory";
         current_stab = PBSP_stab;
-        ui->PreCompiledFileSystem_frame->setVisible(true);
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
-        Kernel="linux-imx_4.1.15_1.2.0_ga";
-        SourceMeFile="SourceMe32_5";
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-imx_4.1.15_1.2.0_ga/arch/arm/boot/zImage");
+        Kernel=NXP_P_KERNEL;
+        SourceMeFile=NXP_P_SOURCEME;
+        file_exists_path += NXP_P_BLOB_NAME;
+        check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomP-2015.04/NOVAsomP/u-boot.img");
@@ -112,12 +114,12 @@ QFileInfo check_file1;
         ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "M8 BSP Factory";
         current_stab = M8BSP_stab;
-        ui->PreCompiledFileSystem_frame->setVisible(true);
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
-        Kernel="linux-4.11.0-QualcommLinaro";
-        SourceMeFile="SourceMe64";
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-4.11.0-QualcommLinaro/arch/arm64/boot/Image");
+        Kernel=QUALCOMM_KERNEL;
+        SourceMeFile=QUALCOMM_SOURCEME;
+        file_exists_path += QUALCOMM_BLOB_NAME;
+        check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomM8-2017.11/u-boot.bin");
@@ -130,12 +132,12 @@ QFileInfo check_file1;
         ui->FileSystemSelectedlineEdit->setText("");
         CurrentBSPF_Tab = "M9 BSP Factory";
         current_stab = M9BSP_stab;
-        ui->PreCompiledFileSystem_frame->setVisible(true);
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
-        Kernel="linux-allw-4.15.0";
-        SourceMeFile="SourceMe64";
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Kernel/linux-allw-4.15.0/arch/arm64/boot/Image");
+        Kernel=ALLWINNER_KERNEL;
+        SourceMeFile=ALLWINNER_SOURCEME;
+        file_exists_path += ALLWINNER_BLOB_NAME;
+        check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-NOVAsomH5-2017.11/u-boot.bin");
@@ -143,6 +145,11 @@ QFileInfo check_file1;
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
     }
+    if ( ! QDir("/Devel/NOVAsom_SDK/Kernel/"+Kernel).exists() )
+        disable_kernelbuttons();
+    else
+        enable_kernelbuttons();
+
     /* hide Tools for recompose order */
     ui->tab->removeTab(3);
 
@@ -176,6 +183,7 @@ QFileInfo check_file1;
         KernelValid = "OK";
     }
     ui->frame_5->setEnabled(false);
+    compile_ExtFS_comboBox();
     storeNOVAembed_ini();
 }
 
@@ -207,6 +215,11 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
     {
         out << QString("cd qcom\n");
         out << QString("./umakeM8 > /Devel/NOVAsom_SDK/Logs/umakeM8.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "M9")
+    {
+        out << QString("cd allw\n");
+        out << QString("./umakeM9 > /Devel/NOVAsom_SDK/Logs/umakeM9.log\n");
     }
 
     scriptfile.close();
@@ -325,9 +338,30 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
-    out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    if ( ui->Board_comboBox->currentText() == "P Series")
+    {
+        out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
+        out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "U5")
+    {
+        out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
+        out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "M8")
+    {
+        out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/qcom\n");
+        out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "M9")
+    {
+        out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/allw\n");
+        out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    }
 
     scriptfile.close();
     if ( run_script() == 0)
@@ -534,6 +568,8 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" U > /Devel/NOVAsom_SDK/Logs/FileSystem_Umake.log\n");
     if ( ui->Board_comboBox->currentText() == "M8")
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" M8 > /Devel/NOVAsom_SDK/Logs/FileSystem_M8make.log\n");
+    if ( ui->Board_comboBox->currentText() == "M9")
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" M9 > /Devel/NOVAsom_SDK/Logs/FileSystem_M8make.log\n");
 
 
 
@@ -710,6 +746,13 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
         if ( ui->UserAutoRun_checkBox->isChecked())
             out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     }
+    if ( ui->Board_comboBox->currentText() == "M9")
+    {
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/allw\n");
+        out << QString("./flashM9 "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+fi.baseName()+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        if ( ui->UserAutoRun_checkBox->isChecked())
+            out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+    }
     scriptfile.close();
     if ( run_script() == 0)
     {
@@ -810,6 +853,7 @@ void NOVAembed::on_AddFileSystemConfig_pushButton_clicked()
 void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
 {
     QFile scriptfile("/tmp/script");
+    QString full_path;
     update_status_bar("Creating file system "+ui->NewFileSystemSelectedlineEdit->text()+" ...");
 
     if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
@@ -820,7 +864,14 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    out << QString("./flashP_ExtFs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" /Devel/NOVAsom_SDK/ExternalFileSystems/"+ ui->ExtFS_comboBox->currentText()+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
+    if ( ui->Board_comboBox->currentText() == "U5")
+        full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+ui->ExtFS_comboBox->currentText();
+    if ( ui->Board_comboBox->currentText() == "M8")
+        full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+ui->ExtFS_comboBox->currentText();
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+ui->ExtFS_comboBox->currentText();
+
+    out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     scriptfile.close();
     if ( run_script() == 0)
     {
@@ -828,13 +879,6 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
     }
     else
         update_status_bar("File System Creation error");
-}
-
-
-void NOVAembed::on_ExtFS_comboBox_currentIndexChanged(const QString &arg1)
-{
-    QPixmap fspixmap (":/Icons/"+arg1+".png");
-    ui->FileSystemLogo->setPixmap(fspixmap);
 }
 
 void NOVAembed::on_UserBSPFSelect_pushButton_clicked()
@@ -922,6 +966,8 @@ void NOVAembed::on_ViewBootLog_pushButton_clicked()
         system("kwrite /Devel/NOVAsom_SDK/Logs/umakeU.log");
     if ( ui->Board_comboBox->currentText() == "M8")
         system("kwrite /Devel/NOVAsom_SDK/Logs/umakeM8.log");
+    if ( ui->Board_comboBox->currentText() == "M9")
+        system("kwrite /Devel/NOVAsom_SDK/Logs/umakeM9.log");
 }
 
 void NOVAembed::on_ViewFSLog_pushButton_clicked()
@@ -932,6 +978,8 @@ void NOVAembed::on_ViewFSLog_pushButton_clicked()
         system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_Umake.log");
     if ( ui->Board_comboBox->currentText() == "M8")
         system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_M8make.log");
+    if ( ui->Board_comboBox->currentText() == "M9")
+        system("kwrite /Devel/NOVAsom_SDK/Logs/FileSystem_M9make.log");
 }
 
 void NOVAembed::on_ViewKernelLog_pushButton_clicked()
@@ -951,6 +999,32 @@ void NOVAembed::on_ViewuSDwriteLog_pushButton_clicked()
 void NOVAembed::on_ViewPreCompiledLog_pushButton_clicked()
 {
     system("kwrite /Devel/NOVAsom_SDK/Logs/extfs.log");
+}
+
+
+
+void NOVAembed::on_KernelDecompress_pushButton_clicked()
+{
+    QFile scriptfile("/tmp/script");
+
+    update_status_bar("Decompressing "+Kernel+" ...");
+
+    if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
+    {
+        update_status_bar("Unable to create /tmp/script");
+        return;
+    }
+    QTextStream out(&scriptfile);
+    out << QString("#!/bin/sh\n");
+    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
+    out << QString("./decompress_kernel "+Kernel+" >> /Devel/NOVAsom_SDK/Logs/decompress_kernel_log\n");
+    scriptfile.close();
+    if ( run_script() == 0)
+    {
+        update_status_bar("Kernel "+Kernel+" decompressed succesfully");
+    }
+    else
+        update_status_bar("Kernel "+Kernel+" decompression error");
 }
 
 /*****************************************************************************************************************************************************************************************/

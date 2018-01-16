@@ -46,8 +46,8 @@ QString KernelValid = "INVALID";
 QString CurrentDevelopment = "Stable";
 QString uSDwriteValid = "INVALID";
 QString CurrentSplashName =  "NOVAsomP800x480";
-QString Kernel =  "linux-imx_4.1.15_1.2.0_ga";
-QString SourceMeFile =  "SourceMe32_5";
+QString Kernel =  NXP_P_KERNEL;
+QString SourceMeFile =  NXP_P_SOURCEME;
 
 
 extern  void storeNOVAembed_ini();
@@ -147,20 +147,26 @@ int     copy_required_files = 0;
         CurrentSplashName = settings->value( strKeySettings + "CurrentSplashName", "r").toString();
         Kernel = settings->value( strKeySettings + "Kernel", "r").toString();
         CurrentDevelopment = settings->value( strKeySettings + "CurrentDevelopment", "r").toString();
+
         if ( _Board_comboBox == "P Series")
         {
-            Kernel="linux-imx_4.1.15_1.2.0_ga";
-            SourceMeFile="SourceMe32_5";
-        }
-        if ( _Board_comboBox == "M8")
-        {
-            Kernel="linux-4.11.0-QualcommLinaro";
-            SourceMeFile="SourceMe64";
+            Kernel=NXP_P_KERNEL;
+            SourceMeFile=NXP_P_SOURCEME;
         }
         if ( _Board_comboBox == "U5")
         {
-            Kernel="linux-imx_4.1.43";
-            SourceMeFile="SourceMe32_5";
+            Kernel=NXP_U_KERNEL;
+            SourceMeFile=NXP_U_SOURCEME;
+        }
+        if ( _Board_comboBox == "M8")
+        {
+            Kernel=QUALCOMM_KERNEL;
+            SourceMeFile=QUALCOMM_SOURCEME;
+        }
+        if ( _Board_comboBox == "M8")
+        {
+            Kernel=ALLWINNER_KERNEL;
+            SourceMeFile=ALLWINNER_SOURCEME;
         }
     }
     if ( ! QDir("/Devel/NOVAsom_SDK/NOVAembed_Settings/PClass_bspf").exists() )
@@ -238,6 +244,26 @@ void NOVAembed::on_actionExit_triggered()
 /*****************************************************************************************************************************************************************************************/
 /*                                                                              Helper Functions                                                                                         */
 /*****************************************************************************************************************************************************************************************/
+void NOVAembed::disable_kernelbuttons()
+{
+    ui->KernelXconfig_pushButton->setEnabled(false);
+    ui->KernelSplash_pushButton->setEnabled(false);
+    ui->KernelCompileSplash_pushButton->setEnabled(false);
+    ui->KernelCompile_pushButton->setEnabled(false);
+    ui->KernelReCompile_pushButton->setEnabled(false);
+    ui->ViewKernelLog_pushButton->setEnabled(false);
+    ui->KernelDecompress_pushButton->setEnabled(true);
+}
+void NOVAembed::enable_kernelbuttons()
+{
+    ui->KernelXconfig_pushButton->setEnabled(true);
+    ui->KernelSplash_pushButton->setEnabled(true);
+    ui->KernelCompileSplash_pushButton->setEnabled(true);
+    ui->KernelCompile_pushButton->setEnabled(true);
+    ui->KernelReCompile_pushButton->setEnabled(true);
+    ui->ViewKernelLog_pushButton->setEnabled(true);
+    ui->KernelDecompress_pushButton->setEnabled(false);
+}
 
 void NOVAembed::storeNOVAembed_ini()
 {
@@ -320,25 +346,31 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
 void NOVAembed::compile_ExtFS_comboBox()
 {
     QString str;
-    QDir ExternalFileSystemsDir("/Devel/NOVAsom_SDK/ExternalFileSystems");
-    str = "*";
+    QDir ExternalFileSystemsDir;
+    if ( ui->Board_comboBox->currentText() == "M8")
+        ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/M8";
+    if ( ui->Board_comboBox->currentText() == "U5")
+        ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/U5";
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/P";
+
+    str = "*.img.tar.bz2";
 
     QStringList ExternalFileSystemsnameFilter(str);
     QStringList ExternalFileSystemsfilesList = ExternalFileSystemsDir.entryList(ExternalFileSystemsnameFilter);
 
-    for(int i=0;i<ExternalFileSystemsfilesList.count();i++)
-        ui->ExtFS_comboBox->removeItem(i);
+    ui->ExtFS_comboBox->clear();
+
     for(int i=0;i<ExternalFileSystemsfilesList.count();i++)
     {
         str = ExternalFileSystemsfilesList[i];
+        str.chop(12);
         if (( str != ".") && (str != ".."))
         {
             ui->ExtFS_comboBox->addItem(str);
         }
     }
     ui->ExtFS_comboBox->setCurrentIndex(0);
-    QPixmap fspixmap (":/Icons/"+ui->ExtFS_comboBox->currentText()+".png");
-    ui->FileSystemLogo->setPixmap(fspixmap);
 }
 
 void NOVAembed:: local_sleep(int ms)
@@ -388,6 +420,11 @@ void NOVAembed::on_tab_currentChanged(int index)
         break;
     case 1 : // BKF Tab
         /* File system config files */
+
+        if ( ! QDir("/Devel/NOVAsom_SDK/Kernel/"+Kernel).exists() )
+            disable_kernelbuttons();
+        else
+            enable_kernelbuttons();
 
         ui->Board_comboBox->setCurrentText(_Board_comboBox);
         ui->UserPartition_comboBox->setCurrentText(NumberOfUserPartitions);
@@ -445,30 +482,28 @@ void NOVAembed::on_tab_currentChanged(int index)
 
         if ( ui->Board_comboBox->currentText() == "M9")
         {
-            Kernel="linux-allw-4.15.0";
-            SourceMeFile="SourceMe64";
+            Kernel=ALLWINNER_KERNEL;
+            SourceMeFile=ALLWINNER_SOURCEME;
             if ( Last_M9_BSPFactoryFile.length() < 2)
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
             else
                 ui->UserBSPFselectedlineEdit->setText(Last_M9_BSPFactoryFile);
-            ui->PreCompiledFileSystem_frame->setVisible(true);
             ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "M8")
         {
-            Kernel="linux-4.11.0-QualcommLinaro";
-            SourceMeFile="SourceMe64";
+            Kernel=QUALCOMM_KERNEL;
+            SourceMeFile=QUALCOMM_SOURCEME;
             if ( Last_M8_BSPFactoryFile.length() < 2)
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
             else
                 ui->UserBSPFselectedlineEdit->setText(Last_M8_BSPFactoryFile);
-            ui->PreCompiledFileSystem_frame->setVisible(true);
             ui->brand_label->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
         {
-            Kernel="linux-imx_4.1.15_1.2.0_ga";
-            SourceMeFile="SourceMe32_5";
+            Kernel=NXP_P_KERNEL;
+            SourceMeFile=NXP_P_SOURCEME;
             if ( Last_P_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
@@ -479,13 +514,12 @@ void NOVAembed::on_tab_currentChanged(int index)
                 P_load_BSPF_File(Last_P_BSPFactoryFile);
                 ui->UserBSPFselectedlineEdit->setText(Last_P_BSPFactoryFile);
             }
-            ui->PreCompiledFileSystem_frame->setVisible(true);
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "U5")
         {
-            Kernel="linux-imx_4.1.43";
-            SourceMeFile="SourceMe32_5";
+            Kernel=NXP_U_KERNEL;
+            SourceMeFile=NXP_U_SOURCEME;
             if ( Last_U_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
@@ -493,7 +527,6 @@ void NOVAembed::on_tab_currentChanged(int index)
             }
             else
                 ui->UserBSPFselectedlineEdit->setText(Last_U_BSPFactoryFile);
-            ui->PreCompiledFileSystem_frame->setVisible(false);
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
 
@@ -522,7 +555,6 @@ void NOVAembed::on_tab_currentChanged(int index)
             ui->UserAutoRunSelectedlineEdit->setText(AutoRunFolder);
             ui->Write_AutoRun_pushButton->setEnabled(false);
         }
-
 
         update_status_bar("BKF");
         ui->UserPartition1Size_lineEdit->setText(UserPartition1Size);
@@ -689,5 +721,4 @@ void NOVAembed::on_ViewUpdatesLog_pushButton_clicked()
 {
     system("kwrite /Devel/NOVAsom_SDK/Logs/update.log");
 }
-
 
