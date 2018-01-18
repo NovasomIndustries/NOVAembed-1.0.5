@@ -145,10 +145,7 @@ QString file_exists_path;
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
     }
-    if ( ! QDir("/Devel/NOVAsom_SDK/Kernel/"+Kernel).exists() )
-        disable_kernelbuttons();
-    else
-        enable_kernelbuttons();
+    manage_kerneldwnld_decompress();
 
     /* hide Tools for recompose order */
     ui->tab->removeTab(3);

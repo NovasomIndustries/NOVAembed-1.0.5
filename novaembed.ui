@@ -1038,9 +1038,9 @@
       <widget class="QPushButton" name="ViewKernelLog_pushButton">
        <property name="geometry">
         <rect>
-         <x>350</x>
+         <x>340</x>
          <y>120</y>
-         <width>121</width>
+         <width>131</width>
          <height>21</height>
         </rect>
        </property>
@@ -1051,9 +1051,9 @@
       <widget class="QPushButton" name="KernelDecompress_pushButton">
        <property name="geometry">
         <rect>
-         <x>350</x>
+         <x>340</x>
          <y>80</y>
-         <width>121</width>
+         <width>131</width>
          <height>21</height>
         </rect>
        </property>
@@ -1069,9 +1069,9 @@
       <widget class="QPushButton" name="KernelDownload_pushButton">
        <property name="geometry">
         <rect>
-         <x>350</x>
+         <x>340</x>
          <y>60</y>
-         <width>121</width>
+         <width>131</width>
          <height>21</height>
         </rect>
        </property>
@@ -1750,7 +1750,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">

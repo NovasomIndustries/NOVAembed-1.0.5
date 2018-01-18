@@ -58,8 +58,7 @@ private slots:
     void initrd_helper(void);
     void disable_kernelbuttons();
     void enable_kernelbuttons();
-
-
+    void manage_kerneldwnld_decompress();
 
     /* Helper Functions End */
 

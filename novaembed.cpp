@@ -252,17 +252,8 @@ void NOVAembed::disable_kernelbuttons()
     ui->KernelCompile_pushButton->setEnabled(false);
     ui->KernelReCompile_pushButton->setEnabled(false);
     ui->ViewKernelLog_pushButton->setEnabled(false);
-    if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+".tar.bz2").exists() )
-    {
-        ui->KernelDownload_pushButton->setEnabled(false);
-        ui->KernelDecompress_pushButton->setEnabled(true);
-    }
-    else
-    {
-        ui->KernelDownload_pushButton->setEnabled(true);
-        ui->KernelDecompress_pushButton->setEnabled(false);
-    }
 }
+
 void NOVAembed::enable_kernelbuttons()
 {
     ui->KernelXconfig_pushButton->setEnabled(true);
@@ -273,6 +264,31 @@ void NOVAembed::enable_kernelbuttons()
     ui->ViewKernelLog_pushButton->setEnabled(true);
     ui->KernelDecompress_pushButton->setEnabled(false);
 }
+
+void NOVAembed::manage_kerneldwnld_decompress()
+{
+    if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/Makefile").exists() )
+    {
+        ui->KernelDownload_pushButton->setEnabled(false);
+        ui->KernelDecompress_pushButton->setEnabled(false);
+        enable_kernelbuttons();
+    }
+    else
+    {
+        if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+".tar.bz2").exists() )
+        {
+            ui->KernelDownload_pushButton->setEnabled(false);
+            ui->KernelDecompress_pushButton->setEnabled(true);
+        }
+        else
+        {
+            ui->KernelDownload_pushButton->setEnabled(true);
+            ui->KernelDecompress_pushButton->setEnabled(false);
+        }
+        disable_kernelbuttons();
+    }
+}
+
 
 void NOVAembed::storeNOVAembed_ini()
 {
@@ -454,10 +470,6 @@ void NOVAembed::on_tab_currentChanged(int index)
     case 1 : // BKF Tab
         /* File system config files */
 
-        if ( ! QDir("/Devel/NOVAsom_SDK/Kernel/"+Kernel).exists() )
-            disable_kernelbuttons();
-        else
-            enable_kernelbuttons();
 
         ui->Board_comboBox->setCurrentText(_Board_comboBox);
         ui->UserPartition_comboBox->setCurrentText(NumberOfUserPartitions);
@@ -468,6 +480,7 @@ void NOVAembed::on_tab_currentChanged(int index)
         compile_ExtFS_comboBox();
         on_ThisIsReferenceServer_checkBox_clicked(true);
         initrd_helper();
+        manage_kerneldwnld_decompress();
 
         ui->iperror_label->setVisible(false);
         ui->REFERENCE_SERVER_label->setEnabled(false);
