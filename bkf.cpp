@@ -208,7 +208,6 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
     if ( ui->Board_comboBox->currentText() == "U5")
     {
         out << QString("cd nxp\n");
-        out << QString("cd nxp\n");
         out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "M8")
