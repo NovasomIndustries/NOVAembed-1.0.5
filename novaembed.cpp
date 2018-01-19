@@ -19,7 +19,7 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0rc3";
+QString Version = "1.0.5.0rc0";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
@@ -62,6 +62,8 @@ NOVAembed::NOVAembed(QWidget *parent) :
     ui(new Ui::NOVAembed)
 {
 int     copy_required_files = 0;
+QString PixMapName="";
+
     std::cout << "Starting now" << std::flush;
     /* Initialize user area */
     if ( ! QDir("/Devel/NOVAsom_SDK/Logs").exists() )
@@ -147,28 +149,10 @@ int     copy_required_files = 0;
         CurrentSplashName = settings->value( strKeySettings + "CurrentSplashName", "r").toString();
         Kernel = settings->value( strKeySettings + "Kernel", "r").toString();
         CurrentDevelopment = settings->value( strKeySettings + "CurrentDevelopment", "r").toString();
-
-        if ( _Board_comboBox == "P Series")
-        {
-            Kernel=NXP_P_KERNEL;
-            SourceMeFile=NXP_P_SOURCEME;
-        }
-        if ( _Board_comboBox == "U5")
-        {
-            Kernel=NXP_U_KERNEL;
-            SourceMeFile=NXP_U_SOURCEME;
-        }
-        if ( _Board_comboBox == "M8")
-        {
-            Kernel=QUALCOMM_KERNEL;
-            SourceMeFile=QUALCOMM_SOURCEME;
-        }
-        if ( _Board_comboBox == "M8")
-        {
-            Kernel=ALLWINNER_KERNEL;
-            SourceMeFile=ALLWINNER_SOURCEME;
-        }
     }
+
+
+
     if ( ! QDir("/Devel/NOVAsom_SDK/NOVAembed_Settings/PClass_bspf").exists() )
     {
         QDir().mkdir("/Devel/NOVAsom_SDK/NOVAembed_Settings/PClass_bspf");
@@ -183,6 +167,46 @@ int     copy_required_files = 0;
     }
 
     ui->setupUi(this);
+
+    if ( _Board_comboBox == "")
+    {
+        _Board_comboBox = "P Series";
+        Kernel=NXP_P_KERNEL;
+        SourceMeFile=NXP_P_SOURCEME;
+        PixMapName=":/Icons/NXP-Logo.png";
+    }
+    if ( _Board_comboBox == "P Series")
+    {
+        Kernel=NXP_P_KERNEL;
+        SourceMeFile=NXP_P_SOURCEME;
+        PixMapName=":/Icons/NXP-Logo.png";
+    }
+    if ( _Board_comboBox == "U5")
+    {
+        Kernel=NXP_U_KERNEL;
+        SourceMeFile=NXP_U_SOURCEME;
+        PixMapName=":/Icons/NXP-Logo.png";
+    }
+    if ( _Board_comboBox == "M8")
+    {
+        Kernel=QUALCOMM_KERNEL;
+        SourceMeFile=QUALCOMM_SOURCEME;
+        PixMapName=":/Icons/Qualcomm_Snapdragon_logo.png";
+    }
+    if ( _Board_comboBox == "M9")
+    {
+        Kernel=ALLWINNER_KERNEL;
+        SourceMeFile=ALLWINNER_SOURCEME;
+        PixMapName=":/Icons/allwinnerlogo.png";
+    }
+
+    ui->Board_comboBox->setCurrentText(_Board_comboBox);
+    Board_comboBox_setText(_Board_comboBox);
+    ui->brand_label->setPixmap(QPixmap(PixMapName));
+    ui->BrandNameBKF->setPixmap(QPixmap(PixMapName));
+    ui->BoardNameBKF->setText(_Board_comboBox);
+
+
 
     QMovie *movie = new QMovie(":/Icons/animation.gif");
     ui->movie_label->setMovie(movie);

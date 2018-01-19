@@ -59,6 +59,7 @@ private slots:
     void disable_kernelbuttons();
     void enable_kernelbuttons();
     void manage_kerneldwnld_decompress();
+    void Board_comboBox_setText(const QString &arg1);
 
     /* Helper Functions End */
 
