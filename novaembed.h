@@ -330,6 +330,8 @@ private slots:
 
     void on_KernelDownload_pushButton_clicked();
 
+    void on_actionVersion_triggered();
+
 private:
     Ui::NOVAembed *ui;
 };
