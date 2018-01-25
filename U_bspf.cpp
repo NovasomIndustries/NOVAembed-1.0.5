@@ -14,6 +14,7 @@
 #include <QDirIterator>
 
 extern  QString Last_U_BSPFactoryFile;
+extern  QString Kernel;
 
 QString U_GPIO01_IO09_comboBox="GPIO01_IO09";
 QString U_GPIO01_IO10_comboBox="GPIO01_IO10";
@@ -365,10 +366,86 @@ void NOVAembed::on_U_Save_pushButton_clicked()
     ui->U_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
     U_save_helper(fileName);
 }
+/*
+ *     QFile scriptfile("/tmp/script");
+    QString config_file;
+    if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
+    {
+        update_status_bar("Unable to create /tmp/script");
+        return;
+    }
+    update_status_bar("ReCompiling "+Kernel);
 
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        config_file = "imx_novasomp_defconfig";
+    if ( ui->Board_comboBox->currentText() == "U5")
+        config_file = "imx_v7_defconfig";
+    if ( ui->Board_comboBox->currentText() == "M8")
+        config_file = "qcom_defconfig";
+
+    QTextStream out(&scriptfile);
+    out << QString("#!/bin/sh\n");
+    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+    out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
+    out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
+    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
+    out << QString("./kremake "+Kernel+" "+SourceMeFile+" "+config_file+">> /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+
+    scriptfile.close();
+    */
 void NOVAembed::on_U_Generate_pushButton_clicked()
 {
+    // Check if the kernel exists
+    if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/Makefile").exists() )
+    {
+        if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+".tar.bz2").exists() )
+        {
+            QMessageBox::StandardButton reply = QMessageBox::question(this, "Archive not present" , "The archive "+Kernel+".tar.bz2 does not exists.\nThis should be a time consuming task,\nand depends on your internet connection\nand on remote servers load.\n\nIf you reply \"No\" the dtb file cannot be compiled.\n\nDo you want to start the download?", QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes)
+            {
+                QString syscmd = "/Devel/NOVAsom_SDK/Utils/download_kernel "+Kernel+" "+KERNEL_REPO_SERVER;
+                QByteArray ba = syscmd.toLatin1();
+                const char *str = ba.data();
+                this->setCursor(Qt::WaitCursor);
+                update_status_bar("Downloading "+Kernel+".tar.bz2 from "+KERNEL_REPO_SERVER+" ...");
+                system(str);
+                this->setCursor(Qt::ArrowCursor);
+            }
+            else
+                return;
+        }
+        if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+".tar.bz2").exists() )
+        {
+            if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/Makefile").exists() )
+            {
+                QMessageBox::StandardButton reply = QMessageBox::question(this, "Kernel source not decompressed" , "The archive "+Kernel+".tar.bz2 exists and must be decompressed.\nThis will be a disk space consuming task,\n\nIf you reply \"No\" the dtb file cannot be compiled.\n\nDo you want to decompress the kernel?", QMessageBox::Yes|QMessageBox::No);
+                if (reply == QMessageBox::Yes)
+                {
+                    QString syscmd = "/Devel/NOVAsom_SDK/Utils/decompress_kernel "+Kernel;
+                    QByteArray ba = syscmd.toLatin1();
+                    const char *str = ba.data();
+                    this->setCursor(Qt::WaitCursor);
+                    update_status_bar("Decompressing "+Kernel+".tar.bz2 ...");
+                    system(str);
+                    this->setCursor(Qt::ArrowCursor);
+                }
+                else
+                    return;
+            }
+        }
+        else
+        {
+            QMessageBox::StandardButton reply = QMessageBox::question(this, "Download still in progress" , "If you reply \"No\" the current download will not be stopped.\n\nDo you want to stop the current download?", QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes)
+                system("kill -9 ` pidof wget`");
+            update_status_bar("Download of "+Kernel+".tar.bz2 cancelled");
+
+            return;
+        }
+    }
+
     // Save .bspf and Generate .dtb
+
     QString fileName = QFileDialog::getSaveFileName(this,tr("Save .bspf"), Last_U_BSPFactoryFile,tr(".bspf (*.bspf)"));
     if ( fileName.isEmpty() )
         return;

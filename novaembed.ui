@@ -1426,7 +1426,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
@@ -107357,7 +107357,7 @@
   </action>
   <action name="actionVersion">
    <property name="text">
-    <string>Version</string>
+    <string>&amp;Version</string>
    </property>
   </action>
  </widget>
