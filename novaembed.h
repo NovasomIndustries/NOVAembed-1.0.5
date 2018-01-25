@@ -60,6 +60,7 @@ private slots:
     void enable_kernelbuttons();
     void manage_kerneldwnld_decompress();
     void Board_comboBox_setText(const QString &arg1);
+    int CheckIfKernelsPresent();
 
     /* Helper Functions End */
 
@@ -331,6 +332,8 @@ private slots:
     void on_KernelDownload_pushButton_clicked();
 
     void on_actionVersion_triggered();
+
+    void on_M9_Generate_pushButton_clicked();
 
 private:
     Ui::NOVAembed *ui;

@@ -2033,6 +2033,8 @@ void NOVAembed::on_P_Save_pushButton_clicked()
 
 void NOVAembed::on_P_Generate_pushButton_clicked()
 {
+    if ( CheckIfKernelsPresent() == 1 )
+        return;
     // Save .bspf and Generate .dtb
     QString fileName = QFileDialog::getSaveFileName(this,tr("Save .bspf"), Last_P_BSPFactoryFile,tr(".bspf (*.bspf)"));
     if ( fileName.isEmpty() )
