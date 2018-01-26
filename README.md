@@ -4,7 +4,7 @@
 Summary:
 ========
 This repo contains the NOVAembed 1.0.5 graphic tool for the NOVAsom_SDK 1.0.5 Novasom Industries 
-project
+project.
 Can be downloaded at at [NOVAsomIndustries on github](https://novasomindustries.github.io/NOVAembed-1.0.5/)
 ## Prerequisities
 A running Fedora 27 an equivalent virtual machine
