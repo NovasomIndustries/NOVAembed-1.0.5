@@ -366,33 +366,6 @@ void NOVAembed::on_U_Save_pushButton_clicked()
     ui->U_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
     U_save_helper(fileName);
 }
-/*
- *     QFile scriptfile("/tmp/script");
-    QString config_file;
-    if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
-    {
-        update_status_bar("Unable to create /tmp/script");
-        return;
-    }
-    update_status_bar("ReCompiling "+Kernel);
-
-    if ( ui->Board_comboBox->currentText() == "P Series")
-        config_file = "imx_novasomp_defconfig";
-    if ( ui->Board_comboBox->currentText() == "U5")
-        config_file = "imx_v7_defconfig";
-    if ( ui->Board_comboBox->currentText() == "M8")
-        config_file = "qcom_defconfig";
-
-    QTextStream out(&scriptfile);
-    out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
-    out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
-    out << QString("./kremake "+Kernel+" "+SourceMeFile+" "+config_file+">> /Devel/NOVAsom_SDK/Logs/kremake.log\n");
-
-    scriptfile.close();
-    */
 void NOVAembed::on_U_Generate_pushButton_clicked()
 {
     if ( CheckIfKernelsPresent() == 1 )
@@ -440,14 +413,11 @@ void NOVAembed::on_U_Generate_pushButton_clicked()
         ba = syscmd_quad.toLatin1();
         str = ba.data();
         system(str);
-
-
         NOVAsom_Params_helper();
         //storeNOVAembed_ini();
     }
     else
         update_status_bar("Error compiling "+fi.baseName()+".dtb");
-
 }
 
 void NOVAembed::on_U_ViewDtbCompileLog_pushButton_clicked()
