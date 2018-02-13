@@ -558,8 +558,6 @@ void NOVAembed::on_tab_currentChanged(int index)
         break;
     case 1 : // BKF Tab
         /* File system config files */
-
-
         ui->Board_comboBox->setCurrentText(_Board_comboBox);
         ui->UserPartition_comboBox->setCurrentText(NumberOfUserPartitions);
         ui->SplashImageNameLabel->setText(CurrentSplashName+".png");
@@ -619,9 +617,15 @@ void NOVAembed::on_tab_currentChanged(int index)
             Kernel=ALLWINNER_KERNEL;
             SourceMeFile=ALLWINNER_SOURCEME;
             if ( Last_M9_BSPFactoryFile.length() < 2)
+            {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
+                ui->frame_5->setEnabled(false);
+            }
             else
+            {
                 ui->UserBSPFselectedlineEdit->setText(Last_M9_BSPFactoryFile);
+                ui->frame_5->setEnabled(true);
+            }
             ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "M8")
@@ -629,9 +633,15 @@ void NOVAembed::on_tab_currentChanged(int index)
             Kernel=QUALCOMM_KERNEL;
             SourceMeFile=QUALCOMM_SOURCEME;
             if ( Last_M8_BSPFactoryFile.length() < 2)
+            {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
+                ui->frame_5->setEnabled(false);
+            }
             else
+            {
                 ui->UserBSPFselectedlineEdit->setText(Last_M8_BSPFactoryFile);
+                ui->frame_5->setEnabled(true);
+            }
             ui->brand_label->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
@@ -641,12 +651,13 @@ void NOVAembed::on_tab_currentChanged(int index)
             if ( Last_P_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
-                Last_P_BSPFactoryFile = "/Devel/NOVAsom_SDK/DtbUserWorkArea/PClass_bspf/uninitialized.bspf";
+                ui->frame_5->setEnabled(false);
             }
             else
             {
                 P_load_BSPF_File(Last_P_BSPFactoryFile);
                 ui->UserBSPFselectedlineEdit->setText(Last_P_BSPFactoryFile);
+                ui->frame_5->setEnabled(true);
             }
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
@@ -657,10 +668,13 @@ void NOVAembed::on_tab_currentChanged(int index)
             if ( Last_U_BSPFactoryFile.length() < 2)
             {
                 ui->UserBSPFselectedlineEdit->setText("Not Initialized");
-                Last_U_BSPFactoryFile = "/Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf/uninitialized.bspf";
+                ui->frame_5->setEnabled(false);
             }
             else
+            {
                 ui->UserBSPFselectedlineEdit->setText(Last_U_BSPFactoryFile);
+                ui->frame_5->setEnabled(true);
+            }
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         }
 
