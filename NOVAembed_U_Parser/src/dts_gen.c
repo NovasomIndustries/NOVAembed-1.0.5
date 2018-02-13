@@ -160,7 +160,10 @@ int     speed;
 
     if ( iomux->ecspi4 == 1 )
     {
-        sprintf(t,ecspi4_defs);
+        if ( iomux->ecspi4_dev == 1 )
+            sprintf(t,ecspi1_dev_4_defs);
+        else
+            sprintf(t,ecspi4_defs);
         strcat(dtsfile_dump,t);
     }
     if ( iomux->can1 == 1 )

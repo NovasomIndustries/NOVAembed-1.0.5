@@ -411,7 +411,7 @@
         fsl,spi-num-chipselects = <1>;\n\
         cs-gpios = <&gpio5 17 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi1>;\n\
+        pinctrl-0 = <&pinctrl_ecspi4>;\n\
         status = \"okay\";\n\
                spi@0 {\n\
                               reg = <0>;\n\
@@ -426,7 +426,7 @@
         fsl,spi-num-chipselects = <2>;\n\
         cs-gpios = <&gpio5 17 0> ,  <&gpio5 9 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi1>;\n\
+        pinctrl-0 = <&pinctrl_ecspi5>;\n\
         status = \"okay\";\n\
 };\n\
 "
@@ -435,7 +435,7 @@
         fsl,spi-num-chipselects = <2>;\n\
         cs-gpios = <&gpio5 17 0> ,  <&gpio5 9 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi1>;\n\
+        pinctrl-0 = <&pinctrl_ecspi5>;\n\
         status = \"okay\";\n\
         spi@0 {\n\
                       reg = <0>;\n\

@@ -49660,6 +49660,29 @@ a PCAP/RT touch</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>540</y>
+        <width>411</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>* GPIO : 32 * (PORT - 1) + BIT. I.e. ; GPIO4_IO26 = 32 * (4 - 1) + 26 = 122</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabBSPFU">
      <attribute name="title">
@@ -49785,7 +49808,7 @@ a PCAP/RT touch</string>
         </font>
        </property>
        <property name="text">
-        <string>GPIO04_IO04</string>
+        <string>GPIO04_IO05</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_UGPIO04_IO00">
@@ -50060,6 +50083,9 @@ a PCAP/RT touch</string>
          <bold>true</bold>
          <underline>false</underline>
         </font>
+       </property>
+       <property name="toolTip">
+        <string/>
        </property>
        <property name="text">
         <string>GPIO04_IO19</string>
@@ -68657,7 +68683,7 @@ a PCAP/RT touch</string>
         </font>
        </property>
        <property name="text">
-        <string>GPIO04_IO02</string>
+        <string>GPIO04_IO03</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_UGPIO04_IO09">
@@ -68928,6 +68954,29 @@ a PCAP/RT touch</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>540</y>
+        <width>411</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>* GPIO : 32 * (PORT - 1) + BIT. I.e. ; GPIO4_IO26 = 32 * (4 - 1) + 26 = 122</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </widget>

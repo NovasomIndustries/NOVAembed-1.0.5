@@ -568,6 +568,20 @@ imx6ul-ddr3-arm2 {\n\
         status = \"okay\";\n\
 };\n\
 "
+#define ecspi1_dev_4_defs "\
+&ecspi1 {\n\
+        fsl,spi-num-chipselects = <1>;\n\
+        cs-gpios = <&gpio4 9 0>;\n\
+        pinctrl-names = \"default\";\n\
+        pinctrl-0 = <&pinctrl_ecspi4>;\n\
+        status = \"okay\";\n\
+               spi@0 {\n\
+                              reg = <0>;\n\
+                              compatible = \"spidev\";\n\
+                              spi-max-frequency = <54000000>;\n\
+               };\n\
+};\n\
+"
 
 #define ecspi4_pins "\
     pinctrl_ecspi4: ecspi4 {\n\
