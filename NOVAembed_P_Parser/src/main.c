@@ -19,7 +19,7 @@ char        lvds_1280x800_ch1_parserinput[1024];
 void read_parserinput(void)
 {
 FILE *fpin;
-char    parserinput_dir[]="/Devel/NOVAsom_SDK/Qt/NOVAembed/NOVAembed/NOVAembed_P_Parser/lvds_defs/";
+char    parserinput_dir[]="/Devel/NOVAsom_SDK/Qt/NOVAembed/NOVAembed_P_Parser/lvds_defs/";
 char fname[256];
 
     bzero(lvds_800x480_ch0_parserinput,sizeof(lvds_800x480_ch0_parserinput));
