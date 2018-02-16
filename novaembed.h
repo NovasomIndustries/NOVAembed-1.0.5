@@ -29,7 +29,7 @@
 #define QUALCOMM_BLOB_NAME  "linux-qualcomm-4.11.0_Image"
 #define NXP_P_BLOB_NAME     "linux-nxp_p-4.1.15.2_zImage"
 #define NXP_U_BLOB_NAME     "linux-nxp_u-4.1.43_zImage"
-#define KERNEL_REPO_SERVER  "217.57.158.18"
+#define KERNEL_REPO_SERVER  "88.87.126.82"
 
 namespace Ui {
 class NOVAembed;

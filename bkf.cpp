@@ -925,7 +925,14 @@ void NOVAembed::on_KernelDownload_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     out << QString("echo \"This windows runs a background script. DO NOT CLOSE IT!!\"\n");
-    out << QString("./download_kernel "+Kernel+" "+ KERNEL_REPO_SERVER +"/Kernels\n");
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        out << QString("./download_kernel "+Kernel+" "+ KERNEL_REPO_SERVER +"/Kernels/P\n");
+    if ( ui->Board_comboBox->currentText() == "U5")
+        out << QString("./download_kernel "+Kernel+" "+ KERNEL_REPO_SERVER +"/Kernels/U5\n");
+    if ( ui->Board_comboBox->currentText() == "M8")
+        out << QString("./download_kernel "+Kernel+" "+ KERNEL_REPO_SERVER +"/Kernels/M8\n");
+    if ( ui->Board_comboBox->currentText() == "M9")
+        out << QString("./download_kernel "+Kernel+" "+ KERNEL_REPO_SERVER +"/Kernels/M9\n");
     out << QString("echo 0 > /tmp/result\n");
     out << QString("return 0\n");
 
