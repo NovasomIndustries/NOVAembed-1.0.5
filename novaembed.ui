@@ -2391,7 +2391,7 @@
        <property name="geometry">
         <rect>
          <x>220</x>
-         <y>50</y>
+         <y>30</y>
          <width>131</width>
          <height>21</height>
         </rect>
@@ -2485,26 +2485,6 @@
        </property>
        <property name="text">
         <string>CCM ClkO1</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="P_PWM1_checkBox">
-       <property name="geometry">
-        <rect>
-         <x>220</x>
-         <y>30</y>
-         <width>101</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>PWM1 Out</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_11">

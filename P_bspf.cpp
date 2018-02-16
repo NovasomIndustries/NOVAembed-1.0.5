@@ -936,7 +936,7 @@ void NOVAembed::on_P_EPIT1_checkBox_toggled(bool checked)
         ui->P_CCMCLKO1_checkBox->setEnabled(true);
     }
 }
-
+/*
 void NOVAembed::on_P_PWM1_checkBox_toggled(bool checked)
 {
     ui->P_PWM1_checkBox->setChecked(checked);
@@ -953,19 +953,19 @@ void NOVAembed::on_P_PWM1_checkBox_toggled(bool checked)
         ui->label_PGPIO4_IO29->setText("GPIO4_IO29");
     }
 }
-
+*/
 void NOVAembed::on_P_WD1_checkBox_toggled(bool checked)
 {
     ui->P_WD1_checkBox->setChecked(checked);
     if ( checked)
     {
-        ui->P_PWM1_checkBox->setChecked(false);
-        ui->P_PWM1_checkBox->setEnabled(false);
+        //ui->P_PWM1_checkBox->setChecked(false);
+        //ui->P_PWM1_checkBox->setEnabled(false);
         ui->label_PGPIO4_IO29->setText("WDOG1_B");
     }
     else
     {
-        ui->P_PWM1_checkBox->setEnabled(true);
+        //ui->P_PWM1_checkBox->setEnabled(true);
         ui->label_PGPIO4_IO29->setText("GPIO4_IO29");
     }
 }
@@ -1536,11 +1536,12 @@ void NOVAembed::P_pin_decode()
             P_GPIO1_IO00_comboBox = "GPIO1_IO00";
     }
 
-    if ( ui->P_PWM1_checkBox->isChecked() == true )
+    /*if ( ui->P_PWM1_checkBox->isChecked() == true )
     {
         P_GPIO4_IO29_comboBox = "PWM1_OUT";
     }
     else
+    */
     {
         if ( ui->P_WD1_checkBox->isChecked() == true )
             P_GPIO4_IO29_comboBox = "WDOG1_B";
@@ -1845,8 +1846,6 @@ QSettings * func_settings = 0;
         on_P_CCMCLKO1_checkBox_toggled(true);
     if ( P_getvalue(strKeyFunc, func_settings , "P_GPIO1_IO00_comboBox") == "EPIT1_OUT" )
         on_P_EPIT1_checkBox_toggled(true);
-    if ( P_getvalue(strKeyFunc, func_settings , "P_GPIO4_IO29_comboBox") == "PWM1_OUT" )
-        on_P_PWM1_checkBox_toggled(true);
     if ( P_getvalue(strKeyFunc, func_settings , "P_GPIO4_IO29_comboBox") == "WDOG1_B" )
         on_P_WD1_checkBox_toggled(true);
     if ( P_getvalue(strKeyFunc, func_settings , "P_SD3_CMD_comboBox") == "SD3_CMD" )
@@ -1934,7 +1933,7 @@ void NOVAembed::on_P_Clear_pushButton_clicked()
 
     ui->P_KHZ32_checkBox->setChecked(false);
     ui->P_MHZ24_checkBox->setChecked(false);
-    ui->P_PWM1_checkBox->setChecked(false);
+    //ui->P_PWM1_checkBox->setChecked(false);
     ui->P_PCIe_checkBox->setChecked(true);
     ui->P_SATA_checkBox->setChecked(false);
     ui->P_SPDIF_checkBox->setChecked(false);

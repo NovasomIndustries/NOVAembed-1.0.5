@@ -411,13 +411,13 @@
         fsl,spi-num-chipselects = <1>;\n\
         cs-gpios = <&gpio5 17 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi4>;\n\
+        pinctrl-0 = <&pinctrl_ecspi1>;\n\
         status = \"okay\";\n\
-               spi@0 {\n\
-                              reg = <0>;\n\
-                              compatible = \"spidev\";\n\
-                              spi-max-frequency = <54000000>;\n\
-               };\n\
+        spi@0 {\n\
+            reg = <0>;\n\
+            compatible = \"spidev\";\n\
+            spi-max-frequency = <54000000>;\n\
+        };\n\
 };\n\
 "
 
@@ -426,7 +426,7 @@
         fsl,spi-num-chipselects = <2>;\n\
         cs-gpios = <&gpio5 17 0> ,  <&gpio5 9 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi5>;\n\
+        pinctrl-0 = <&pinctrl_ecspi1>;\n\
         status = \"okay\";\n\
 };\n\
 "
@@ -435,7 +435,7 @@
         fsl,spi-num-chipselects = <2>;\n\
         cs-gpios = <&gpio5 17 0> ,  <&gpio5 9 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi5>;\n\
+        pinctrl-0 = <&pinctrl_ecspi1>;\n\
         status = \"okay\";\n\
         spi@0 {\n\
                       reg = <0>;\n\
@@ -865,13 +865,12 @@
                         MX6QDL_PAD_GPIO_6__GPIO1_IO06 \n\
                 >;\n\
         };\n\
-"
-/*        pinctrl_pwm1: pwm1grp {\n\
+        pinctrl_pwm1: pwm1grp {\n\
                 fsl,pins = <\n\
                         MX6QDL_PAD_GPIO_9__PWM1_OUT 0x1b0b1\n\
                 >;\n\
         };\n\
-*/
+"
 
 #define dtsi_lvds_header_defs "\
 &ldb {\n\

@@ -197,8 +197,6 @@ private slots:
 
     void on_P_EPIT1_checkBox_toggled(bool checked);
 
-    void on_P_PWM1_checkBox_toggled(bool checked);
-
     void on_P_WD1_checkBox_toggled(bool checked);
 
     void on_P_SPDIF_checkBox_toggled(bool checked);

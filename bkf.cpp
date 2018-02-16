@@ -118,6 +118,8 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
 void NOVAembed::on_KernelXconfig_pushButton_clicked()
 {
     QFile scriptfile("/tmp/script");
+    QString config_file;
+
     if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
     {
         update_status_bar("Unable to create /tmp/script");
@@ -127,6 +129,20 @@ void NOVAembed::on_KernelXconfig_pushButton_clicked()
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/Kernel/"+Kernel+"\n");
     out << QString(". ../../Utils/"+SourceMeFile+"\n");
+
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        config_file = "imx_novasomp_defconfig";
+    if ( ui->Board_comboBox->currentText() == "U5")
+        config_file = "imx_v7_defconfig";
+    if ( ui->Board_comboBox->currentText() == "M8")
+        config_file = "qcom_defconfig";
+    if ( ui->Board_comboBox->currentText() == "M9")
+        config_file = "sunxi_arm64_defconfig";
+
+    if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/.config").exists() )
+    {
+        out << QString("make "+config_file+"\n");
+    }
     out << QString("make xconfig\n");
     out << QString("echo \"0\" > /tmp/result\n");
 
