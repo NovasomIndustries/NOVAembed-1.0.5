@@ -325,10 +325,6 @@ private slots:
 
     void M9_save_helper(QString fileName);
 
-    void on_KernelDecompress_pushButton_clicked();
-
-    void on_KernelDownload_pushButton_clicked();
-
     void on_actionVersion_triggered();
 
     void on_M9_Generate_pushButton_clicked();

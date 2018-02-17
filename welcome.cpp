@@ -80,7 +80,7 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomU-2016.03/NOVAsomU/u-boot.imx");
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomU-2016.03/u-boot.imx");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
@@ -101,7 +101,7 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
-        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomP-2015.04/NOVAsomP/u-boot.img");
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomP-2015.04/u-boot.img");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
         ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));

@@ -19,7 +19,7 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0rc0";
+QString Version = "1.0.5.0rc1";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
@@ -66,6 +66,8 @@ QString PixMapName="";
 
     std::cout << "Starting now" << std::flush;
     /* Initialize user area */
+    if ( ! QDir("/Devel/NOVAsom_SDK/Blobs").exists() )
+        system("mkdir -p /Devel/NOVAsom_SDK/Blobs");
     if ( ! QDir("/Devel/NOVAsom_SDK/Logs").exists() )
         system("mkdir -p /Devel/NOVAsom_SDK/Logs");
     if ( ! QDir("/Devel/NOVAsom_SDK/Deploy").exists() )
@@ -76,6 +78,7 @@ QString PixMapName="";
         system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/PClass_bspf/temp");
         system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/UClass_bspf/temp");
         system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/M8Class_bspf/temp");
+        system("mkdir -p /Devel/NOVAsom_SDK/DtbUserWorkArea/M9Class_bspf/temp");
         copy_required_files = 1;
     }
     if ( ! QDir("/Devel/NOVAsom_SDK/DtbUserWorkArea/PClass_bspf").exists() )
@@ -286,29 +289,18 @@ void NOVAembed::enable_kernelbuttons()
     ui->KernelCompile_pushButton->setEnabled(true);
     ui->KernelReCompile_pushButton->setEnabled(true);
     ui->ViewKernelLog_pushButton->setEnabled(true);
-    ui->KernelDecompress_pushButton->setEnabled(false);
 }
 
 void NOVAembed::manage_kerneldwnld_decompress()
 {
     if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/Makefile").exists() )
     {
-        ui->KernelDownload_pushButton->setEnabled(false);
-        ui->KernelDecompress_pushButton->setEnabled(false);
+
         enable_kernelbuttons();
     }
     else
     {
-        if ( QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+".tar.bz2").exists() )
-        {
-            ui->KernelDownload_pushButton->setEnabled(false);
-            ui->KernelDecompress_pushButton->setEnabled(true);
-        }
-        else
-        {
-            ui->KernelDownload_pushButton->setEnabled(true);
-            ui->KernelDecompress_pushButton->setEnabled(false);
-        }
+
         disable_kernelbuttons();
     }
 }

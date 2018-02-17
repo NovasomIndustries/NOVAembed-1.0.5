@@ -724,42 +724,6 @@
         <string>View kernel log</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="KernelDecompress_pushButton">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>80</y>
-         <width>131</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Decompress Sources</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="KernelDownload_pushButton">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>60</y>
-         <width>131</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Download Sources</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QFrame" name="frame_4">
       <property name="geometry">
@@ -2337,30 +2301,6 @@
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
-     </widget>
-     <widget class="QLabel" name="label_test">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
-        <y>280</y>
-        <width>341</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-        <underline>false</underline>
-       </font>
-      </property>
-      <property name="text">
-       <string>Boot Loader</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tabBSPFP">
