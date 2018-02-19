@@ -2499,9 +2499,9 @@
       <widget class="QCheckBox" name="P_SDCARD3_checkBox">
        <property name="geometry">
         <rect>
-         <x>430</x>
+         <x>420</x>
          <y>30</y>
-         <width>121</width>
+         <width>131</width>
          <height>21</height>
         </rect>
        </property>
