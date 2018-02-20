@@ -416,9 +416,8 @@ imx6ul-ddr3-arm2 {\n\
     };\n\
     pinctrl_i2c2: i2c2 {\n\
         fsl,pins = <\n\
-        MX6UL_PAD_UART5_TX_DATA__I2C2_SCL        0x4001b8b1\n\
-        MX6UL_PAD_UART5_RX_DATA__I2C2_SDA        0x4001b8b1\n\
-        MX6UL_PAD_LCD_RESET__GPIO3_IO04          0x1b0b1\n\
+        MX6UL_PAD_CSI_HSYNC__I2C2_SCL           0x4001b8b1\n\
+        MX6UL_PAD_CSI_VSYNC__I2C2_SDA           0x4001b8b1\n\
         >;\n\
     };\n\
     pinctrl_i2ctouch_irq: i2ctouch_irq {\n\
