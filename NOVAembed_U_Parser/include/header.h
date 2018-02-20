@@ -298,6 +298,11 @@
 };\n\
 &iomuxc {\n\
 imx6ul-ddr3-arm2 {\n\
+    pinctrl_hog: hoggrp {\
+            fsl,pins = <\
+                MX6UL_PAD_NAND_DATA07__GPIO4_IO09     0x4001b8b1\
+          >;\
+        };\
     pinctrl_sai1: sai1grp {\n\
         fsl,pins = <\n\
         MX6UL_PAD_CSI_DATA04__SAI1_TX_SYNC	0x1b0b0\n\
@@ -577,7 +582,7 @@ imx6ul-ddr3-arm2 {\n\
                spi@0 {\n\
                               reg = <0>;\n\
                               compatible = \"spidev\";\n\
-                              spi-max-frequency = <54000000>;\n\
+                              spi-max-frequency = <27000000>;\n\
                };\n\
 };\n\
 "
@@ -588,7 +593,6 @@ imx6ul-ddr3-arm2 {\n\
         MX6UL_PAD_NAND_DATA04__ECSPI4_SCLK        0xb0\n\
         MX6UL_PAD_NAND_DATA05__ECSPI4_MOSI        0xb0\n\
         MX6UL_PAD_NAND_DATA06__ECSPI4_MISO        0xb0\n\
-        MX6UL_PAD_NAND_DATA07__ECSPI4_SS0        0xb0\n\
         >;\n\
     };\n\
 "
