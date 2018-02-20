@@ -567,8 +567,8 @@ imx6ul-ddr3-arm2 {\n\
         status = \"okay\";\n\
 };\n\
 "
-#define ecspi1_dev_4_defs "\
-&ecspi1 {\n\
+#define ecspi4_dev_4_defs "\
+&ecspi4 {\n\
         fsl,spi-num-chipselects = <1>;\n\
         cs-gpios = <&gpio4 9 0>;\n\
         pinctrl-names = \"default\";\n\
