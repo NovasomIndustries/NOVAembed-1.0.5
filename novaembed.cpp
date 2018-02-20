@@ -772,6 +772,8 @@ void NOVAembed::on_tab_currentChanged(int index)
                 if ( base != "" )
                     ui->U_Current_BSPF_File_label->setText(base+".bspf");
                 U_load_BSPF_File(Last_U_BSPFactoryFile);
+                ui->U_I2C2Speed_lineEdit->setText("100000");
+
                 ui->U_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
                 update_status_bar("BSP Factory : Loaded file "+Last_U_BSPFactoryFile);
             }

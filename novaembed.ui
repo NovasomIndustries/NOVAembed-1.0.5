@@ -50341,7 +50341,7 @@ a PCAP/RT touch</string>
         <rect>
          <x>10</x>
          <y>90</y>
-         <width>401</width>
+         <width>311</width>
          <height>20</height>
         </rect>
        </property>
@@ -50355,7 +50355,7 @@ a PCAP/RT touch</string>
         </font>
        </property>
        <property name="text">
-        <string>UART                                                                                                              </string>
+        <string>UART                                                                              </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -50432,6 +50432,33 @@ a PCAP/RT touch</string>
        </property>
        <property name="text">
         <string>UART 6 has 4 Wires</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="VideoVisible_label_5">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>80</y>
+         <width>161</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Note :
+I2C2 must be checked to have 
+a PCAP or an external RT touch</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
       </widget>
      </widget>
