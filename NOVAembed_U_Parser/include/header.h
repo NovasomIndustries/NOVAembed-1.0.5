@@ -577,7 +577,7 @@ imx6ul-ddr3-arm2 {\n\
         fsl,spi-num-chipselects = <1>;\n\
         cs-gpios = <&gpio4 9 0>;\n\
         pinctrl-names = \"default\";\n\
-        pinctrl-0 = <&pinctrl_ecspi4>;\n\
+        pinctrl-0 = <&pinctrl_ecspi4 &pinctrl_ecspi4_cs_1>;\n\
         status = \"okay\";\n\
                spi@0 {\n\
                               reg = <0>;\n\
@@ -593,6 +593,11 @@ imx6ul-ddr3-arm2 {\n\
         MX6UL_PAD_NAND_DATA04__ECSPI4_SCLK        0xb0\n\
         MX6UL_PAD_NAND_DATA05__ECSPI4_MOSI        0xb0\n\
         MX6UL_PAD_NAND_DATA06__ECSPI4_MISO        0xb0\n\
+        >;\n\
+    };\n\
+    pinctrl_ecspi4_cs_1: ecspi4_cs_grp-1 {\n\
+        fsl,pins = <\n\
+        MX6UL_PAD_NAND_DATA07__GPIO4_IO09  0x10b0\n\
         >;\n\
     };\n\
 "
