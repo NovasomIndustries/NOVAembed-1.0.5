@@ -137,7 +137,7 @@ void NOVAembed::on_KernelXconfig_pushButton_clicked()
     if ( ui->Board_comboBox->currentText() == "M8")
         config_file = "qcom_defconfig";
     if ( ui->Board_comboBox->currentText() == "M9")
-        config_file = "sunxi_arm64_defconfig";
+        config_file = "novasom_m9_defconfig";
 
     if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/.config").exists() )
     {
@@ -317,7 +317,7 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
     {
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/allw\n");
-        config_file = "sunxi_arm64_defconfig";
+        config_file = "novasom_m9_defconfig";
         out << QString("./kremake "+Kernel+" "+SourceMeFile+" "+config_file+">> /Devel/NOVAsom_SDK/Logs/kremake.log\n");
     }
     scriptfile.close();

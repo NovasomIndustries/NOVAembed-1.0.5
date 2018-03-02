@@ -16,7 +16,7 @@
 //#include <QHostInfo>
 #include <QDirIterator>
 
-#define ALLWINNER_KERNEL    "linux-allw-4.14.0"
+#define ALLWINNER_KERNEL    "linux-allw-4.15.0"
 #define QUALCOMM_KERNEL     "linux-4.11.0-QualcommLinaro"
 #define NXP_P_KERNEL        "linux-imx_4.1.15_1.2.0_ga"
 #define NXP_U_KERNEL        "linux-imx_4.1.43"
@@ -25,7 +25,7 @@
 #define NXP_P_SOURCEME      "SourceMe32_5"
 #define NXP_U_SOURCEME      "SourceMe32_5"
 #define BLOBS_PATH          "/Devel/NOVAsom_SDK/Blobs/"
-#define ALLWINNER_BLOB_NAME "linux-allw-4.14.0_Image"
+#define ALLWINNER_BLOB_NAME "linux-allw-4.15.0_Image"
 #define QUALCOMM_BLOB_NAME  "linux-qualcomm-4.11.0_Image"
 #define NXP_P_BLOB_NAME     "linux-nxp_p-4.1.15.2_zImage"
 #define NXP_U_BLOB_NAME     "linux-nxp_u-4.1.43_zImage"
