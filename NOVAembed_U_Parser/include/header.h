@@ -512,6 +512,16 @@ imx6ul-ddr3-arm2 {\n\
                 irq-gpios = <&gpio3 4 GPIO_ACTIVE_HIGH>;\n\
                 reset-gpios = <&gpio4 30 GPIO_ACTIVE_LOW>;\n\
         };\n\
+        polytouch4: ilitek@41 {\n\
+                compatible = \"ilitek_ts\";\n\
+                reg = <0x41>;\n\
+                pinctrl-names = \"default\";\n\
+                pinctrl-0 = <&pinctrl_i2ctouch_irq>;\n\
+                interrupt-parent = <&gpio1>;\n\
+                interrupts = <6 0>;\n\
+                ilitek,irq-gpio = <&gpio1 6 GPIO_ACTIVE_HIGH>;\n\
+                ilitek,reset-gpio = <&gpio4 30 GPIO_ACTIVE_LOW>;\n\
+        };\n\
 };\n\
 "
 
