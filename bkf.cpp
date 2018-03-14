@@ -50,15 +50,11 @@ QWidget *current_stab;
 
 void NOVAembed::initrd_helper(void)
 {
-    QFileInfo info1("/Devel/NOVAsom_SDK/Deploy/uInitrd");
-    QString link_ptr = info1.symLinkTarget() ;
-    QFileInfo info2(link_ptr);
-    initrd_size = (info2.size() / 1024) * 2;
-    if ( initrd_size < 64000 )
-        initrd_size += 64000;
+    QFileInfo info1("/Devel/NOVAsom_SDK/FileSystem/"+FileSystemName+"/output/images/rootfs.ext2");
+    initrd_size = (info1.size() / 1024) + 32000;
     ui->initRdSize_lineEdit->setText( QString::number(initrd_size) );
-
 }
+
 /* Bootloader */
 void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
 {
