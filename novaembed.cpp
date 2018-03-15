@@ -19,7 +19,7 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0rc2";
+QString Version = "1.0.5.0rc3";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
@@ -72,6 +72,15 @@ QString PixMapName="";
         system("mkdir -p /Devel/NOVAsom_SDK/Logs");
     if ( ! QDir("/Devel/NOVAsom_SDK/Deploy").exists() )
         system("mkdir -p /Devel/NOVAsom_SDK/Deploy");
+    if ( ! QDir("/Devel/NOVAsom_SDK/ExternalFileSystems").exists() )
+    {
+        QMessageBox::information(this, tr("ExternalFileSystems"),"ExternalFileSystems not found. Creating a new one!");
+        system("mkdir -p /Devel/NOVAsom_SDK/ExternalFileSystems/P");
+        system("mkdir -p /Devel/NOVAsom_SDK/ExternalFileSystems/U");
+        system("mkdir -p /Devel/NOVAsom_SDK/ExternalFileSystems/M8");
+        system("mkdir -p /Devel/NOVAsom_SDK/ExternalFileSystems/M9");
+        copy_required_files = 1;
+    }
     if ( ! QDir("/Devel/NOVAsom_SDK/DtbUserWorkArea").exists() )
     {
         QMessageBox::information(this, tr("DtbUserWorkArea"),"DtbUserWorkArea not found. Creating a new one!");
@@ -396,12 +405,14 @@ void NOVAembed::compile_ExtFS_comboBox()
     QDir ExternalFileSystemsDir;
     if ( ui->Board_comboBox->currentText() == "M8")
         ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/M8";
+    if ( ui->Board_comboBox->currentText() == "M9")
+        ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/M9";
     if ( ui->Board_comboBox->currentText() == "U5")
         ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/U5";
     if ( ui->Board_comboBox->currentText() == "P Series")
         ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/P";
 
-    str = "*.img.tar.bz2";
+    str = "*.img.bz2";
 
     QStringList ExternalFileSystemsnameFilter(str);
     QStringList ExternalFileSystemsfilesList = ExternalFileSystemsDir.entryList(ExternalFileSystemsnameFilter);
@@ -411,7 +422,6 @@ void NOVAembed::compile_ExtFS_comboBox()
     for(int i=0;i<ExternalFileSystemsfilesList.count();i++)
     {
         str = ExternalFileSystemsfilesList[i];
-        str.chop(12);
         if (( str != ".") && (str != ".."))
         {
             ui->ExtFS_comboBox->addItem(str);
@@ -886,3 +896,4 @@ void NOVAembed::on_M9_Generate_pushButton_clicked()
     if ( CheckIfKernelsPresent() == 1 )
         return;
 }
+

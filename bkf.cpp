@@ -757,6 +757,88 @@ void NOVAembed::on_AddFileSystemConfig_pushButton_clicked()
 }
 
 /* External file systems */
+
+void NOVAembed::on_ExtFS_CheckAvailable_FS_pushButton_clicked()
+{
+const char *cmd;
+QByteArray ba;
+QString repo_server=KERNEL_REPO_SERVER;
+QString currentboard=ui->Board_comboBox->currentText();
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        currentboard="P";
+    QString Qcmd = "cd /tmp; rm nova_os*.* ;wget http://"+repo_server+"/OS/"+currentboard+"/nova_os.txt";
+    ba = Qcmd.toLatin1();
+    cmd = ba.data();
+    system(cmd);
+    QFile file("/tmp/nova_os.txt");
+    QString content;
+    ui->ExtFS_Available_comboBox->clear();
+    QString ExternalFileSystemsFile;
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&file);
+        while (!stream.atEnd())
+        {
+            content = stream.readLine();
+            QString extfsname = content.split(" ").at(0);
+            if ( ui->Board_comboBox->currentText() == "M8")
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+extfsname;
+            if ( ui->Board_comboBox->currentText() == "M9")
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M9/"+extfsname;
+            if ( ui->Board_comboBox->currentText() == "U5")
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+extfsname;
+            if ( ui->Board_comboBox->currentText() == "P Series")
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+extfsname;
+            QFileInfo check_file(ExternalFileSystemsFile);
+            if ( ! check_file.exists() )
+                ui->ExtFS_Available_comboBox->addItem(extfsname);
+            /*
+            ba = extfsname.toLatin1();
+            std::cout << ba.data() << std::flush;
+            file.close();
+            ba = content.toLatin1();
+            */
+        }
+    }
+    ui->ExtFS_Available_comboBox->setCurrentIndex(0);
+}
+
+
+
+void NOVAembed::on_ExtFS_Available_comboBox_currentIndexChanged(const QString &arg1)
+{
+    ui->ExtFS_DownloadSelected_FS_pushButton->setText("Download "+ui->ExtFS_Available_comboBox->currentText());
+}
+
+
+
+void NOVAembed::on_ExtFS_DownloadSelected_FS_pushButton_clicked()
+{
+    QFile scriptfile("/tmp/script");
+    QString repo_server=KERNEL_REPO_SERVER;
+    QString currentboard=ui->Board_comboBox->currentText();
+    if ( ui->Board_comboBox->currentText() == "P Series")
+        currentboard="P";
+    if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
+    {
+        update_status_bar("Unable to create /tmp/script");
+        return;
+    }
+    QTextStream out(&scriptfile);
+    out << QString("#!/bin/sh\n");
+    out << QString("cd /Devel/NOVAsom_SDK/ExternalFileSystems/"+currentboard+"\n");
+    out << QString("wget http://"+repo_server+"/OS/"+currentboard+"/"+ui->ExtFS_Available_comboBox->currentText()+"\n");
+    out << QString("echo 0 > /tmp/result\n");
+    out << QString("return 0\n");
+    scriptfile.close();
+    if ( run_script() == 0)
+    {
+        update_status_bar("File System "+ui->ExtFS_Available_comboBox->currentText()+" downloaded");
+    }
+    else
+        update_status_bar("File System "+ui->ExtFS_Available_comboBox->currentText()+" download error");
+}
+
 void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
 {
     QFile scriptfile("/tmp/script");
@@ -777,6 +859,8 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+ui->ExtFS_comboBox->currentText();
     if ( ui->Board_comboBox->currentText() == "P Series")
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+ui->ExtFS_comboBox->currentText();
+    if ( ui->Board_comboBox->currentText() == "M9")
+        full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+ui->ExtFS_comboBox->currentText();
 
     out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     scriptfile.close();
@@ -787,6 +871,7 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
     else
         update_status_bar("File System Creation error");
 }
+/* External file systems end */
 
 void NOVAembed::on_UserBSPFSelect_pushButton_clicked()
 {

@@ -329,6 +329,12 @@ private slots:
 
     void on_M9_Generate_pushButton_clicked();
 
+    void on_ExtFS_CheckAvailable_FS_pushButton_clicked();
+
+    void on_ExtFS_Available_comboBox_currentIndexChanged(const QString &arg1);
+
+    void on_ExtFS_DownloadSelected_FS_pushButton_clicked();
+
 private:
     Ui::NOVAembed *ui;
 };
