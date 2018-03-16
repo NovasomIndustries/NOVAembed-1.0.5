@@ -750,13 +750,15 @@ void NOVAembed::on_AddFileSystemConfig_pushButton_clicked()
         }
     }
     QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"/.config", dest_file);
-
     QFile::copy("/Devel/NOVAsom_SDK/FileSystem/"+ui->FileSystemSelectedlineEdit->text()+"/BusyBox.config", "/Devel/NOVAsom_SDK/Utils/Configurations/BusyBox_"+ui->FileSystemSelectedlineEdit->text()+".config");
-
     compile_NewFileSystemFileSystemConfigurationcomboBox();
 }
 
 /* External file systems */
+QString extfsname;
+QString extfsfilename;
+QString extfsversion;
+QString extfsboard;
 
 void NOVAembed::on_ExtFS_CheckAvailable_FS_pushButton_clicked()
 {
@@ -780,15 +782,22 @@ QString currentboard=ui->Board_comboBox->currentText();
         while (!stream.atEnd())
         {
             content = stream.readLine();
-            QString extfsname = content.split(" ").at(0);
+            extfsfilename = content.split(" ").at(0);
+            extfsname = content.split(" ").at(1);
+            extfsboard = content.split(" ").at(2);
+            extfsversion = content.split(" ").at(3);
+            ui->ExtFSName_lineEdit->setText(extfsname);
+            ui->ExtFSFileName_lineEdit->setText(extfsfilename);
+            ui->ExtFSVersion_lineEdit->setText(extfsversion);
+            ui->ExtFSBoard_lineEdit->setText(extfsboard);
             if ( ui->Board_comboBox->currentText() == "M8")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+extfsname;
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+extfsfilename;
             if ( ui->Board_comboBox->currentText() == "M9")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M9/"+extfsname;
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M9/"+extfsfilename;
             if ( ui->Board_comboBox->currentText() == "U5")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+extfsname;
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+extfsfilename;
             if ( ui->Board_comboBox->currentText() == "P Series")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+extfsname;
+                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+extfsfilename;
             QFileInfo check_file(ExternalFileSystemsFile);
             if ( ! check_file.exists() )
                 ui->ExtFS_Available_comboBox->addItem(extfsname);
@@ -799,18 +808,59 @@ QString currentboard=ui->Board_comboBox->currentText();
             ba = content.toLatin1();
             */
         }
+        file.close();
     }
     ui->ExtFS_Available_comboBox->setCurrentIndex(0);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&file);
+        while (!stream.atEnd())
+        {
+            content = stream.readLine();
+            QString locextfsname = content.split(" ").at(1);
+            if ( locextfsname == ui->ExtFS_Available_comboBox->currentText())
+            {
+                extfsname = content.split(" ").at(1);
+                extfsfilename = content.split(" ").at(0);
+                extfsboard = content.split(" ").at(2);
+                extfsversion = content.split(" ").at(3);
+                ui->ExtFSName_lineEdit->setText(extfsname);
+                ui->ExtFSFileName_lineEdit->setText(extfsfilename);
+                ui->ExtFSVersion_lineEdit->setText(extfsversion);
+                ui->ExtFSBoard_lineEdit->setText(extfsboard);
+            }
+        }
+        file.close();
+    }
 }
-
-
 
 void NOVAembed::on_ExtFS_Available_comboBox_currentIndexChanged(const QString &arg1)
 {
     ui->ExtFS_DownloadSelected_FS_pushButton->setText("Download "+ui->ExtFS_Available_comboBox->currentText());
+    QFile file("/tmp/nova_os.txt");
+    QString content;
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&file);
+        while (!stream.atEnd())
+        {
+            content = stream.readLine();
+            QString locextfsname = content.split(" ").at(1);
+            if ( locextfsname == arg1)
+            {
+                extfsname = content.split(" ").at(1);
+                extfsfilename = content.split(" ").at(0);
+                extfsboard = content.split(" ").at(2);
+                extfsversion = content.split(" ").at(3);
+                ui->ExtFSName_lineEdit->setText(extfsname);
+                ui->ExtFSFileName_lineEdit->setText(extfsfilename);
+                ui->ExtFSVersion_lineEdit->setText(extfsversion);
+                ui->ExtFSBoard_lineEdit->setText(extfsboard);
+            }
+        }
+        file.close();
+    }
 }
-
-
 
 void NOVAembed::on_ExtFS_DownloadSelected_FS_pushButton_clicked()
 {
@@ -827,12 +877,14 @@ void NOVAembed::on_ExtFS_DownloadSelected_FS_pushButton_clicked()
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
     out << QString("cd /Devel/NOVAsom_SDK/ExternalFileSystems/"+currentboard+"\n");
-    out << QString("wget http://"+repo_server+"/OS/"+currentboard+"/"+ui->ExtFS_Available_comboBox->currentText()+"\n");
+    out << QString("wget http://"+repo_server+"/OS/"+currentboard+"/"+ui->ExtFSFileName_lineEdit->text()+"\n");
     out << QString("echo 0 > /tmp/result\n");
     out << QString("return 0\n");
     scriptfile.close();
+    return;
     if ( run_script() == 0)
     {
+        compile_ExtFS_comboBox();
         update_status_bar("File System "+ui->ExtFS_Available_comboBox->currentText()+" downloaded");
     }
     else
