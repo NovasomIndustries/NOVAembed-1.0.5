@@ -881,7 +881,6 @@ void NOVAembed::on_ExtFS_DownloadSelected_FS_pushButton_clicked()
     out << QString("echo 0 > /tmp/result\n");
     out << QString("return 0\n");
     scriptfile.close();
-    return;
     if ( run_script() == 0)
     {
         compile_ExtFS_comboBox();
