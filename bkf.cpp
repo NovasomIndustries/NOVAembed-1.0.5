@@ -894,7 +894,6 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
 {
     QFile scriptfile("/tmp/script");
     QString full_path;
-    update_status_bar("Creating file system "+ui->NewFileSystemSelectedlineEdit->text()+" ...");
 
     if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
     {
@@ -912,12 +911,13 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+ui->ExtFS_comboBox->currentText();
     if ( ui->Board_comboBox->currentText() == "M9")
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+ui->ExtFS_comboBox->currentText();
+    update_status_bar("Writing image "+ui->ExtFS_comboBox->currentText()+" ...");
 
-    out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
+    out << QString("./flash_extfs /dev/"+ui->ExtFSFileName_lineEdit->text()+" "+full_path+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     scriptfile.close();
     if ( run_script() == 0)
     {
-        update_status_bar("File System "+ui->ExtFS_comboBox->currentText()+" written");
+        update_status_bar("File System "+ui->ExtFSFileName_lineEdit->text()+" written");
     }
     else
         update_status_bar("File System Creation error");
