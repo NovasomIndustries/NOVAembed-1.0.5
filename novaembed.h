@@ -32,8 +32,8 @@
 #define KERNEL_REPO_SERVER  "88.87.126.82"
 #define HUM_P               "NI150316-HUM-P-V1.0.pdf"
 #define QSG_P               "NI150316-QSG-P-V1.0.pdf"
-#define HUM_U5              "N.U-200417-HUM-U5-V1.0.pdf"
-#define QSG_U5              "N.U-200417-HUM-U5-V1.0.pdf"
+#define HUM_U5              "N.U-200417-HUM-U5-V1.1.pdf"
+#define QSG_U5              "N.U-200417-HUM-U5-V1.1.pdf"
 
 namespace Ui {
 class NOVAembed;
