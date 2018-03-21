@@ -28,3 +28,6 @@ FORMS    += novaembed.ui
 
 RESOURCES += \
     novaembedresources.qrc
+
+DISTFILES += \
+    Revision.txt

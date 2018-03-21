@@ -30,6 +30,10 @@
 #define NXP_P_BLOB_NAME     "linux-nxp_p-4.1.15.2_zImage"
 #define NXP_U_BLOB_NAME     "linux-nxp_u-4.1.43_zImage"
 #define KERNEL_REPO_SERVER  "88.87.126.82"
+#define HUM_P               "NI150316-HUM-P-V1.0.pdf"
+#define QSG_P               "NI150316-QSG-P-V1.0.pdf"
+#define HUM_U5              "N.U-200417-HUM-U5-V1.0.pdf"
+#define QSG_U5              "N.U-200417-HUM-U5-V1.0.pdf"
 
 namespace Ui {
 class NOVAembed;
@@ -148,10 +152,6 @@ private slots:
 
     void on_UserPartition2Size_lineEdit_textChanged(const QString &arg1);
 
-    void on_P_HUM_pushButton_clicked();
-
-    void on_P_QSG_pushButton_clicked();
-
     void on_LaunchBusyboxMenuConfig_pushButton_clicked();
 
     void on_uSD_Device_comboBox_currentIndexChanged(const QString &arg1);
@@ -177,6 +177,7 @@ private slots:
     void on_Write_AutoRun_pushButton_clicked();
 
     void on_P_SPI1_checkBox_toggled(bool checked);
+
     void on_P_Audio4_checkBox_toggled(bool checked);
 
     void on_P_SPI2_checkBox_toggled(bool checked);
@@ -232,8 +233,8 @@ private slots:
     void on_P_MHZ24_checkBox_toggled(bool checked);
 
     void P_pin_decode();
-    void on_P_Clear_pushButton_clicked();
 
+    void on_P_Clear_pushButton_clicked();
 
     void on_KernelSplash_pushButton_clicked();
 
@@ -291,9 +292,6 @@ private slots:
 
     void on_ViewUpdatesLog_pushButton_clicked();
 
-    void on_P_HUM_pushButton_3_clicked();
-
-
     void on_M8_Clear_pushButton_clicked();
 
     void on_M8_SPI1_checkBox_toggled(bool checked);
@@ -334,6 +332,12 @@ private slots:
     void on_ExtFS_Available_comboBox_currentIndexChanged(const QString &arg1);
 
     void on_ExtFS_DownloadSelected_FS_pushButton_clicked();
+
+    void on_HUM_pushButton_clicked();
+
+    void on_QSG_pushButton_clicked();
+
+    void on_NovaEmbedM_pushButton_clicked();
 
 private:
     Ui::NOVAembed *ui;

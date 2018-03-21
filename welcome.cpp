@@ -40,14 +40,10 @@ extern int initrd_size;
 
 extern QWidget *current_stab;
 
-QString HUM_P="NI150316-HUM-P-V1.0.pdf";
-QString QSG_P="NI150316-QSG-P-V1.0.pdf";
-
-
 void NOVAembed::Board_comboBox_setText(const QString &arg1)
 {
-    ui->P_HUM_pushButton->setText(arg1+" Hardware User Manual");
-    ui->P_QSG_pushButton->setText(arg1+" Hardware User Manual");
+    ui->HUM_pushButton->setText(arg1+" Hardware User Manual");
+    ui->QSG_pushButton->setText(arg1+" Quick Start Guide");
 }
 
 void NOVAembed::on_Board_comboBox_currentIndexChanged(const QString &arg1)
@@ -67,8 +63,6 @@ QString file_exists_path;
     file_exists_path = BLOBS_PATH;
 
     Board_comboBox_setText(arg1);
-
-
 
     if ( arg1 == "U5")
     {
@@ -187,30 +181,40 @@ QString file_exists_path;
     storeNOVAembed_ini();
 }
 
-void NOVAembed::on_P_HUM_pushButton_clicked()
+void NOVAembed::on_HUM_pushButton_clicked()
 {
-QString syscmd;
+    QString syscmd,filename;
 
     if ( ui->Board_comboBox->currentText() == "P Series")
-        syscmd = "qpdfview /Devel/NOVAsom_SDK/Doc/"+HUM_P;
+        filename = HUM_P;
+    if ( ui->Board_comboBox->currentText() == "U5")
+        filename = HUM_U5;
+    syscmd = "qpdfview /Devel/NOVAsom_SDK/Doc/"+filename;
     QByteArray ba = syscmd.toLatin1();
     const char *str = ba.data();
     system(str);
-
 }
 
-void NOVAembed::on_P_QSG_pushButton_clicked()
+
+void NOVAembed::on_QSG_pushButton_clicked()
 {
-    QString syscmd;
+    QString syscmd,filename;
 
         if ( ui->Board_comboBox->currentText() == "P Series")
-            syscmd = "qpdfview /Devel/NOVAsom_SDK/Doc/"+QSG_P;
+            filename = QSG_P;
+        if ( ui->Board_comboBox->currentText() == "U5")
+            filename = HUM_U5;
+        syscmd = "qpdfview /Devel/NOVAsom_SDK/Doc/"+filename;
         QByteArray ba = syscmd.toLatin1();
         const char *str = ba.data();
         system(str);
 }
 
-void NOVAembed::on_P_HUM_pushButton_3_clicked()
+
+
+
+void NOVAembed::on_NovaEmbedM_pushButton_clicked()
 {
     system("qpdfview /Devel/NOVAsom_SDK/Doc/SUM-NOVAembed-V1.0.pdf");
 }
+

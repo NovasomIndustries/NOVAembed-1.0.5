@@ -19,7 +19,7 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0rc3";
+QString Version = "1.0.5.0rc4";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
@@ -896,4 +896,5 @@ void NOVAembed::on_M9_Generate_pushButton_clicked()
     if ( CheckIfKernelsPresent() == 1 )
         return;
 }
+
 
