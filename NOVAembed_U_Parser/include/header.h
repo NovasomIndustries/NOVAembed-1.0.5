@@ -546,6 +546,7 @@ imx6ul-ddr3-arm2 {\n\
         status = \"okay\";\n\
 };\n\
 "
+
 #define spdif_pins "\
     pinctrl_spdif: spdif {\n\
         fsl,pins = <\n\
