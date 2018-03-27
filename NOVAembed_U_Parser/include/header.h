@@ -430,6 +430,11 @@ imx6ul-ddr3-arm2 {\n\
         MX6UL_PAD_LCD_RESET__GPIO3_IO04          0x1b0b1\n\
         >;\n\
     };\n\
+    pinctrl_tsc2007: tsc2007_irq {\n\
+        fsl,pins = <\n\
+        MX6UL_PAD_CSI_DATA02__GPIO4_IO23         0x1b0b1\n\
+        >;\n\
+    };\n\
     pinctrl_lcdif_dat: lcdifdatgrp {\n\
         fsl,pins = <\n\
         MX6UL_PAD_LCD_DATA00__LCDIF_DATA00  0x79\n\
@@ -521,6 +526,17 @@ imx6ul-ddr3-arm2 {\n\
                 interrupts = <6 0>;\n\
                 ilitek,irq-gpio = <&gpio1 6 GPIO_ACTIVE_HIGH>;\n\
                 ilitek,reset-gpio = <&gpio4 30 GPIO_ACTIVE_LOW>;\n\
+        };\n\
+        touchscreen: tsc2007@48 {\n\
+                compatible = \"ti,tsc2007\";\n\
+                reg = <0x48>;\n\
+                pinctrl-names = \"default\";\n\
+                pinctrl-0 = <&pinctrl_tsc2007>;\n\
+                interrupt-parent = <&gpio4>;\n\
+                interrupts = <23 0>;\n\
+                gpios = <&gpio4 23 GPIO_ACTIVE_LOW>;\n\
+                ti,x-plate-ohms = <660>;\n\
+                linux,wakeup;\n\
         };\n\
 };\n\
 "
