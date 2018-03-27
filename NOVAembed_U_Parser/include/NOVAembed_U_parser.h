@@ -6,6 +6,8 @@
 
 #define     PIN_NAME_SIZE  48
 
+
+
 typedef struct _iomux_cfg
 {
     int pwm2;
