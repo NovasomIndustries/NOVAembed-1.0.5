@@ -472,11 +472,9 @@ imx6ul-ddr3-arm2 {\n\
         >;\n\
     };\n\
 "
-
 #define dts_footer "\n\
 };\n\
 "
-
 #define i2c2_defs_top "\n\
 &i2c2 {\n\
         pinctrl-names = \"default\";\n\
