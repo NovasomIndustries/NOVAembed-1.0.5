@@ -2024,7 +2024,7 @@
       <widget class="QLineEdit" name="initRdSize_lineEdit">
        <property name="geometry">
         <rect>
-         <x>160</x>
+         <x>400</x>
          <y>130</y>
          <width>71</width>
          <height>21</height>
@@ -2036,7 +2036,7 @@
         <rect>
          <x>10</x>
          <y>130</y>
-         <width>111</width>
+         <width>81</width>
          <height>20</height>
         </rect>
        </property>
@@ -2048,7 +2048,7 @@
         </font>
        </property>
        <property name="text">
-        <string>initRd size in kbytes</string>
+        <string>Current initRd</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -2065,6 +2065,39 @@
        </property>
        <property name="text">
         <string>View uSD write log</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="CurrentFS_lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>130</y>
+         <width>191</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_104">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>130</y>
+         <width>31</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <italic>true</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>size</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </widget>

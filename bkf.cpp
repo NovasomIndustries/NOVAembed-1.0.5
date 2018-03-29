@@ -52,6 +52,7 @@ void NOVAembed::initrd_helper(void)
 {
     QFileInfo info1("/Devel/NOVAsom_SDK/FileSystem/"+FileSystemName+"/output/images/rootfs.ext2");
     initrd_size = (info1.size() / 1024) + 32000;
+    ui->CurrentFS_lineEdit->setText( FileSystemName );
     ui->initRdSize_lineEdit->setText( QString::number(initrd_size) );
 }
 

@@ -71,7 +71,7 @@ void NOVAembed::M8_save_helper(QString fileName)
 
 void NOVAembed::on_M8_Save_pushButton_clicked()
 {
-        QString fileName = QFileDialog::getSaveFileName(this,tr("Save .bspf"), Last_M8_BSPFactoryFile,tr(".bspf (*.bspf)"));
+        QString fileName = QFileDialog::getSaveFileName(this,tr("Save .bspf"), "/Devel/NOVAsom_SDK/DtbUserWorkArea/M8Class_bspf",tr(".bspf (*.bspf)"));
         if ( fileName.isEmpty() )
             return;
         QFileInfo fi(fileName);
@@ -88,7 +88,7 @@ void NOVAembed::on_M8_Generate_pushButton_clicked()
     if ( CheckIfKernelsPresent() == 1 )
         return;
     // Save .bspf and Generate .dtb
-    QString fileName = QFileDialog::getSaveFileName(this,tr("Save .bspf"), Last_M8_BSPFactoryFile,tr(".bspf (*.bspf)"));
+    QString fileName = QFileDialog::getSaveFileName(this,tr("Save .bspf"), "/Devel/NOVAsom_SDK/DtbUserWorkArea/M8Class_bspf",tr(".bspf (*.bspf)"));
     if ( fileName.isEmpty() )
         return;
 
