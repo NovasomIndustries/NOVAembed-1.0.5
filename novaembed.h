@@ -16,11 +16,11 @@
 //#include <QHostInfo>
 #include <QDirIterator>
 
-#define ALLWINNER_KERNEL    "linux-allw-4.15.0"
+#define ALLWINNER_KERNEL    "linux-allw-3.10"
 #define QUALCOMM_KERNEL     "linux-4.11.0-QualcommLinaro"
 #define NXP_P_KERNEL        "linux-imx_4.1.15_1.2.0_ga"
 #define NXP_U_KERNEL        "linux-imx_4.1.43"
-#define ALLWINNER_SOURCEME  "SourceMe64"
+#define ALLWINNER_SOURCEME  "allw/SourceMe64_ALLW"
 #define QUALCOMM_SOURCEME   "SourceMe64"
 #define NXP_P_SOURCEME      "SourceMe32_5"
 #define NXP_U_SOURCEME      "SourceMe32_5"

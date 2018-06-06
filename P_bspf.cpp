@@ -637,6 +637,7 @@ QString P_PCIe_checkBox="true";
 QString P_PrimaryVideo_comboBox;
 QString P_SecondaryVideo_comboBox;
 QString Processor;
+QString spwg_flag;
 
 
 void NOVAembed::on_P_SPI1_checkBox_toggled(bool checked)
@@ -1654,6 +1655,10 @@ void NOVAembed::P_save_helper(QString fileName , QString Processor_model)
         out << QString("P_PriVideo_24bit_checkBox=true\n");
     else
         out << QString("P_PriVideo_24bit_checkBox=false\n");
+    if (ui->PriVideo_spwg_checkBox->isChecked() )
+        out << QString("P_PriVideo_spwg_checkBox=true\n");
+    else
+        out << QString("P_PriVideo_spwg_checkBox=false\n");
     if ( ui->SecVideo_24bit_checkBox->isChecked() )
         out << QString("P_SecVideo_24bit_checkBox=true\n");
     else

@@ -134,7 +134,7 @@ void NOVAembed::on_KernelXconfig_pushButton_clicked()
     if ( ui->Board_comboBox->currentText() == "M8")
         config_file = "qcom_defconfig";
     if ( ui->Board_comboBox->currentText() == "M9")
-        config_file = "novasom_m9_defconfig";
+        config_file = "sun50iw6p1smp_defconfig";
 
     if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/.config").exists() )
     {

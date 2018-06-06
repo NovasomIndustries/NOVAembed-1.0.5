@@ -664,6 +664,11 @@ char    ldb[4096];
         strcat(ldb,lvds_1280x800_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 1280x800\n");
     }
+    if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 1366x768"))
+    {
+        strcat(ldb,lvds_1366x768_ch0_parserinput);
+        printf("PrimaryVideo   : LVDS 1366x768\n");
+    }
 
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 800x480"))
     {
@@ -689,6 +694,11 @@ char    ldb[4096];
     {
         strcat(ldb,lvds_1280x800_ch1_parserinput);
         printf("SecondaryVideo : LVDS 1280x800\n");
+    }
+    if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 1366x768"))
+    {
+        strcat(ldb,lvds_1366x768_ch1_parserinput);
+        printf("SecondaryVideo   : LVDS 1366x768\n");
     }
 
     strcat(ldb,dtsi_lvds_footer_defs);

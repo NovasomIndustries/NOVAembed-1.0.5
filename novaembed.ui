@@ -2815,7 +2815,7 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>110</x>
          <y>60</y>
          <width>71</width>
          <height>21</height>
@@ -2894,7 +2894,7 @@
       <widget class="QCheckBox" name="P_SPDIF_checkBox">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>100</x>
          <y>40</y>
          <width>87</width>
          <height>21</height>
@@ -2939,7 +2939,7 @@
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>201</width>
+         <width>171</width>
          <height>20</height>
         </rect>
        </property>
@@ -2953,7 +2953,7 @@
         </font>
        </property>
        <property name="text">
-        <string>AUDIO                                             </string>
+        <string>AUDIO                                     </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -2962,7 +2962,7 @@
       <widget class="QLabel" name="VideoVisible_label_2">
        <property name="geometry">
         <rect>
-         <x>230</x>
+         <x>190</x>
          <y>60</y>
          <width>91</width>
          <height>20</height>
@@ -2986,7 +2986,7 @@
       <widget class="QComboBox" name="PrimaryVideo_comboBox">
        <property name="geometry">
         <rect>
-         <x>330</x>
+         <x>290</x>
          <y>40</y>
          <width>131</width>
          <height>21</height>
@@ -3046,7 +3046,7 @@
       <widget class="QCheckBox" name="SecVideo_24bit_checkBox">
        <property name="geometry">
         <rect>
-         <x>470</x>
+         <x>430</x>
          <y>60</y>
          <width>61</width>
          <height>21</height>
@@ -3066,7 +3066,7 @@
       <widget class="QComboBox" name="SecondaryVideo_comboBox">
        <property name="geometry">
         <rect>
-         <x>330</x>
+         <x>290</x>
          <y>60</y>
          <width>131</width>
          <height>21</height>
@@ -3116,7 +3116,7 @@
       <widget class="QLabel" name="VideoVisible_label">
        <property name="geometry">
         <rect>
-         <x>230</x>
+         <x>190</x>
          <y>40</y>
          <width>81</width>
          <height>20</height>
@@ -3140,7 +3140,7 @@
       <widget class="QCheckBox" name="PriVideo_24bit_checkBox">
        <property name="geometry">
         <rect>
-         <x>470</x>
+         <x>430</x>
          <y>40</y>
          <width>61</width>
          <height>21</height>
@@ -3160,7 +3160,7 @@
       <widget class="QLabel" name="label_35">
        <property name="geometry">
         <rect>
-         <x>230</x>
+         <x>190</x>
          <y>20</y>
          <width>321</width>
          <height>20</height>
@@ -3180,6 +3180,29 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="PriVideo_spwg_checkBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>490</x>
+         <y>40</y>
+         <width>61</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>spwg</string>
        </property>
       </widget>
      </widget>

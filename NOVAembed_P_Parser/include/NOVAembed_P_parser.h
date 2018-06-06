@@ -218,6 +218,8 @@ extern  char        lvds_1024x768_ch0_parserinput[1024];
 extern  char        lvds_1024x768_ch1_parserinput[1024];
 extern  char        lvds_1280x800_ch0_parserinput[1024];
 extern  char        lvds_1280x800_ch1_parserinput[1024];
+extern  char        lvds_1366x768_ch0_parserinput[1024];
+extern  char        lvds_1366x768_ch1_parserinput[1024];
 
 extern  iomux_cfg   *iomux;
 extern  char        special_hogs[1024];
