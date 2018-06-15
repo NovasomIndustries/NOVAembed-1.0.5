@@ -893,8 +893,15 @@ void NOVAembed::on_ExtFS_DownloadSelected_FS_pushButton_clicked()
 
 void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
 {
+    if ( ui->ExtFSBSPFselectedlineEdit->text() == "")
+    {
+       update_status_bar("BSPF file is empty");
+       return;
+    }
+
     QFile scriptfile("/tmp/script");
     QString full_path;
+    QFileInfo fi(ui->ExtFSBSPFselectedlineEdit->text());
 
     if ( ! scriptfile.open(QIODevice::WriteOnly | QIODevice::Text) )
     {
@@ -914,7 +921,7 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+ui->ExtFS_comboBox->currentText();
     update_status_bar("Writing image "+ui->ExtFS_comboBox->currentText()+" ...");
 
-    out << QString("./flash_extfs /dev/"+ui->ExtFSFileName_lineEdit->text()+" "+full_path+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
+    out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     scriptfile.close();
     if ( run_script() == 0)
     {
@@ -923,6 +930,18 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
     else
         update_status_bar("File System Creation error");
 }
+
+void NOVAembed::on_ExtFSBSPFSelect_pushButton_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Select BSPF"), "/Devel/NOVAsom_SDK/DtbUserWorkArea/PClass_bspf",tr("BSPF (*.bspf)"));
+    if (fileName.isEmpty())
+        return;
+    else
+    {
+        ui->ExtFSBSPFselectedlineEdit->setText(fileName);
+    }
+}
+
 /* External file systems end */
 
 void NOVAembed::on_UserBSPFSelect_pushButton_clicked()

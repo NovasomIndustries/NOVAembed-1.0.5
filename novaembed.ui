@@ -2105,9 +2105,9 @@
       <property name="geometry">
        <rect>
         <x>880</x>
-        <y>270</y>
+        <y>310</y>
         <width>361</width>
-        <height>291</height>
+        <height>251</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -2120,7 +2120,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>40</y>
          <width>341</width>
          <height>21</height>
         </rect>
@@ -2138,7 +2138,7 @@
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>100</y>
+         <y>70</y>
          <width>251</width>
          <height>21</height>
         </rect>
@@ -2153,7 +2153,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
+         <y>70</y>
          <width>71</width>
          <height>20</height>
         </rect>
@@ -2176,7 +2176,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>260</y>
+         <y>220</y>
          <width>341</width>
          <height>21</height>
         </rect>
@@ -2197,7 +2197,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
+         <y>160</y>
          <width>61</width>
          <height>16</height>
         </rect>
@@ -2213,7 +2213,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>160</y>
+         <y>130</y>
          <width>61</width>
          <height>16</height>
         </rect>
@@ -2229,7 +2229,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>130</y>
+         <y>100</y>
          <width>61</width>
          <height>16</height>
         </rect>
@@ -2245,7 +2245,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>220</y>
+         <y>190</y>
          <width>61</width>
          <height>16</height>
         </rect>
@@ -2258,7 +2258,7 @@
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>130</y>
+         <y>100</y>
          <width>281</width>
          <height>21</height>
         </rect>
@@ -2268,7 +2268,7 @@
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>160</y>
+         <y>130</y>
          <width>281</width>
          <height>21</height>
         </rect>
@@ -2278,7 +2278,7 @@
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>190</y>
+         <y>160</y>
          <width>281</width>
          <height>21</height>
         </rect>
@@ -2288,7 +2288,7 @@
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>220</y>
+         <y>190</y>
          <width>281</width>
          <height>21</height>
         </rect>
@@ -2297,9 +2297,9 @@
       <widget class="QLabel" name="label_128">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>10</y>
-         <width>361</width>
+         <width>341</width>
          <height>20</height>
         </rect>
        </property>
@@ -2392,7 +2392,7 @@
         <x>880</x>
         <y>80</y>
         <width>361</width>
-        <height>171</height>
+        <height>221</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -2405,7 +2405,7 @@
        <property name="geometry">
         <rect>
          <x>200</x>
-         <y>140</y>
+         <y>190</y>
          <width>151</width>
          <height>21</height>
         </rect>
@@ -2418,7 +2418,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>140</y>
+         <y>190</y>
          <width>121</width>
          <height>21</height>
         </rect>
@@ -2549,6 +2549,53 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ExtFSBSPFSelect_pushButton">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>110</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Browse</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_64">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>110</y>
+         <width>111</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <italic>true</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Select BSPF file</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ExtFSBSPFselectedlineEdit">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>341</width>
+         <height>21</height>
+        </rect>
        </property>
       </widget>
      </widget>

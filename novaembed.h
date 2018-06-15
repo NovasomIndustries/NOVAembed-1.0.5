@@ -339,6 +339,8 @@ private slots:
 
     void on_NovaEmbedM_pushButton_clicked();
 
+    void on_ExtFSBSPFSelect_pushButton_clicked();
+
 private:
     Ui::NOVAembed *ui;
 };
