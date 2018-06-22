@@ -916,7 +916,7 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
     out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
 
     if ( ui->ExtFSBSPFselectedlineEdit->text() == "")
-        out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
+        out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+"  "+full_path+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     else
         out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     scriptfile.close();
