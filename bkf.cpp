@@ -893,12 +893,6 @@ void NOVAembed::on_ExtFS_DownloadSelected_FS_pushButton_clicked()
 
 void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
 {
-    if ( ui->ExtFSBSPFselectedlineEdit->text() == "")
-    {
-       update_status_bar("BSPF file is empty");
-       return;
-    }
-
     QFile scriptfile("/tmp/script");
     QString full_path;
     QFileInfo fi(ui->ExtFSBSPFselectedlineEdit->text());
@@ -908,9 +902,6 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
         update_status_bar("Unable to create /tmp/script");
         return;
     }
-    QTextStream out(&scriptfile);
-    out << QString("#!/bin/sh\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
     if ( ui->Board_comboBox->currentText() == "U5")
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+ui->ExtFS_comboBox->currentText();
     if ( ui->Board_comboBox->currentText() == "M8")
@@ -919,10 +910,17 @@ void NOVAembed::on_ExtFS_Write_uSD_pushButton_clicked()
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+ui->ExtFS_comboBox->currentText();
     if ( ui->Board_comboBox->currentText() == "M9")
         full_path="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+ui->ExtFS_comboBox->currentText();
-    update_status_bar("Writing image "+ui->ExtFS_comboBox->currentText()+" ...");
 
-    out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
+    QTextStream out(&scriptfile);
+    out << QString("#!/bin/sh\n");
+    out << QString("cd /Devel/NOVAsom_SDK/Utils\n");
+
+    if ( ui->ExtFSBSPFselectedlineEdit->text() == "")
+        out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
+    else
+        out << QString("./flash_extfs /dev/"+ui->ExtFS_uSD_Device_comboBox->currentText()+" "+full_path+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" > /Devel/NOVAsom_SDK/Logs/extfs.log \n");
     scriptfile.close();
+    update_status_bar("Writing image "+ui->ExtFS_comboBox->currentText()+" ...");
     if ( run_script() == 0)
     {
         update_status_bar("File System "+ui->ExtFSFileName_lineEdit->text()+" written");
