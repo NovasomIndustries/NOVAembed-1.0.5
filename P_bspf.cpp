@@ -1684,6 +1684,10 @@ void NOVAembed::P_save_helper(QString fileName , QString Processor_model)
         out << QString("P_PCIe_checkBox=true\n");
     else
         out << QString("P_PCIe_checkBox=false\n");
+    if ( +ui->PriVideo_spwg_checkBox->isChecked())
+        out << QString("PriVideo_spwg_checkBox=true\n");
+    else
+        out << QString("PriVideo_spwg_checkBox=false\n");
     out << QString("PrimaryVideo_comboBox="+ui->PrimaryVideo_comboBox->currentText()+"\n");
     out << QString("SecondaryVideo_comboBox="+ui->SecondaryVideo_comboBox->currentText()+"\n");
     P_PrimaryVideo_comboBox   = ui->PrimaryVideo_comboBox->currentText();
@@ -2110,6 +2114,16 @@ void NOVAembed::on_P_Generate_pushButton_clicked()
 void NOVAembed::on_ViewDtbCompileLog_pushButton_clicked()
 {
    system("kwrite /Devel/NOVAsom_SDK/Logs/P_bspf.log");
+}
+
+
+void NOVAembed::on_PrimaryVideo_comboBox_currentIndexChanged(const QString &arg1)
+{
+    if (( arg1 == "HDMI 1920x1080") || ( arg1 == "HDMI 1280x720"))
+        ui->PriVideo_spwg_checkBox->setEnabled(false);
+    else
+        ui->PriVideo_spwg_checkBox->setEnabled(true);
+
 }
 
 /*****************************************************************************************************************************************************************************************/

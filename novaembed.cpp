@@ -751,6 +751,10 @@ void NOVAembed::on_tab_currentChanged(int index)
             ui->P_NO_PAD_CTL_checkBox->setChecked(true);
             ui->P_I2C1Speed_lineEdit->setText("100000");
             ui->P_I2C3Speed_lineEdit->setText("100000");
+            if (( ui->PrimaryVideo_comboBox->currentText() == "HDMI 1920x1080") || ( ui->PrimaryVideo_comboBox->currentText() == "HDMI 1280x720"))
+                ui->PriVideo_spwg_checkBox->setEnabled(false);
+            else
+                ui->PriVideo_spwg_checkBox->setEnabled(true);
 
             ui->P_cbit_lineEdit->setText(CfgBitDefaultValue);
             ui->P_Decoded_CFG_Bits_lineEdit->setText("0x00000000");
@@ -896,5 +900,6 @@ void NOVAembed::on_M9_Generate_pushButton_clicked()
     if ( CheckIfKernelsPresent() == 1 )
         return;
 }
+
 
 

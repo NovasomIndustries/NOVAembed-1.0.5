@@ -701,6 +701,18 @@ char    ldb[4096];
         printf("SecondaryVideo   : LVDS 1366x768\n");
     }
 
+    if (strstr(file_contents,"P_PriVideo_spwg_checkBox=true"))
+    {
+        char * pch;
+        pch = strstr (ldb,"\"jeida\";");
+        if ( pch != NULL )
+            strncpy (pch,"\"spwg\" ;",7);
+        printf("SPWG   : true\n");
+    }
+    else
+        printf("SPWG   : false\n");
+
+
     strcat(ldb,dtsi_lvds_footer_defs);
     strcat(dtsifile_dump,ldb);
 }

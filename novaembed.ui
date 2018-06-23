@@ -3255,7 +3255,7 @@
       </widget>
       <widget class="QCheckBox" name="PriVideo_spwg_checkBox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
