@@ -19,7 +19,7 @@
 /*                                                                              Global variables                                                                                         */
 /*****************************************************************************************************************************************************************************************/
 
-QString Version = "1.0.5.0";
+QString Version = "1.0.5.1";
 QString Configuration = "Standard";
 QString FileSystemName = "";
 QString DeployedFileSystemName = "";
@@ -29,6 +29,8 @@ QString Last_M8_BSPFactoryFile = "";
 QString Last_M9_BSPFactoryFile = "";
 QString Last_U_BSPFactoryFile = "";
 QString Last_P_BSPFactoryFile = "";
+QString Last_N1_BSPFactoryFile = "";
+
 QString CfgBitDefaultValueDefault = "0x4001b8b1";
 QString CfgBitDefaultValue = "0x4001b8b1";
 QString NumberOfUserPartitions = "-";
@@ -51,7 +53,7 @@ QString SourceMeFile =  NXP_P_SOURCEME;
 
 
 extern  void storeNOVAembed_ini();
-QWidget *PBSP_stab,*UBSP_stab,*M8BSP_stab,*M9BSP_stab,*TOOL_stab,*TOOL_devel;
+QWidget *PBSP_stab,*UBSP_stab,*M8BSP_stab,*M9BSP_stab,*N1BSP_stab,*TOOL_stab,*TOOL_devel;
 
 /*****************************************************************************************************************************************************************************************/
 /*                                                                                    Code                                                                                               */
@@ -143,6 +145,7 @@ QString PixMapName="";
         Last_M8_BSPFactoryFile = settings->value( strKeySettings + "Last_M8_BSPFactoryFile", "r").toString();
         Last_P_BSPFactoryFile = settings->value( strKeySettings + "Last_P_BSPFactoryFile", "r").toString();
         Last_U_BSPFactoryFile = settings->value( strKeySettings + "Last_U_BSPFactoryFile", "r").toString();
+        Last_N1_BSPFactoryFile = settings->value( strKeySettings + "Last_N1_BSPFactoryFile", "r").toString();
         CfgBitDefaultValue = settings->value( strKeySettings + "CfgBitDefaultValue", "r").toString();
         if ( CfgBitDefaultValue == "r" )
              CfgBitDefaultValue = CfgBitDefaultValueDefault;
@@ -179,6 +182,7 @@ QString PixMapName="";
     }
 
     ui->setupUi(this);
+    //std::cout << "Starting now" << std::flush;
 
     if ( _Board_comboBox == "")
     {
@@ -198,6 +202,12 @@ QString PixMapName="";
         Kernel=NXP_U_KERNEL;
         SourceMeFile=NXP_U_SOURCEME;
         PixMapName=":/Icons/NXP-Logo.png";
+    }
+    if ( _Board_comboBox == "N1")
+    {
+        Kernel=NXP_N1_KERNEL;
+        SourceMeFile=NXP_N1_SOURCEME;
+        PixMapName=":/Icons/NXP-LayerScapeLogo.png";
     }
     if ( _Board_comboBox == "M8")
     {
@@ -235,6 +245,7 @@ QString PixMapName="";
     UBSP_stab=ui->tabBSPFU;
     M8BSP_stab=ui->tabBSPFM8;
     M9BSP_stab=ui->tabBSPFM9;
+    N1BSP_stab=ui->tabBSPFN1;
     TOOL_stab=ui->tabTools;
     ui->tab->removeTab(5);
     ui->tab->removeTab(4);
@@ -256,6 +267,10 @@ QString PixMapName="";
     else if (CurrentBSPF_Tab == "M9 BSP Factory")
     {
         ui->tab->insertTab(2,M9BSP_stab,"M9 BSP Factory");
+    }
+    else if (CurrentBSPF_Tab == "N1 BSP Factory")
+    {
+        //ui->tab->insertTab(2,N1BSP_stab,"N1 BSP Factory");
     }
     else
     {
@@ -335,6 +350,7 @@ void NOVAembed::storeNOVAembed_ini()
     out << QString("Last_M8_BSPFactoryFile="+Last_M8_BSPFactoryFile+"\n");
     out << QString("Last_P_BSPFactoryFile="+Last_P_BSPFactoryFile+"\n");
     out << QString("Last_U_BSPFactoryFile="+Last_U_BSPFactoryFile+"\n");
+    out << QString("Last_N1_BSPFactoryFile="+Last_N1_BSPFactoryFile+"\n");
     out << QString("CfgBitDefaultValue="+CfgBitDefaultValue+"\n");
     out << QString("NumberOfUserPartitions="+NumberOfUserPartitions+"\n");
     out << QString("UserPartition1Size="+UserPartition1Size+"\n");
@@ -383,6 +399,12 @@ void NOVAembed::compile_NewFileSystemFileSystemConfigurationcomboBox()
         ui->PrimaryVideo_comboBox->setVisible(false);
         ui->VideoVisible_label->setVisible(false);
     }
+    else if (ui->Board_comboBox->currentText() == "N1")
+    {
+        str = "N1Class_Buildroot_*.config";
+        ui->PrimaryVideo_comboBox->setVisible(false);
+        ui->VideoVisible_label->setVisible(false);
+    }
     else
         str = "Buildroot_*.config";
 
@@ -409,6 +431,8 @@ void NOVAembed::compile_ExtFS_comboBox()
         ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/M9";
     if ( ui->Board_comboBox->currentText() == "U5")
         ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/U5";
+    if ( ui->Board_comboBox->currentText() == "N1")
+        ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/N1";
     if ( ui->Board_comboBox->currentText() == "P Series")
         ExternalFileSystemsDir="/Devel/NOVAsom_SDK/ExternalFileSystems/P";
 
@@ -599,10 +623,11 @@ void NOVAembed::on_tab_currentChanged(int index)
         {
             ui->kernel_Valid_label->setPixmap(QPixmap(":/Icons/invalid.png"));
         }
+        ui->frame_5->setEnabled(true);
         if ((BootValid != "OK") || (FSValid != "OK") || (KernelValid != "OK"))
+        {
             ui->frame_5->setEnabled(false);
-        else
-            ui->frame_5->setEnabled(true);
+        }
 
         ui->VideoVisible_label->setVisible(true);
         ui->VideoVisible_label_2->setVisible(true);
@@ -614,8 +639,22 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->UserBSPFSelect_pushButton->setVisible(true);
         ui->UserBSPFselectedlineEdit->setVisible(true);
 
+        ui->label_61->setVisible(false);
+        ui->UserBSPFSelect_pushButton->setVisible(false);
+        ui->UserBSPFselectedlineEdit->setVisible(false);
+        ui->label_65->setVisible(false);
+        ui->label_64->setVisible(false);
+        ui->ExtFSBSPFSelect_pushButton->setVisible(false);
+        ui->ExtFSBSPFselectedlineEdit->setVisible(false);
         if ( ui->Board_comboBox->currentText() == "M9")
         {
+            ui->label_61->setVisible(true);
+            ui->UserBSPFSelect_pushButton->setVisible(true);
+            ui->UserBSPFselectedlineEdit->setVisible(true);
+            ui->label_65->setVisible(true);
+            ui->label_64->setVisible(true);
+            ui->ExtFSBSPFSelect_pushButton->setVisible(true);
+            ui->ExtFSBSPFselectedlineEdit->setVisible(true);
             Kernel=ALLWINNER_KERNEL;
             SourceMeFile=ALLWINNER_SOURCEME;
             if ( Last_M9_BSPFactoryFile.length() < 2)
@@ -632,6 +671,13 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "M8")
         {
+            ui->label_61->setVisible(true);
+            ui->UserBSPFSelect_pushButton->setVisible(true);
+            ui->UserBSPFselectedlineEdit->setVisible(true);
+            ui->label_65->setVisible(true);
+            ui->label_64->setVisible(true);
+            ui->ExtFSBSPFSelect_pushButton->setVisible(true);
+            ui->ExtFSBSPFselectedlineEdit->setVisible(true);
             Kernel=QUALCOMM_KERNEL;
             SourceMeFile=QUALCOMM_SOURCEME;
             if ( Last_M8_BSPFactoryFile.length() < 2)
@@ -648,6 +694,13 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "P Series")
         {
+            ui->label_61->setVisible(true);
+            ui->UserBSPFSelect_pushButton->setVisible(true);
+            ui->UserBSPFselectedlineEdit->setVisible(true);
+            ui->label_65->setVisible(true);
+            ui->label_64->setVisible(true);
+            ui->ExtFSBSPFSelect_pushButton->setVisible(true);
+            ui->ExtFSBSPFselectedlineEdit->setVisible(true);
             Kernel=NXP_P_KERNEL;
             SourceMeFile=NXP_P_SOURCEME;
             if ( Last_P_BSPFactoryFile.length() < 2)
@@ -665,6 +718,13 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "U5")
         {
+            ui->label_61->setVisible(true);
+            ui->UserBSPFSelect_pushButton->setVisible(true);
+            ui->UserBSPFselectedlineEdit->setVisible(true);
+            ui->label_65->setVisible(true);
+            ui->label_64->setVisible(true);
+            ui->ExtFSBSPFSelect_pushButton->setVisible(true);
+            ui->ExtFSBSPFselectedlineEdit->setVisible(true);
             Kernel=NXP_U_KERNEL;
             SourceMeFile=NXP_U_SOURCEME;
             if ( Last_U_BSPFactoryFile.length() < 2)
@@ -678,6 +738,12 @@ void NOVAembed::on_tab_currentChanged(int index)
                 ui->frame_5->setEnabled(true);
             }
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
+        }
+        if ( ui->Board_comboBox->currentText() == "N1")
+        {
+            Kernel=NXP_N1_KERNEL;
+            SourceMeFile=NXP_N1_SOURCEME;
+            ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-LayerScapeLogo.png"));
         }
 
         if ( AutoRunSelected == "true" )
@@ -808,6 +874,10 @@ void NOVAembed::on_tab_currentChanged(int index)
                 ui->M8_Generate_pushButton->setText("Save "+fi.baseName()+".bspf and Generate "+fi.baseName()+".dtb");
                 update_status_bar("BSP Factory : Loaded file "+Last_M8_BSPFactoryFile);
             }
+        }
+        if (CurrentBSPF_Tab == "N1 BSP Factory")
+        {
+                update_status_bar("BSP Factory : N1 has no BSP factory options");
         }
         if (CurrentBSPF_Tab == "M9 BSP Factory")
         {

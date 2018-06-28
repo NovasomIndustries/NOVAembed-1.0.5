@@ -13,6 +13,8 @@
 #include <QDesktopServices>
 //#include <QHostInfo>
 #include <QDirIterator>
+#include <iostream>
+
 
 extern  QString FileSystemName;
 extern  QString DeployedFileSystemName;
@@ -32,7 +34,7 @@ extern  QString AutoRunSelected;
 extern  QString AutoRunFolder;
 extern  QString Kernel;
 extern  QString SourceMeFile;
-extern  QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*M8BSP_stab,*M9BSP_stab,*TOOL_stab;
+extern  QWidget *PBSP_stab,*UBSP_stab,*SBSP_stab,*M8BSP_stab,*M9BSP_stab,*N1BSP_stab,*TOOL_stab;
 
 extern QString BootValid , FSValid , KernelValid , uSDwriteValid;
 
@@ -59,6 +61,8 @@ QString file_exists_path;
         return;
     if (( arg1 == "M9") && ( CurrentBSPF_Tab == "M9 BSP Factory"))
         return;
+    if (( arg1 == "N1") && ( CurrentBSPF_Tab == "N1 BSP Factory"))
+        return;
     _Board_comboBox = arg1;
     file_exists_path = BLOBS_PATH;
 
@@ -74,9 +78,13 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
+        else
+            std::cout << "kernel not found" << std::flush;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomU-2016.03/u-boot.imx");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        else
+            std::cout << "uboot not found" << std::flush;
         ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         ui->FileSystemSelectedlineEdit->setText("");
         ui->BoardNameBKF->setText(arg1);
@@ -95,9 +103,13 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
+        else
+            std::cout << "kernel not found" << std::flush;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomP-2015.04/u-boot.img");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        else
+            std::cout << "uboot not found" << std::flush;
         ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         ui->BrandNameBKF->setPixmap(QPixmap(":/Icons/NXP-Logo.png"));
         ui->BoardNameBKF->setText(arg1);
@@ -115,9 +127,13 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
+        else
+            std::cout << "kernel not found" << std::flush;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomM8-2017.11/u-boot.bin");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        else
+            std::cout << "uboot not found" << std::flush;
         ui->brand_label->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
         ui->BrandNameBKF->setPixmap(QPixmap(":/Icons/Qualcomm_Snapdragon_logo.png"));
         ui->BoardNameBKF->setText(arg1);
@@ -135,11 +151,37 @@ QString file_exists_path;
         check_file1 = QFileInfo(file_exists_path);
         if (check_file1.exists() && check_file1.isFile())
             kernelok=1;
+        else
+            std::cout << "kernel not found" << std::flush;
         check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-NOVAsomH5-2017.11/H5/u-boot.bin");
         if (check_file1.exists() && check_file1.isFile())
             bootok=1;
+        else
+            std::cout << "uboot not found" << std::flush;
         ui->brand_label->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
         ui->BrandNameBKF->setPixmap(QPixmap(":/Icons/allwinnerlogo.png"));
+        ui->BoardNameBKF->setText(arg1);
+    }
+    if ( arg1 == "N1")
+    {
+        ui->FileSystemSelectedlineEdit->setText("");
+        CurrentBSPF_Tab = "N1 BSP Factory";
+        current_stab = N1BSP_stab;
+        Kernel=NXP_N1_KERNEL;
+        SourceMeFile=NXP_N1_SOURCEME;
+        file_exists_path += NXP_N1_BLOB_NAME;
+        check_file1 = QFileInfo(file_exists_path);
+        if (check_file1.exists() && check_file1.isFile())
+            kernelok=1;
+        else
+            std::cout << "kernel not found" << std::flush;
+        check_file1 = QFileInfo("/Devel/NOVAsom_SDK/Bootloader/u-boot-novasomN1-2017.11_1.0.5/u-boot.bin");
+        if (check_file1.exists() && check_file1.isFile())
+            bootok=1;
+        else
+            std::cout << "uboot not found" << std::flush;
+        ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-LayerScapeLogo.png"));
+        ui->BrandNameBKF->setPixmap(QPixmap(":/Icons/NXP-LayerScapeLogo.png"));
         ui->BoardNameBKF->setText(arg1);
     }
     manage_kerneldwnld_decompress();

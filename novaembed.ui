@@ -450,6 +450,11 @@
         <string>M9</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>N1</string>
+       </property>
+      </item>
      </widget>
      <widget class="QLabel" name="brand_label">
       <property name="geometry">
@@ -1390,7 +1395,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
@@ -2352,7 +2357,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="novaembedresources.qrc">:/Icons/NXP-Logo.png</pixmap>
+        <pixmap resource="novaembedresources.qrc">:/Icons/NXP-LayerScapeLogo.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -107581,6 +107586,34 @@ a PCAP or an external RT touch</string>
         <string>UART 2 has 4 Wires</string>
        </property>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabBSPFN1">
+     <attribute name="title">
+      <string>N1 BSP Factory</string>
+     </attribute>
+     <widget class="QLabel" name="label_153">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>561</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>N1 has no BSPF functions. This tab is empty.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tabTools">

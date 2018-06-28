@@ -30,5 +30,6 @@
         <file>Icons/NXP-Logo.png</file>
         <file>Icons/Qualcomm_Snapdragon_logo.png</file>
         <file>Icons/allwinnerlogo.png</file>
+        <file>Icons/NXP-LayerScapeLogo.png</file>
     </qresource>
 </RCC>

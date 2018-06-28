@@ -79,6 +79,11 @@ void NOVAembed::on_BootLoaderCompile_pushButton_clicked()
         out << QString("cd nxp\n");
         out << QString("./umakeU > /Devel/NOVAsom_SDK/Logs/umakeU.log\n");
     }
+    if ( ui->Board_comboBox->currentText() == "N1")
+    {
+        out << QString("cd nxp\n");
+        out << QString("./umakeN1 > /Devel/NOVAsom_SDK/Logs/umakeN1.log\n");
+    }
     if ( ui->Board_comboBox->currentText() == "M8")
     {
         out << QString("cd qcom\n");
@@ -138,7 +143,10 @@ void NOVAembed::on_KernelXconfig_pushButton_clicked()
 
     if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/.config").exists() )
     {
-        out << QString("make "+config_file+"\n");
+        if ( ui->Board_comboBox->currentText() == "N1")
+            out << QString("make defconfig lsdk.config\n");
+        else
+            out << QString("make "+config_file+"\n");
     }
     out << QString("make xconfig\n");
     out << QString("echo \"0\" > /tmp/result\n");
@@ -250,6 +258,12 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
     {
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/allw\n");
+        out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "N1")
+    {
+        out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     }
 
@@ -474,6 +488,8 @@ void NOVAembed::on_FileSystemDeploy_pushButton_clicked()
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" P > /Devel/NOVAsom_SDK/Logs/FileSystem_Pmake.log\n");
     if ( ui->Board_comboBox->currentText() == "U5")
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" U > /Devel/NOVAsom_SDK/Logs/FileSystem_Umake.log\n");
+    if ( ui->Board_comboBox->currentText() == "N1")
+        out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" N1 > /Devel/NOVAsom_SDK/Logs/FileSystem_N1make.log\n");
     if ( ui->Board_comboBox->currentText() == "M8")
         out << QString("/Devel/NOVAsom_SDK/Utils/MakeFs "+ui->FileSystemSelectedlineEdit->text()+" "+IP+" M8 > /Devel/NOVAsom_SDK/Logs/FileSystem_M8make.log\n");
     if ( ui->Board_comboBox->currentText() == "M9")
@@ -774,6 +790,8 @@ QString currentboard=ui->Board_comboBox->currentText();
     cmd = ba.data();
     system(cmd);
     QFile file("/tmp/nova_os.txt");
+    if ( file.size() < 10 )
+        return;
     QString content;
     ui->ExtFS_Available_comboBox->clear();
     QString ExternalFileSystemsFile;
