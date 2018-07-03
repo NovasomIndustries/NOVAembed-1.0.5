@@ -33,7 +33,7 @@
 #define NXP_U_BLOB_NAME     "linux-nxp_u-4.1.43_zImage"
 #define NXP_N1_BLOB_NAME    "linux-4.14.47_layerscape_Image"
 #define KERNEL_REPO_SERVER  "93.41.190.216"
-#define HUM_P               "NI150316-HUM-P-V1.0.pdf"
+#define HUM_P               "NI150316-HUM-P-V1.1.pdf"
 #define QSG_P               "NI150316-QSG-P-V1.0.pdf"
 #define HUM_U5              "N.U-200417-HUM-U5-V1.1.pdf"
 #define QSG_U5              "N.U-200417-HUM-U5-V1.1.pdf"
