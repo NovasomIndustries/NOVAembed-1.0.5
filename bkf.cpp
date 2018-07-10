@@ -144,7 +144,7 @@ void NOVAembed::on_KernelXconfig_pushButton_clicked()
     if ( !QFile("/Devel/NOVAsom_SDK/Kernel/"+Kernel+"/.config").exists() )
     {
         if ( ui->Board_comboBox->currentText() == "N1")
-            out << QString("make defconfig lsdk.config\n");
+            out << QString("make defconfig lsk_defconfig\n");
         else
             out << QString("make "+config_file+"\n");
     }
@@ -234,34 +234,41 @@ void NOVAembed::on_KernelCompile_pushButton_clicked()
     update_status_bar("Compiling "+Kernel);
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
     if ( ui->Board_comboBox->currentText() == "P Series")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "U5")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "M8")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/qcom\n");
         out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "M9")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kmake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/allw\n");
         out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
     }
     if ( ui->Board_comboBox->currentText() == "N1")
     {
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./kmake "+Kernel+" "+SourceMeFile+" >> /Devel/NOVAsom_SDK/Logs/kmake.log\n");
@@ -300,11 +307,11 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
 
     QTextStream out(&scriptfile);
     out << QString("#!/bin/sh\n");
-    out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
-    out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
 
     if ( ui->Board_comboBox->currentText() == "P Series")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         config_file = "imx_novasomp_defconfig";
@@ -312,13 +319,24 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
     }
     if ( ui->Board_comboBox->currentText() == "U5")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm zImage ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/zImage\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         config_file = "imx_v7_defconfig";
         out << QString("./kremake "+Kernel+" "+SourceMeFile+" "+config_file+">> /Devel/NOVAsom_SDK/Logs/kremake.log\n");
     }
+    if ( ui->Board_comboBox->currentText() == "N1")
+    {
+        out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm/boot/Image\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
+        config_file = "lsdk.config";
+        out << QString("./kremake "+Kernel+" "+SourceMeFile+" "+config_file+">> /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+    }
     if ( ui->Board_comboBox->currentText() == "M8")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/qcom\n");
         config_file = "qcom_defconfig";
@@ -326,6 +344,8 @@ void NOVAembed::on_KernelReCompile_pushButton_clicked()
     }
     if ( ui->Board_comboBox->currentText() == "M9")
     {
+        out << QString("/Devel/NOVAsom_SDK/Utils/CreateLogo /Devel/NOVAsom_SDK/Utils/LinuxSplashLogos/"+CurrentSplashName+".png "+Kernel+" > /Devel/NOVAsom_SDK/Logs/kremake.log\n");
+        out << QString("cd /Devel/NOVAsom_SDK/Deploy\n");
         out << QString("rm Image ; ln -s ../Kernel/"+Kernel+"/arch/arm64/boot/Image\n");
         out << QString("cd /Devel/NOVAsom_SDK/Utils/allw\n");
         config_file = "novasom_m9_defconfig";
@@ -626,6 +646,10 @@ void NOVAembed::NOVAsom_Params_helper()
             NOVAsomParamsName = "NOVAsomParams_U5_480x272";
         }
     }
+    if ( ui->Board_comboBox->currentText() == "N1")
+    {
+        NOVAsomParamsName = "NOVAsomParams_N1";
+    }
 }
 
 void NOVAembed::on_Write_uSD_pushButton_clicked()
@@ -660,6 +684,13 @@ void NOVAembed::on_Write_uSD_pushButton_clicked()
     {
         out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
         out << QString("./flashP "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"SDL_"+fi.baseName()+".dtb"+" "+"QUAD_"+fi.baseName()+".dtb"+" "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+        if ( ui->UserAutoRun_checkBox->isChecked())
+            out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
+    }
+    if ( ui->Board_comboBox->currentText() == "N1")
+    {
+        out << QString("cd /Devel/NOVAsom_SDK/Utils/nxp\n");
+        out << QString("./flashN1 "+NumberOfUserPartitions+" "+UserPartition1Size+" "+UserPartition2Size+" /dev/"+uSD_Device+" "+"/Devel/NOVAsom_SDK/Kernel/"+NXP_N1_KERNEL+"/arch/arm64/boot/dts/freescale/fsl-ls1012a-frdm.dtb "+NOVAsomParamsName+" "+ui->initRdSize_lineEdit->text()+" > /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
         if ( ui->UserAutoRun_checkBox->isChecked())
             out << QString("./store_application_storage "+ui->UserAutoRunSelectedlineEdit->text()+" /dev/"+uSD_Device+" >> /Devel/NOVAsom_SDK/Logs/uSD_Write.log\n");
     }

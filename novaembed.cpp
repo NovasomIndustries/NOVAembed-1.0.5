@@ -646,6 +646,12 @@ void NOVAembed::on_tab_currentChanged(int index)
         ui->label_64->setVisible(false);
         ui->ExtFSBSPFSelect_pushButton->setVisible(false);
         ui->ExtFSBSPFselectedlineEdit->setVisible(false);
+
+        ui->SplashThumb->setVisible(true);
+        ui->SplashImageNameLabel->setVisible(true);
+        ui->KernelSplash_pushButton->setVisible(true);
+        ui->KernelCompileSplash_pushButton->setVisible(true);
+
         if ( ui->Board_comboBox->currentText() == "M9")
         {
             ui->label_61->setVisible(true);
@@ -741,6 +747,10 @@ void NOVAembed::on_tab_currentChanged(int index)
         }
         if ( ui->Board_comboBox->currentText() == "N1")
         {
+            ui->SplashThumb->setVisible(false);
+            ui->SplashImageNameLabel->setVisible(false);
+            ui->KernelSplash_pushButton->setVisible(false);
+            ui->KernelCompileSplash_pushButton->setVisible(false);
             Kernel=NXP_N1_KERNEL;
             SourceMeFile=NXP_N1_SOURCEME;
             ui->brand_label->setPixmap(QPixmap(":/Icons/NXP-LayerScapeLogo.png"));

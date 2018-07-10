@@ -20,7 +20,7 @@
 #define QUALCOMM_KERNEL     "linux-4.11.0-QualcommLinaro"
 #define NXP_P_KERNEL        "linux-imx_4.1.15_1.2.0_ga"
 #define NXP_U_KERNEL        "linux-imx_4.1.43"
-#define NXP_N1_KERNEL       "linux-4.14.47_layerscape"
+#define NXP_N1_KERNEL       "linux-4.9.105_layerscape"
 #define ALLWINNER_SOURCEME  "allw/SourceMe64_ALLW"
 #define QUALCOMM_SOURCEME   "SourceMe64"
 #define NXP_N1_SOURCEME     "SourceMe64"
