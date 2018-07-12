@@ -1659,10 +1659,15 @@ void NOVAembed::P_save_helper(QString fileName , QString Processor_model)
         out << QString("P_PriVideo_spwg_checkBox=true\n");
     else
         out << QString("P_PriVideo_spwg_checkBox=false\n");
+
     if ( ui->SecVideo_24bit_checkBox->isChecked() )
         out << QString("P_SecVideo_24bit_checkBox=true\n");
     else
         out << QString("P_SecVideo_24bit_checkBox=false\n");
+    if (ui->SecVideo_spwg_checkBox->isChecked() )
+        out << QString("P_SecVideo_spwg_checkBox=true\n");
+    else
+        out << QString("P_SecVideo_spwg_checkBox=false\n");
 
     if ( ui->P_SPIdev1_checkBox->isChecked() )
         out << QString("P_SPIdev1_checkBox=true\n");
@@ -1894,11 +1899,19 @@ QSettings * func_settings = 0;
     ui->PrimaryVideo_comboBox->setCurrentText(P_getvalue(strKeyFunc, func_settings , "PrimaryVideo_comboBox"));
     ui->SecondaryVideo_comboBox->setCurrentText(P_getvalue(strKeyFunc, func_settings , "P_SecondaryVideo_comboBox"));
     ui->PriVideo_24bit_checkBox->setChecked(false);
+    ui->PriVideo_spwg_checkBox->setChecked(false);
     ui->SecVideo_24bit_checkBox->setChecked(false);
+    ui->SecVideo_spwg_checkBox->setChecked(false);
+
     if ( P_getvalue(strKeyFunc, func_settings , "P_PriVideo_24bit_checkBox") == "true" )
         ui->PriVideo_24bit_checkBox->setChecked(true);
+    if ( P_getvalue(strKeyFunc, func_settings , "P_PriVideo_spwg_checkBox") == "true" )
+        ui->PriVideo_spwg_checkBox->setChecked(true);
+
     if ( P_getvalue(strKeyFunc, func_settings , "P_SecVideo_24bit_checkBox") == "true" )
         ui->SecVideo_24bit_checkBox->setChecked(true);
+    if ( P_getvalue(strKeyFunc, func_settings , "P_SecVideo_spwg_checkBox") == "true" )
+        ui->SecVideo_spwg_checkBox->setChecked(true);
 
 }
 

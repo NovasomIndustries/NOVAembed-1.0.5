@@ -1,5 +1,5 @@
         lvds-channel@1 {
-                fsl,data-mapping = "jeida";
+                fsl,data-mapping = "spwg" ;
                 fsl,data-width = <24>;
                 primary;
                 status = "okay";

@@ -985,7 +985,9 @@ void NOVAembed::on_ExtFSBSPFSelect_pushButton_clicked()
         return;
     else
     {
-        ui->ExtFSBSPFselectedlineEdit->setText(fileName);
+        QFileInfo fileinfo(fileName);
+        fileinfo.baseName();
+        ui->ExtFSBSPFselectedlineEdit->setText(fileinfo.baseName());
     }
 }
 
@@ -998,7 +1000,9 @@ void NOVAembed::on_UserBSPFSelect_pushButton_clicked()
         return;
     else
     {
-        ui->UserBSPFselectedlineEdit->setText(fileName);
+        QFileInfo fileinfo(fileName);
+        fileinfo.baseName();
+        ui->UserBSPFselectedlineEdit->setText(fileinfo.baseName());
         if ( ui->Board_comboBox->currentText() == "M8")
             Last_M8_BSPFactoryFile = ui->UserBSPFselectedlineEdit->text();
         if ( ui->Board_comboBox->currentText() == "P Series")

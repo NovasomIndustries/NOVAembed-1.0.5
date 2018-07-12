@@ -634,6 +634,59 @@ char    mxcfb[1024];
     strcat(dtsifile_dump,mxcfb);
 }
 
+void apply_spwg_jeida_pri(char *ldb)
+{
+    printf("%s\n",ldb);
+    if (strstr(file_contents,"P_PriVideo_spwg_checkBox=true"))
+    {
+        printf("P_PriVideo_spwg_checkBox=true!\n");
+        char * pch;
+        pch = strstr (ldb,"\"jeida\";");
+        if ( pch != NULL )
+        {
+            strncpy (pch,"\"spwg\" ;",7);
+            printf("Found!\n");
+        }
+        printf("PriVideo : spwg\n");
+    }
+    else
+    {
+        printf("P_PriVideo_spwg_checkBox=false!\n");
+        char * pch;
+        pch = strstr (ldb,"\"spwg\" ;");
+        if ( pch != NULL )
+        {
+            strncpy (pch,"\"jeida\" ;",7);
+            printf("Found!\n");
+        }
+        printf("PriVideo : jeida\n");
+    }
+    printf("%s\n",ldb);
+}
+void apply_spwg_jeida_sec(char *ldb)
+{
+    if (strstr(file_contents,"P_SecVideo_spwg_checkBox=true"))
+    {
+        char * pch;
+        pch = strstr (ldb,"\"jeida\";");
+        if ( pch != NULL )
+            strncpy (pch,"\"spwg\" ;",7);
+        printf("SecVideo : spwg\n");
+    }
+    else
+    {
+        printf("P_SecVideo_spwg_checkBox=false!\n");
+        char * pch;
+        pch = strstr (ldb,"\"spwg\" ;");
+        if ( pch != NULL )
+        {
+            strncpy (pch,"\"jeida\" ;",7);
+            printf("Found!\n");
+        }
+        printf("SecVideo : jeida\n");
+    }
+}
+
 void process_lvds_channels(void)
 {
 char    ldb[4096];
@@ -641,78 +694,77 @@ char    ldb[4096];
     sprintf(ldb,dtsi_lvds_header_defs);
     if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 800x480"))
     {
+        apply_spwg_jeida_pri(lvds_800x480_ch0_parserinput);
         strcat(ldb,lvds_800x480_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 800x480\n");
     }
     if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 800x600"))
     {
+        apply_spwg_jeida_pri(lvds_800x600_ch0_parserinput);
         strcat(ldb,lvds_800x600_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 800x600\n");
     }
     if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 1024x600"))
     {
+        apply_spwg_jeida_pri(lvds_1024x600_ch0_parserinput);
         strcat(ldb,lvds_1024x600_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 1024x600\n");
     }
     if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 1024x768"))
     {
+        apply_spwg_jeida_pri(lvds_1024x768_ch0_parserinput);
         strcat(ldb,lvds_1024x768_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 1024x768\n");
     }
     if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 1280x800"))
     {
+        apply_spwg_jeida_pri(lvds_1280x800_ch0_parserinput);
         strcat(ldb,lvds_1280x800_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 1280x800\n");
     }
     if (strstr(file_contents,"PrimaryVideo_comboBox=LVDS 1366x768"))
     {
+        apply_spwg_jeida_pri(lvds_1366x768_ch0_parserinput);
         strcat(ldb,lvds_1366x768_ch0_parserinput);
         printf("PrimaryVideo   : LVDS 1366x768\n");
     }
 
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 800x480"))
     {
+        apply_spwg_jeida_sec(lvds_800x480_ch1_parserinput);
         strcat(ldb,lvds_800x480_ch1_parserinput);
         printf("SecondaryVideo : LVDS 800x480\n");
     }
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 800x600"))
     {
+        apply_spwg_jeida_sec(lvds_800x600_ch1_parserinput);
         strcat(ldb,lvds_800x600_ch1_parserinput);
         printf("SecondaryVideo : LVDS 800x600\n");
     }
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 1024x600"))
     {
+        apply_spwg_jeida_sec(lvds_1024x600_ch1_parserinput);
         strcat(ldb,lvds_1024x600_ch1_parserinput);
         printf("SecondaryVideo : LVDS 1024x600\n");
     }
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 1024x768"))
     {
+        apply_spwg_jeida_sec(lvds_1024x768_ch1_parserinput);
         strcat(ldb,lvds_1024x768_ch1_parserinput);
         printf("SecondaryVideo : LVDS 1024x768\n");
     }
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 1280x800"))
     {
+        apply_spwg_jeida_sec(lvds_1280x800_ch1_parserinput);
         strcat(ldb,lvds_1280x800_ch1_parserinput);
         printf("SecondaryVideo : LVDS 1280x800\n");
     }
     if (strstr(file_contents,"SecondaryVideo_comboBox=LVDS 1366x768"))
     {
+        apply_spwg_jeida_sec(lvds_1366x768_ch1_parserinput);
         strcat(ldb,lvds_1366x768_ch1_parserinput);
         printf("SecondaryVideo   : LVDS 1366x768\n");
     }
-
-    if (strstr(file_contents,"P_PriVideo_spwg_checkBox=true"))
-    {
-        char * pch;
-        pch = strstr (ldb,"\"jeida\";");
-        if ( pch != NULL )
-            strncpy (pch,"\"spwg\" ;",7);
-        printf("SPWG   : true\n");
-    }
-    else
-        printf("SPWG   : false\n");
-
-
     strcat(ldb,dtsi_lvds_footer_defs);
     strcat(dtsifile_dump,ldb);
 }
