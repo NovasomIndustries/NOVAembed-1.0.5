@@ -814,49 +814,35 @@ const char *cmd;
 QByteArray ba;
 QString repo_server=KERNEL_REPO_SERVER;
 QString currentboard=ui->Board_comboBox->currentText();
+QString content;
+QString ExternalFileSystemsFile;
+
+    ui->ExtFS_Available_comboBox->clear();
+    ui->ExtFS_Available_comboBox->setCurrentIndex(0);
+
     if ( ui->Board_comboBox->currentText() == "P Series")
         currentboard="P";
+
+    update_status_bar("Downloading External File System List");
+
     QString Qcmd = "cd /tmp; rm nova_os*.* ;wget http://"+repo_server+"/OS/"+currentboard+"/nova_os.txt";
     ba = Qcmd.toLatin1();
     cmd = ba.data();
     system(cmd);
+
     QFile file("/tmp/nova_os.txt");
     if ( file.size() < 10 )
+    {
+        update_status_bar("Failed to retrieve External File System List");
         return;
-    QString content;
-    ui->ExtFS_Available_comboBox->clear();
-    QString ExternalFileSystemsFile;
+    }
+    update_status_bar("External File System List retrieved");
     if (file.open(QIODevice::ReadOnly))
     {
         QTextStream stream(&file);
         while (!stream.atEnd())
         {
             content = stream.readLine();
-            extfsfilename = content.split(" ").at(0);
-            extfsname = content.split(" ").at(1);
-            extfsboard = content.split(" ").at(2);
-            extfsversion = content.split(" ").at(3);
-            ui->ExtFSName_lineEdit->setText(extfsname);
-            ui->ExtFSFileName_lineEdit->setText(extfsfilename);
-            ui->ExtFSVersion_lineEdit->setText(extfsversion);
-            ui->ExtFSBoard_lineEdit->setText(extfsboard);
-            if ( ui->Board_comboBox->currentText() == "M8")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+extfsfilename;
-            if ( ui->Board_comboBox->currentText() == "M9")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M9/"+extfsfilename;
-            if ( ui->Board_comboBox->currentText() == "U5")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+extfsfilename;
-            if ( ui->Board_comboBox->currentText() == "P Series")
-                ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+extfsfilename;
-            QFileInfo check_file(ExternalFileSystemsFile);
-            if ( ! check_file.exists() )
-                ui->ExtFS_Available_comboBox->addItem(extfsname);
-            /*
-            ba = extfsname.toLatin1();
-            std::cout << ba.data() << std::flush;
-            file.close();
-            ba = content.toLatin1();
-            */
         }
         file.close();
     }
@@ -867,17 +853,39 @@ QString currentboard=ui->Board_comboBox->currentText();
         while (!stream.atEnd())
         {
             content = stream.readLine();
-            QString locextfsname = content.split(" ").at(1);
-            if ( locextfsname == ui->ExtFS_Available_comboBox->currentText())
+            if ( content.length() > 20 )
             {
-                extfsname = content.split(" ").at(1);
                 extfsfilename = content.split(" ").at(0);
+                extfsname = content.split(" ").at(1);
                 extfsboard = content.split(" ").at(2);
                 extfsversion = content.split(" ").at(3);
                 ui->ExtFSName_lineEdit->setText(extfsname);
                 ui->ExtFSFileName_lineEdit->setText(extfsfilename);
                 ui->ExtFSVersion_lineEdit->setText(extfsversion);
                 ui->ExtFSBoard_lineEdit->setText(extfsboard);
+                if ( ui->Board_comboBox->currentText() == "M8")
+                    ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M8/"+extfsfilename;
+                if ( ui->Board_comboBox->currentText() == "M9")
+                    ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/M9/"+extfsfilename;
+                if ( ui->Board_comboBox->currentText() == "U5")
+                    ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/U5/"+extfsfilename;
+                if ( ui->Board_comboBox->currentText() == "P Series")
+                    ExternalFileSystemsFile="/Devel/NOVAsom_SDK/ExternalFileSystems/P/"+extfsfilename;
+                QFileInfo check_file(ExternalFileSystemsFile);
+                if ( ! check_file.exists() )
+                    ui->ExtFS_Available_comboBox->addItem(extfsname);
+                QString locextfsname = content.split(" ").at(1);
+                if ( locextfsname == ui->ExtFS_Available_comboBox->currentText())
+                {
+                    extfsname = content.split(" ").at(1);
+                    extfsfilename = content.split(" ").at(0);
+                    extfsboard = content.split(" ").at(2);
+                    extfsversion = content.split(" ").at(3);
+                    ui->ExtFSName_lineEdit->setText(extfsname);
+                    ui->ExtFSFileName_lineEdit->setText(extfsfilename);
+                    ui->ExtFSVersion_lineEdit->setText(extfsversion);
+                    ui->ExtFSBoard_lineEdit->setText(extfsboard);
+                }
             }
         }
         file.close();
