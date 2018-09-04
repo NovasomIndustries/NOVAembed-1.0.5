@@ -247,6 +247,7 @@ QString PixMapName="";
     M9BSP_stab=ui->tabBSPFM9;
     N1BSP_stab=ui->tabBSPFN1;
     TOOL_stab=ui->tabTools;
+    ui->tab->removeTab(6);
     ui->tab->removeTab(5);
     ui->tab->removeTab(4);
     ui->tab->removeTab(3);
@@ -270,7 +271,7 @@ QString PixMapName="";
     }
     else if (CurrentBSPF_Tab == "N1 BSP Factory")
     {
-        //ui->tab->insertTab(2,N1BSP_stab,"N1 BSP Factory");
+        ui->tab->insertTab(2,N1BSP_stab,"N1 BSP Factory");
     }
     else
     {
