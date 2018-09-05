@@ -663,8 +663,11 @@ void apply_spwg_jeida_pri(char *ldb)
     }
     printf("%s\n",ldb);
 }
+
 void apply_spwg_jeida_sec(char *ldb)
 {
+char * pch;
+int secjeida=0;
     if (strstr(file_contents,"P_SecVideo_spwg_checkBox=true"))
     {
         char * pch;
@@ -676,12 +679,24 @@ void apply_spwg_jeida_sec(char *ldb)
     else
     {
         printf("P_SecVideo_spwg_checkBox=false!\n");
-        char * pch;
         pch = strstr (ldb,"\"spwg\" ;");
         if ( pch != NULL )
         {
             strncpy (pch,"\"jeida\" ;",7);
+            secjeida=1;
+            /*
+            char * pch1;
+            pch1 = strstr (ldb,"fsl,data-width = <18>;");
+            if ( pch1 != NULL )
+                strncpy (pch,"fsl,data-width = <24>;",22);
+                */
             printf("Found!\n");
+        }
+        if ( secjeida )
+        {
+            pch = strstr (ldb,"fsl,data-width = <18>;");
+            if ( pch != NULL )
+                strncpy (pch,"fsl,data-width = <24>;",22);
         }
         printf("SecVideo : jeida\n");
     }
