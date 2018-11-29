@@ -485,6 +485,11 @@ int     speed;
         strcat(dtsifile_dump,t);
     }
 
+    if ( iomux->uart2_2 == 0 )
+    {
+        sprintf(t,uart2_2_defs);
+        strcat(dtsifile_dump,t);
+    }
     if ( iomux->uart4_4 == 1 )
     {
         sprintf(t,uart4_4_defs);
